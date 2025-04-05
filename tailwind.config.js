@@ -4,15 +4,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sideBar: "#1C2D6D",
-        titleBar: "#B3B3B3",
+        sideBarColor: "#1C2D6D",
+        titleBarColor: "#B3B3B3",
         gold: "#A38901",
-        accent: "#657786",
-        background: "#ffffff",
-        evenTableRow: "#E7E7E7",
-        editButton: "#6275C1"
+        backgroundColor: "#ffffff",
+        evenTableRowColor: "#E7E7E7",
+        editButtonColor: "#6275C1"
       },
-    
+      fontFamily: {
+        serif: ['Times New Roman', 'sans-serif'], // Replace 'YourFontFamily' with your desired font
+      },
     },
   },
   plugins: [],
