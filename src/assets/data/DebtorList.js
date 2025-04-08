@@ -7,8 +7,27 @@ const debtors = [
     amountowed: 5000,
     duedate: "2023-12-01",
     action: "View More",
+    itemsborrowed: [
+      {
+        loanoffice: "Loan Office 1",
+        itemsborrowed: "Item 2",
+        borrowingdate: "2023-01-01",
+        returningdate: "2023-01-10",
+        status: "Pending",
+        comment: "No comment",
+      },
+      {
+        loanoffice: "Loan Office 2",
+        itemsborrowed: "Item 3",
+        borrowingdate: "2023-02-01",
+        returningDate: "2023-02-10",
+        status: "Approved",
+        comment: "No comment",
+      },
+    ]
 
   },
+   
   {
     id: 2,
     name: "Jane Smith",
@@ -18,6 +37,7 @@ const debtors = [
     duedate: "2023-11-15",
     action: "View More",
   },
+  
   {
     id: 3,
     name: "Acme Corp",

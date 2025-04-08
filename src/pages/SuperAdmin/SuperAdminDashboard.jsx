@@ -4,8 +4,6 @@ import ComputerEngineering from "../../assets/images/ComputerEngineering.jpg";
 import Wrapper from "./Wrapper";
 
 function SuperAdminDashboard() {
-
-
   return (
     <Wrapper>
       <div
@@ -19,17 +17,13 @@ function SuperAdminDashboard() {
       >
         <TitleBar title="Super Admin Dashboard" />
         <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 p-6">
-          <h1 className="text-5xl font-bold text-white">
+          <h1 className="text-5xl font-bold text-white mb-5">
             Welcome to the Super Admin Dashboard
           </h1>
-          <h1 className="mt-4 text-gray-200 text-2xl">
+          <h1 className=" text-center mt-4 text-gray-200 text-2xl">
             Manage your application effectively!
+            A single centralized platform for all your needs to manage <br/>employeess and Staff Clearnace process.
           </h1>
-          <div className="mt-6">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-              Get Started
-            </button>
-          </div>
         </div>
       </div>
     </Wrapper>

@@ -8,7 +8,8 @@ import {
 import ClearanceRequestersList from "./pages/SuperAdmin/ClearanceRequestersList";
 import AllEmployeesList from "./pages/SuperAdmin/AllEmployeesList";
 import SuperAdminDashboard from "./pages/SuperAdmin/SuperAdminDashboard";
-import CrediteeList from "./pages/SuperAdmin/CrediteeList";
+import DebtorsList from "./pages/SuperAdmin/DebtorsList";
+import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <Route path="/" element={<SuperAdminDashboard />} />
         <Route path="/dashboard" element={<SuperAdminDashboard />} />
         <Route path="/employees" element={<AllEmployeesList />} />
-        <Route path="creditees" element={<CrediteeList />} />
+        <Route path="/debtors" element={<DebtorsList />} />
         <Route path="/requesters" element={<ClearanceRequestersList />} />
+        <Route path="/debtorsprofile" element={<DebtorProfile />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Router>

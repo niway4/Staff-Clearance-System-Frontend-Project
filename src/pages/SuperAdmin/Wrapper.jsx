@@ -1,15 +1,21 @@
 import React from "react";
 import Sidebar from "../../components/layout/SideBar";
 import personAvatar from "../../assets/images/personAvatar.jpg";
+import dashboard from "../../assets/icons/dashboard.svg";
+import employees from "../../assets/icons/employees.svg";
+import debtors from "../../assets/icons/debtors.svg";
+import requesters from "../../assets/icons/requesters.svg"; 
 
 function Wrapper({ children }) {
   const navItems = [
-    { to: "/dashboard", label: "Dashboard" },
-    { to: "/employees", label: "Manage Employees" },
-    { to: "/creditees", label: "Creditee List" },
-    { to: "/requesters", label: "Clearance Requesters List" },
+    { to: "/dashboard", label: "Dashboard", icon:dashboard },
+    { to: "/employees", label: "Manage Employees" , icon: employees },
+    { to: "/Debtors", label: "Debtors List" , icon: debtors },
+    { to: "/requesters", label: "Clearance Requesters List" , icon: requesters },
   ];
 
+
+  
   const AdminData = {
     name: "Novel Dejene",
     role: "Admin",
@@ -18,13 +24,11 @@ function Wrapper({ children }) {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <Sidebar AdminData={AdminData} navItems={navItems} />
-
-      {/* Main Content */}
       {children}
     </div>
   );
+
 }
 
 export default Wrapper;

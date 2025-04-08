@@ -3,8 +3,6 @@ import employeeRequests from "../../assets/data/employeeRequests";
 import TitleBar from "../../components/layout/TitleBar";
 import SearchBar from "../../components/layout/SearchBar";
 import TableCard from "../../components/layout/TableCard";
-import Sidebar from "../../components/layout/SideBar";
-import personAvatar from "../../assets/images/personAvatar.jpg";
 import Wrapper from "./Wrapper";
 
 const header = [

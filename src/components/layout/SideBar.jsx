@@ -7,12 +7,20 @@ const Sidebar = ({ AdminData, navItems }) => {
   return (
     <div className="w-64 bg-sideBarColor text-white flex flex-col p-4">
       <div className="flex mb-6 items-center">
-        <img className="rounded-full w-14 h-14 mr-4" src={aastuLogo} alt="AASTU-LOGO" />
+        <img
+          className="rounded-full w-14 h-14 mr-4"
+          src={aastuLogo}
+          alt="AASTU-LOGO"
+        />
         <h2 className="text-lg font-bold">Staff Clearance System</h2>
       </div>
       <hr className="border-gray-300 w-full my-4" />
       <div className="flex items-center my-4 space-x-2">
-        <img className="w-14 h-14 rounded-full" src={AdminData.img} alt="Admin-Image" />
+        <img
+          className="w-14 h-14 rounded-full"
+          src={AdminData.img}
+          alt="Admin-Image"
+        />
         <div>
           <p className="font-semibold">{AdminData.name}</p>
           <p className="text-sm">{AdminData.role}</p>
@@ -22,7 +30,16 @@ const Sidebar = ({ AdminData, navItems }) => {
       <nav className="flex flex-col gap-6">
         {navItems.map((item, index) => (
           <NavLinkItem key={index} to={item.to}>
-            {item.label}
+            <>
+              <div className="flex items-center">
+                <img
+                  className="w-9 h-9 mr-3 invert"
+                  src={item.icon}
+                  alt={item.label}
+                />
+                {item.label}
+              </div>
+            </>
           </NavLinkItem>
         ))}
       </nav>
