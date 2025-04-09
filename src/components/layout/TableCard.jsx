@@ -26,7 +26,7 @@ const TableCard = ({ header, inputData }) => {
                   {key === "Action" ? (
                     <Button
                       onClick={() => { navigate('/debtorsprofile'); }}
-                      className="bg-gold hover:bg-yellow-500 text-white px-4 py-1 rounded"
+                      className="bg-gold hover:bg-sideBarColor text-white px-4 py-1 rounded"
                     >
                       {inp[key.toLowerCase()]}
                     </Button>

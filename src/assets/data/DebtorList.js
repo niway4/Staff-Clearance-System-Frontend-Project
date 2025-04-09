@@ -1,7 +1,9 @@
+import avatar from "../images/avatar.png";
 const debtors = [
   {
     id: 1,
     name: "John Doe",
+    img: avatar,
     contactnumber: "123-456-7890",
     email: "john.doe@example.com",
     amountowed: 5000,
@@ -19,6 +21,14 @@ const debtors = [
       {
         loanoffice: "Loan Office 2",
         itemsborrowed: "Item 3",
+        borrowingdate: "2023-02-01",
+        returningDate: "2023-02-10",
+        status: "Approved",
+        comment: "No comment",
+      },
+      {
+        loanoffice: "Loan Office 3",
+        itemsborrowed: "Item 1",
         borrowingdate: "2023-02-01",
         returningDate: "2023-02-10",
         status: "Approved",
