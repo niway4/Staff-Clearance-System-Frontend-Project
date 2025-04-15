@@ -16,8 +16,8 @@ const header = [
 export default function ClearanceRequestersList() {
   return (
     <Wrapper>
-      {/* Main Content */}
-      <div className="flex-1 bg-backgroundColor p-6 overflow-auto">
+
+      <div>
         <TitleBar title="Clearance Requesters List" />
         <SearchBar placeholder="Search for requests..." />
         <TableCard header={header} inputData={employeeRequests} />

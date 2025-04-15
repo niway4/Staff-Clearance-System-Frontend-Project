@@ -7,7 +7,7 @@ import SearchBar from "../../components/layout/SearchBar.jsx";
 function DebtorsList() {
   return (
     <Wrapper>
-      <div className="flex-1 bg-backgroundColor p-6 overflow-auto">
+      <div >
         <TitleBar title="Debtors List" />
         <SearchBar placeholder="Search for requests..." />
         <TableCard

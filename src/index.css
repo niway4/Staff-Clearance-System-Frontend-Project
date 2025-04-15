@@ -3,5 +3,73 @@
 @tailwind utilities;
 
 body {
-    @apply font-serif; /* Apply the default serif font family */
+  @apply font-serif; /* Apply the default serif font family */
+}
+@keyframes blow {
+  0% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-blow {
+  animation: blow 1s ease-in-out infinite;
+}
+
+.firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, rgba(255, 204, 0, 1) 0%, rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+  animation: explode 1s ease-in-out forwards;
+}
+
+.firework:nth-child(1) {
+  top: 20%;
+  left: 30%;
+  animation-delay: 0s;
+}
+
+.firework:nth-child(2) {
+  top: 30%;
+  left: 50%;
+  animation-delay: 0.5s;
+}
+
+.firework:nth-child(3) {
+  top: 40%;
+  left: 70%;
+  animation-delay: 1s;
+}
+
+.firework:nth-child(4) {
+  top: 10%;
+  left: 80%;
+  animation-delay: 1.5s;
+}
+
+.firework:nth-child(5) {
+  top: 50%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}

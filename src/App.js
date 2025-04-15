@@ -10,6 +10,7 @@ import AllEmployeesList from "./pages/SuperAdmin/AllEmployeesList";
 import SuperAdminDashboard from "./pages/SuperAdmin/SuperAdminDashboard";
 import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
+import Approval from "./pages/SuperAdmin/Approval";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/debtors" element={<DebtorsList />} />
         <Route path="/requesters" element={<ClearanceRequestersList />} />
         <Route path="/debtorsprofile" element={<DebtorProfile />} />
+        <Route path="/approval" element={<Approval />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Router>
