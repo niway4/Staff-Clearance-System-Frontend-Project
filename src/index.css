@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply font-serif; /* Apply the default serif font family */
+  @apply font-serif;
 }
 @keyframes blow {
   0% {

@@ -8,7 +8,6 @@ const debtors = [
     email: "john.doe@example.com",
     amountowed: 5000,
     duedate: "2023-12-01",
-    action: "View More",
     itemsborrowed: [
       {
         loanoffice: "Loan Office 1",
@@ -34,10 +33,9 @@ const debtors = [
         status: "Approved",
         comment: "No comment",
       },
-    ]
-
+    ],
   },
-   
+
   {
     id: 2,
     name: "Jane Smith",
@@ -45,9 +43,8 @@ const debtors = [
     email: "jane.smith@example.com",
     amountowed: 3000,
     duedate: "2023-11-15",
-    action: "View More",
   },
-  
+
   {
     id: 3,
     name: "Acme Corp",
@@ -55,7 +52,6 @@ const debtors = [
     email: "info@acmecorp.com",
     amountowed: 15000,
     duedate: "2024-01-10",
-    action: "View More",
   },
   {
     id: 4,
@@ -64,7 +60,6 @@ const debtors = [
     email: "support@xyzfinancial.com",
     amountowed: 2500,
     duedate: "2023-10-20",
-    action: "View More",
   },
 ];
 
@@ -106,7 +101,5 @@ export const employeeData = [
     comment: "Late return",
   },
 ];
-
-
 
 export default debtors;

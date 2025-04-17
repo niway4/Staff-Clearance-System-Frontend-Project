@@ -17,7 +17,7 @@ function DebtorsList() {
             "Contact Number",
             "Amount Owed",
             "Due Date",
-            "Action",
+       
           ]}
           inputData={debtors}
         />

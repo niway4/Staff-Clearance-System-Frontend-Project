@@ -5,23 +5,16 @@ import SearchBar from "../../components/layout/SearchBar";
 import TableCard from "../../components/layout/TableCard";
 import Wrapper from "./Wrapper";
 
-const header = [
-  "Employee Name",
-  "Department",
-  "Request Date",
-  "Status",
-  "Action",
-];
+const header = ["Employee Name", "Department", "Request Date", "Status"];
 
 export default function ClearanceRequestersList() {
-  return (
-    <Wrapper>
-
-      <div>
-        <TitleBar title="Clearance Requesters List" />
-        <SearchBar placeholder="Search for requests..." />
-        <TableCard header={header} inputData={employeeRequests} />
-      </div>
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <div>
+                <TitleBar title="Clearance Requesters List" />
+                <SearchBar placeholder="Search for requests..." />
+                <TableCard header={header} inputData={employeeRequests} />
+            </div>
+        </Wrapper>
+    );
 }

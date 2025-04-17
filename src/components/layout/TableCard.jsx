@@ -1,9 +1,8 @@
-
 import React from "react";
 import Button from "../ui/Button"; // Adjust the path if necessary
 import { useNavigate } from "react-router-dom";
 
-const TableCard = ({ header, inputData }) => {
+const TableCard = ({ header, inputData, onRowClick }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,20 +18,12 @@ const TableCard = ({ header, inputData }) => {
           </tr>
         </thead>
         <tbody>
-          {inputData.map((inp, index) => (
-            <tr key={index} className="even:bg-evenTableRowColor">
+          {inputData.map((inp) => (
+            <tr key={inp.id} className="even:bg-evenTableRowColor  hover:bg-titleBarColor cursor-pointer"
+              onClick={()=>onRowClick(inp.id)}>
               {header.map((key, idx) => (
                 <td key={idx} className="py-1 px-2">
-                  {key === "Action" ? (
-                    <Button
-                      onClick={() => { navigate('/debtorsprofile'); }}
-                      className="bg-gold hover:bg-sideBarColor text-white px-4 py-1 rounded"
-                    >
-                      {inp[key.toLowerCase()]}
-                    </Button>
-                  ) : (
-                    inp[key.toLowerCase().replace(/\s+/g, "")]
-                  )}
+                  {inp[key.toLowerCase().replace(/\s+/g, "")]}
                 </td>
               ))}
             </tr>
