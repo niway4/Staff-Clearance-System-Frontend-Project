@@ -5,7 +5,7 @@ import aastuLogo from "../../assets/images/aastuLogo.png";
 
 const Sidebar = ({ AdminData, navItems }) => {
    return (
-      <div className="w-64 bg-sideBarColor text-white flex flex-col p-4">
+      <div className="w-56 bg-sideBarColor text-white flex flex-col p-2">
          <div className="flex mb-6 items-center">
             <img
                className="rounded-full w-14 h-14 mr-4"
@@ -33,7 +33,7 @@ const Sidebar = ({ AdminData, navItems }) => {
                   <>
                      <div className="flex items-center">
                         <img
-                           className="w-9 h-9 mr-3 invert"
+                           className="w-6 h-6 mr-3 invert"
                            src={item.icon}
                            alt={item.label}
                         />

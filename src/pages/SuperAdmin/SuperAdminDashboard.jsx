@@ -26,7 +26,7 @@ function SuperAdminDashboard() {
               for all your needs to manage <br />
               employeess and Staff Clearnace process.
             </h1>
-          </div>  
+          </div>
         </div>
       </div>
     </Wrapper>
