@@ -24,10 +24,11 @@ const SearchBar = ({ searchFunction,filterParams, placeholder = "Search..." }) =
   const handleFilterSelect = (filter) => {
     setSelectedFilter(filter);
     setIsDropdownOpen(false);
+    searchFunction(tobeSearched, filter);
   };
 
   return (
-    <div className="flex items-center  mb-4">
+    <div className="flex items-center space-x-4   mb-4">
       <div className="flex items-center space-x-2 relative">
         <span className="text-lg font-bold text-gray-700">Filter:</span>
         <Button variant="outline" onClick={toggleDropdown}>

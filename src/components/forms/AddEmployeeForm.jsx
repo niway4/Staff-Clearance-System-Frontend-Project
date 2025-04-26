@@ -58,6 +58,8 @@ const AddEmployeeForm = () => {
                      type="number"
                      id="id"
                      name="id"
+                     min={1}
+                     
                      placeholder="Enter Employee ID"
                      value={formData.id}
                      onChange={handleChange}

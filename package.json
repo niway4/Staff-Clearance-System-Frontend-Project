@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^4.4.8",
     "classnames": "^2.5.1",
+    "framer-motion": "^12.9.2",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.487.0",
     "react": "^19.1.0",
