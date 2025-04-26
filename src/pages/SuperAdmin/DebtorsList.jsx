@@ -5,11 +5,22 @@ import TableCard from "../../components/layout/TableCard.jsx";
 import debtors from "../../assets/data/DebtorList.js";
 import SearchBar from "../../components/layout/SearchBar.jsx";
 function DebtorsList() {
+  const handleSerch = (searchTerm) => {
+    const filteredData = debtors.filter(
+      (data) =>
+        data.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        data.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        data.contactnumber.toString().includes(searchTerm) ||
+        data.amountowed.toString().includes(searchTerm) ||
+        data.duedate.includes(searchTerm)
+    );
+    return filteredData;
+  }
   return (
     <Wrapper>
-      <div className="flex-1 bg-backgroundColor p-6 overflow-auto">
+      <div >
         <TitleBar title="Debtors List" />
-        <SearchBar placeholder="Search for requests..." />
+        <SearchBar filterParams={[ ]} searchFunction={handleSerch} placeholder="Search for Debtors..." />
         <TableCard
           header={[
             "Name",
@@ -17,7 +28,7 @@ function DebtorsList() {
             "Contact Number",
             "Amount Owed",
             "Due Date",
-            "Action",
+       
           ]}
           inputData={debtors}
         />

@@ -5,22 +5,36 @@ import SearchBar from "../../components/layout/SearchBar";
 import TableCard from "../../components/layout/TableCard";
 import Wrapper from "./Wrapper";
 
-const header = [
-  "Employee Name",
-  "Department",
-  "Request Date",
-  "Status",
-  "Action",
-];
+const header = ["Employee Name", "Department", "Request Date", "Status"];
 
 export default function ClearanceRequestersList() {
+  const [filteredData, setFilteredData] = React.useState(employeeRequests);
+  const handleSearch = (searchTerm, selectedFilter) => {
+    const filtered = employeeRequests.filter((data) => {
+      const matchesName = data.employeename
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesDepartment = data.department
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesRole = data.requestdate
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesFilter =
+        selectedFilter === "All" || data.status === selectedFilter;
+
+      return (matchesName || matchesDepartment || matchesRole) && matchesFilter;
+    });
+
+    setFilteredData(filtered);
+  };
+
   return (
     <Wrapper>
-      {/* Main Content */}
-      <div className="flex-1 bg-backgroundColor p-6 overflow-auto">
+      <div>
         <TitleBar title="Clearance Requesters List" />
-        <SearchBar placeholder="Search for requests..." />
-        <TableCard header={header} inputData={employeeRequests} />
+        <SearchBar filterParams={['All','Approved', 'Pending', 'Rejected']} searchFunction={handleSearch} placeholder="Search for requests..." />
+        <TableCard header={header} inputData={filteredData} />
       </div>
     </Wrapper>
   );
