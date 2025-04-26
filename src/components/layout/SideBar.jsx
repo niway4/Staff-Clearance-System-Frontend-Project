@@ -1,5 +1,5 @@
 // Sidebar.js
-import React, { useState } from "react";
+import React from "react";
 import NavLinkItem from "../ui/NavLinkItem";
 import aastuLogo from "../../assets/images/aastuLogo.png";
 const Sidebar = ({ AdminData, navItems }) => {

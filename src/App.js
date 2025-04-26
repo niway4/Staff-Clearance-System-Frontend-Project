@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   useNavigate,
-  navigate,
   useParams
 } from "react-router-dom";
 import ClearanceRequestersList from "./pages/SuperAdmin/ClearanceRequestersList";

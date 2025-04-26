@@ -1,9 +1,6 @@
 import React from "react";
-import Button from "../ui/Button"; // Adjust the path if necessary
-import { useNavigate } from "react-router-dom";
 
 const TableCard = ({ header, inputData, onRowClick }) => {
-   const navigate = useNavigate();
 
    return (
       <div>
