@@ -17,7 +17,7 @@ function Wrapper({ children }) {
   ];
 
   const AdminData = {
-    name: "Novel Dejene",
+    name: "FName LName",
     role: "Admin",
     img: personAvatar,
   };

@@ -1,4 +1,6 @@
-const employeeData = [
+
+
+export const employeeData = [
    {
       id: 4,
       employeename: "Biniyam Gedefaw",
@@ -8,7 +10,7 @@ const employeeData = [
    },
    {
       id: 5,
-      employeename: "Niway Chemere",   
+      employeename: "Niway Chemere",
       department: "Electrical Engineering",
       role: "Computer Engineer",
       status: "Active",
@@ -56,5 +58,3 @@ const employeeData = [
       status: "Active",
    },
 ];
-
-export default employeeData;

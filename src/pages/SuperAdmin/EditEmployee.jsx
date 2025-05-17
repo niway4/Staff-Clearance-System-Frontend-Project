@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import employeeData from "../../assets/data/AllEmployees"; // Adjust the path as necessary
+import useEmplyeeData from "../../assets/data/useEmployeeData"; // Import the custom hook to fetch employee data
 
 function EditEmployee() {
+const {employeeData, fetcheError, fetchLoading} = useEmplyeeData();
+
   const { id } = useParams();
   const [employee, setEmployee] = useState(null);
   const navigate = useNavigate();

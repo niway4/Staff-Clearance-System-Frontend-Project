@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import employeeData from "../../assets/data/AllEmployees"; // Adjust the path as necessary
+import {employeeData} from "../../assets/data/AllEmployees"; 
 
 function EmployeeDetail() {
+
   const { id } = useParams(); // Extract id from route parameters
   const [employee, setEmployee] = useState(null);
   const navigate = useNavigate();

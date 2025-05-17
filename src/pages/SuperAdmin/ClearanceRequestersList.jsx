@@ -5,8 +5,13 @@ import SearchBar from "../../components/layout/SearchBar";
 import TableCard from "../../components/layout/TableCard";
 import Wrapper from "./Wrapper";
 
-const header = ["Employee Name", "Department", "Request Date", "Status"];
+const header = [
+  {label:"Employee Name", key: "employeename"},
+  {label:"Department", key: "department"},
+  {label:"Request Date", key: "requestdate"},
+  {label:"Status", key: "status"},
 
+]
 export default function ClearanceRequestersList() {
   const [filteredData, setFilteredData] = React.useState(employeeRequests);
   const handleSearch = (searchTerm, selectedFilter) => {

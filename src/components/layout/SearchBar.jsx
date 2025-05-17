@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import Button from "../ui/Button";
 import { Search } from "lucide-react";
 
-const SearchBar = ({ searchFunction,filterParams, placeholder = "Search..." }) => {
+const SearchBar = ({
+  searchFunction,
+  filterParams,
+  placeholder = "Search...",
+}) => {
   const [tobeSearched, setTobeSearched] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
 
   const handleSearch = (e) => {
-    setTobeSearched(e.target.value);
+    const value = e.target.value;
+    setTobeSearched(value);
+    searchFunction(value, selectedFilter);
   };
 
   const handleKeyDown = (e) => {
@@ -32,21 +38,19 @@ const SearchBar = ({ searchFunction,filterParams, placeholder = "Search..." }) =
       <div className="flex items-center space-x-2 relative">
         <span className="text-lg font-bold text-gray-700">Filter:</span>
         <Button variant="outline" onClick={toggleDropdown}>
-          {selectedFilter} 
+          {selectedFilter}
         </Button>
         {isDropdownOpen && (
           <div className="absolute top-full mt-1 w-40 bg-white border border-gold rounded shadow-lg z-10">
-            {filterParams.map(
-              (filter) => (
-                <button
-                  key={filter}
-                  className="block w-full text-left px-4 py-2 hover:bg-titleBarColor"
-                  onClick={() => handleFilterSelect(filter)}
-                >
-                  {filter}
-                </button>
-              )
-            )}
+            {filterParams.map((filter) => (
+              <button
+                key={filter}
+                className="block w-full text-left px-4 py-2 hover:bg-titleBarColor"
+                onClick={() => handleFilterSelect(filter)}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
         )}
       </div>
