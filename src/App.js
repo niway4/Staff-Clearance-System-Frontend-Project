@@ -11,6 +11,7 @@ import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import SideBarProvider from "./contexts/SideBarProvider";
 import ExampleComponent from "./assets/data/emp";
+import { EmployeeProvider } from "./contexts/EmployeeContext";
 // import Wasman from "./wasman";
 import {
   user,
@@ -43,74 +44,75 @@ function App() {
   const navigate = useNavigate();
   return (
     <SideBarProvider>
-      <Routes>
-        {/* Novel Route */}
-        <Route path="/example" element={<ExampleComponent />} />
-        <Route path="/novel" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/loginpage" element={<LoginPage />} />
-        <Route path="/supportpage" element={<SupportPage />} />
-        <Route path="/employeehomepage" element={<EmployeeHomePage />} />
-
-        <Route path="/" element={<SuperAdminDashboard />} />
-        <Route path="/dashboard" element={<SuperAdminDashboard />} />
-        <Route path="/employees" element={<AllEmployeesList />} />
-        <Route path="/employees/:id" element={<EmplyeeDetail />} />
-        <Route path="/add-employee" element={<AddEmployeeForm />} />
-        <Route path="/edit-employee/:id" element={<EditEmployee />} />
-        <Route path="/debtors" element={<DebtorsList />} />
-        <Route path="/requesters" element={<ClearanceRequestersList />} />
-        <Route path="/debtorsprofile" element={<DebtorProfile />} />
-        <Route path="/approval" element={<Approval />} />
-        {/* fsnfsonlf */}
-        <Route
-          path="/wasman"
-          element={
-            <Dashboard
-              user={user}
-              stats={stats}
-              onNavigateToProgress={() => navigate("/progress")}
-            />
-          }
-        />
-        <Route
-          path="/progress"
-          element={
-            <Progress
-              items={clearanceItems}
-              stats={stats}
-              onBackClick={() => navigate("/")}
-            />
-          }
-        />
-        <Route
-          path="/records"
-          element={
-            <Records
-              records={clearanceRecords}
-              onBackClick={() => navigate("/")}
-              onViewRecord={(id) => navigate(`/records/${id}`)}
-            />
-          }
-        />
-        <Route
-          path="/records/:id"
-          element={<RecordDetailWrapper records={clearanceRecords} />}
-        />
-        <Route
-          path="/create"
-          element={
-            <CreateRecord
-              onBackClick={() => navigate("/records")}
-              onSubmit={(data) => {
-                console.log("Form submitted:", data);
-                navigate("/records");
-              }}
-            />
-          }
-        />
-        {<Route path="*" element={<navigate to="/dashboard" replace />} />}
-      </Routes>
+      <EmployeeProvider>
+        <Routes>
+          {/* Novel Route */}
+          <Route path="/example" element={<ExampleComponent />} />
+          <Route path="/novel" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/loginpage" element={<LoginPage />} />
+          <Route path="/supportpage" element={<SupportPage />} />
+          <Route path="/employeehomepage" element={<EmployeeHomePage />} />
+          <Route path="/" element={<SuperAdminDashboard />} />
+          <Route path="/dashboard" element={<SuperAdminDashboard />} />
+          <Route path="/employees" element={<AllEmployeesList />} />
+          <Route path="/employees/:id" element={<EmplyeeDetail />} />
+          <Route path="/add-employee" element={<AddEmployeeForm />} />
+          <Route path="/edit-employee/:id" element={<EditEmployee />} />
+          <Route path="/debtors" element={<DebtorsList />} />
+          <Route path="/requesters" element={<ClearanceRequestersList />} />
+          <Route path="/debtorsprofile" element={<DebtorProfile />} />
+          <Route path="/approval" element={<Approval />} />
+          {/* fsnfsonlf */}
+          <Route
+            path="/wasman"
+            element={
+              <Dashboard
+                user={user}
+                stats={stats}
+                onNavigateToProgress={() => navigate("/progress")}
+              />
+            }
+          />
+          <Route
+            path="/progress"
+            element={
+              <Progress
+                items={clearanceItems}
+                stats={stats}
+                onBackClick={() => navigate("/")}
+              />
+            }
+          />
+          <Route
+            path="/records"
+            element={
+              <Records
+                records={clearanceRecords}
+                onBackClick={() => navigate("/")}
+                onViewRecord={(id) => navigate(`/records/${id}`)}
+              />
+            }
+          />
+          <Route
+            path="/records/:id"
+            element={<RecordDetailWrapper records={clearanceRecords} />}
+          />
+          <Route
+            path="/create"
+            element={
+              <CreateRecord
+                onBackClick={() => navigate("/records")}
+                onSubmit={(data) => {
+                  console.log("Form submitted:", data);
+                  navigate("/records");
+                }}
+              />
+            }
+          />
+          {<Route path="*" element={<navigate to="/dashboard" replace />} />}
+        </Routes>
+      </EmployeeProvider>
     </SideBarProvider>
   );
 }

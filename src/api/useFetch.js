@@ -23,22 +23,31 @@ const useFetch = (baseURL) => {
     }
   };
 
-  const get = (url) => fetchData(url);
+  // const get = (url) => fetchData(url);
+
+  const get = (url) =>
+    fetchData(url, {
+      method: "GET",
+      credentials: "include",
+    });
   const post = (url, body) =>
     fetchData(url, {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   const put = (url, body) =>
     fetchData(url, {
       method: "PUT",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
   const del = (url) =>
     fetchData(url, {
       method: "DELETE",
+      credentials: "include",
     });
 
   return { data, error, loading, get, post, put, del };

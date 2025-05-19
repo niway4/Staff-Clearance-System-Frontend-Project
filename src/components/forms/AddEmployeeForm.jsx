@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useEmplyeeData from "../../assets/data/useEmployeeData.js";
 import Wrapper from "../../pages/SuperAdmin/Wrapper.jsx";
 import TitleBar from "../../components/layout/TitleBar.jsx";
 import Button from "../ui/Button.jsx";
 import useFetch from "../../api/useFetch.js";
 import { Phone } from "lucide-react";
-import "./style.css"; 
+import "./style.css";
+import { moveItem } from "framer-motion";
 
 const AddEmployeeForm = () => {
   // const {  employeeData, fetcheError, fetchLoading } = useEmplyeeData(); // Fetch employee data from the API
-  const { data, error, loading, post } = useFetch(
-    "https://aastu-clearance.onrender.com"
-  );
+  const { data, error, loading, post } = useFetch("/admin");
+  const {
+    data: getData,
+    error: getError,
+    loading: getLoading,
+    get,
+  } = useFetch("/admin");
+
+  useEffect(() => {
+    get("/department");
+  }, []);
 
   const [formData, setFormData] = useState({
     fname: "",
@@ -26,14 +35,14 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
+    await post("/register", formData);
     console.log(formData);
-    await post("/addEmployee", formData);
     setFormData({
       fname: "",
       sname: "",
       lname: "",
-      Phone: "",
+      phone: "",
       address: "",
       email: "",
       is_academic: false,
@@ -50,8 +59,8 @@ const AddEmployeeForm = () => {
     <Wrapper>
       <TitleBar title="Add New Employee" />
       <div className="flex items-center justify-center bg-white ">
-        <div className="flex flex-col items-center justify-center border-sideBarColor border h-fit  p-4 m-6 bg-lightGray rounded-lg shadow-xl">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col items-center justify-center border-sideBarColor border h-fit w-4/6 p-4 m-6 bg-lightGray rounded-lg shadow-xl">
+          <form onSubmit={handleSubmit} className="w-full space-y-4 ">
             <label htmlFor="employeename" className="block">
               First Name:
             </label>
@@ -97,18 +106,16 @@ const AddEmployeeForm = () => {
               Phone Number:
             </label>
             <input
-           
               type="number"
               id="phone"
               name="phone"
-            //   min={1}
+              //   min={1}
               placeholder="Enter Phone Number"
               value={formData.phone}
               onChange={handleChange}
               className="no-spinner border rounded p-2 w-full  focus:outline-sideBarColor"
               required
             />
-      
 
             <label htmlFor="address" className="block">
               Address:
@@ -138,17 +145,72 @@ const AddEmployeeForm = () => {
             />
 
             {/* is_academic */}
+            <div className="flex items-center w-full">
+              <input
+                type="checkbox"
+                id="is_academic"
+                name="is_academic"
+                checked={formData.is_academic}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_academic: e.target.checked })
+                }
+                className="w-6 h-6 text-sideBarColor border-gray-300 rounded focus:ring-sideBarColor"
+              />
+              <label
+                htmlFor="is_academic"
+                className="text-gray-700 text-xl pl-3"
+              >
+                IS ACADEMIC
+              </label>
+            </div>
 
             {/* dept_id */}
+
+            <label htmlFor="dept_id" className="block">
+              Department:
+            </label>
+            <select
+              id="dept_id"
+              name="dept_id"
+              value={formData.dept_id}
+              onChange={handleChange}
+              className="border rounded p-2 w-full focus:outline-sideBarColor"
+              // required
+            >
+              <option value="" disabled>
+                Select Department
+              </option>
+              {getData &&
+                getData.map((department) => (
+                  <option key={department.dept_id} value={department.dept_id}>
+                    {department.name}
+                  </option>
+                ))}
+            </select>
 
             <Button variant="ghost">Add Employee</Button>
           </form>
         </div>
       </div>
       <div>
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error.message}</p>}
-        {data && `${console.log(data)}`}
+        {loading && <p>postLoading...</p>}
+        {error && <p>postError: {error.message}</p>}{" "}
+        {data && (
+          <>
+            <p>Post Data Below:</p>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </>
+        )}
+        <div>
+          {getLoading && <p>getLoading...</p>}
+          {getError && <p>getError: {getError.message}</p>}{" "}
+          {getData && (console.log(`Get data below \n ${getData}`)
+            // <>
+            //   <p>Get Data Below:</p>
+            //   <pre>{JSON.stringify(getData, null, 2)}</pre>
+            // </>
+          )}
+        </div>
       </div>
     </Wrapper>
   );

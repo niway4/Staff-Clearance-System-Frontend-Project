@@ -6,8 +6,10 @@ import SearchBar from "../../components/layout/SearchBar";
 import Button from "../../components/ui/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../api/useFetch.js";
+import { useEmployeeContext } from "../../contexts/EmployeeContext.js";
 
 function AllEmployeesList() {
+  const { employees, setEmployees } = useEmployeeContext();
   const header = [
     { label: "Id", key: "id" },
     { label: "Name", key: "username" },
@@ -22,81 +24,48 @@ function AllEmployeesList() {
   ];
 
   const [filteredData, setFilteredData] = useState([]);
-  const { data, error, loading, get } = useFetch(
-    "https://jsonplaceholder.typicode.com/"
-  );
+  const { data, error, loading, get } = useFetch("https://jsonplaceholder.typicode.com");
 
   const navigate = useNavigate();
 
+  // useEffect(() => {get("/users");  }, []);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setFilteredData(data);
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    get("/users");
+    if (!employees) {
+      get("/users");
+    } else {
+      setFilteredData(employees);
+    }
   }, []);
 
   useEffect(() => {
-    if (data) {
+    if (data && !employees) {
+      setEmployees(data);
       setFilteredData(data);
     }
   }, [data]);
-
   const handleRowClick = (id) => {
     navigate(`/employees/${id}`);
   };
 
-  // const handleSearch = (searchTerm, selectedFilter) => {
-  //   const filtered = data?.filter((item) => {
-  //     const matchesName = item.employeename
-  //       .toLowerCase()
-  //       .includes(searchTerm.toLowerCase());
-  //     const matchesDepartment = item.department
-  //       .toLowerCase()
-  //       .includes(searchTerm.toLowerCase());
-  //     const matchesRole = item.role
-  //       .toLowerCase()
-  //       .includes(searchTerm.toLowerCase());
-  //     const matchesFilter =
-  //       selectedFilter === "All" || item.status === selectedFilter;
-
-  //     return (matchesName || matchesDepartment || matchesRole) && matchesFilter;
-  //   });
-
-  //   setFilteredData(filtered);
-  // };
-
   const handleSearch = (searchTerm, selectedFilter) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
-    const numericSearchTerm = !isNaN(searchTerm) ? Number(searchTerm) : null;
 
-    const filtered = data?.filter((item) => {
-      const matchesId =
-        item.id === numericSearchTerm ||
-        item.id?.toString().includes(searchTerm);
-
+    const filtered = employees?.filter((item) => {
       const matchesName = item.username
         ?.toLowerCase()
-        .includes(lowerSearchTerm);
+        .startsWith(lowerSearchTerm);
 
-      const matchesEmail = item.email?.toLowerCase().includes(lowerSearchTerm);
-
-      const matchesPhone = item.phone?.toLowerCase().includes(lowerSearchTerm);
-
-      // Flatten and search address object as a single string
-      const addressString = item.address
-        ? `${item.address.street} ${item.address.city} ${item.address.zipcode}`.toLowerCase()
-        : "";
-      const matchesAddress = addressString.includes(lowerSearchTerm);
-
-      // Match status if applicable (optional depending on your data)
       const matchesFilter =
         selectedFilter === "All" || item.status === selectedFilter;
 
-      return (
-        (matchesId ||
-          matchesName ||
-          matchesEmail ||
-          matchesPhone ||
-          matchesAddress) &&
-        matchesFilter
-      );
+      return matchesName && matchesFilter;
     });
 
     setFilteredData(filtered);

@@ -35,9 +35,12 @@
 // };
 
 // export default TableCard;
+
+
+
 import React from "react";
 
-const TableCard = ({ header, inputData, onRowClick }) => {
+const TableCard = ({ header, inputData=[], onRowClick }) => {
   return (
     <div>
       <table className="w-full text-left border-black-300 border-2 border-gray-500">

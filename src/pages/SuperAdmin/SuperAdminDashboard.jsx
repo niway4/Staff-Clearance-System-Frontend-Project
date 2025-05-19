@@ -1,6 +1,6 @@
 import React from "react";
 import TitleBar from "../../components/layout/TitleBar";
-import ComputerEngineering from "../../assets/images/ComputerEngineering.jpg";
+import bkd from "../../assets/images/bkd.jpg";
 import Wrapper from "./Wrapper";
 
 function SuperAdminDashboard() {
@@ -10,14 +10,14 @@ function SuperAdminDashboard() {
         <TitleBar title="Super Admin Dashboard" />
         <div
           style={{
-            backgroundImage: `url(${ComputerEngineering})`,
+            backgroundImage: `url(${bkd})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             minHeight: "100vh",
           }}
         >
-          <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 p-6">
+          <div className="flex flex-col items-center justify-center h-screen bg-black bg-opacity-50 p-6">
             <h1 className="text-5xl font-bold text-white mb-5">
               Welcome to the Super Admin Dashboard
             </h1>

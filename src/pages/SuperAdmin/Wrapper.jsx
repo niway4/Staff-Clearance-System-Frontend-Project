@@ -12,7 +12,7 @@ function Wrapper({ children }) {
   const navItems = [
     { to: "/dashboard", label: "Dashboard", icon: dashboard },
     { to: "/employees", label: "Manage Employees", icon: employees },
-    { to: "/Debtors", label: "Debtors List", icon: debtors },
+    { to: "/Debtors", label: "Creditees List", icon: debtors },
     { to: "/requesters", label: "Clearance Requesters List", icon: requesters },
   ];
 

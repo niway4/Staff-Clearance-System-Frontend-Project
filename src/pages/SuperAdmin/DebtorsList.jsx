@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Wrapper from "./Wrapper.jsx";
 import TitleBar from "../../components/layout/TitleBar.jsx";
 import TableCard from "../../components/layout/TableCard.jsx";
 import debtors from "../../assets/data/DebtorList.js";
 import SearchBar from "../../components/layout/SearchBar.jsx";
-// import { label } from "framer-motion/client";
 import useFetch from "../../api/useFetch.js";
 
 function DebtorsList() {
-  const { data, error, loading, post } = useFetch("https://aastu-clearance.onrender.com"); // base URL
-  const handleSubmit = async (e) => {
+  const { data, error, loading, get } = useFetch();
+  const {
+    data: postData,
+    error: postError,
+    loading: postLoading,
+    post,
+  } = useFetch("/admin");
+
+  useEffect(() => {
+    get("/");
+  }, []);
+
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    const newData = { email: 'biniyamgashe@gmail.com', password: "123456" };
-    await post('/login', newData);
-};
+    const newData = { username: "bina", password: "123456" };
+    await post("/login", newData);
+  };
+
   const handleSerch = (searchTerm) => {
     const filteredData = debtors.filter(
       (data) =>
@@ -24,37 +35,36 @@ function DebtorsList() {
         data.duedate.includes(searchTerm)
     );
     return filteredData;
-  }
+  };
+
   return (
     <Wrapper>
-      <div >
-        <TitleBar title="Debtors List" />
-        <SearchBar filterParams={[ ]} searchFunction={handleSerch} placeholder="Search for Debtors..." />
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          hello
-        </button>
-        
+      <div>
+        <TitleBar title="Creditees List" />
+        <SearchBar
+          filterParams={[]}
+          searchFunction={handleSerch}
+          placeholder="Search for Debtors..."
+        />
+        <button onClick={handleSignIn}>login</button>
         <TableCard
-         header={[
-          {label: "Name", key: "name"},
-          {label: "Email", key: "email"},
-          {label: "Contact Number", key: "contactnumber"},
-          {label: "Amount Owed", key: "amountowed"},
-          {label: "Due Date", key: "duedate"},
-          {label: "Status", key: "status"}
-
-
-       
-         ]}
+          header={[
+            { label: "Name", key: "name" },
+            { label: "Email", key: "email" },
+            { label: "Contact Number", key: "contactnumber" },
+            { label: "Amount Owed", key: "amountowed" },
+            { label: "Due Date", key: "duedate" },
+            { label: "Status", key: "status" },
+          ]}
           inputData={debtors}
         />
         <div>
-          {loading && <p>Loading...</p>}
+          {loading && <p>get Loading...</p>}
           {error && <p>Error: {error.message}</p>}
-          {data && `${console.log(data)}`}
+          {data && `got ${console.log(data)}`}
+          {postLoading && <p>post Loading...</p>}
+          {postError && <p>post Error: {postError.message}</p>}
+          {postData && ` posted ${console.log(postData)}`}
         </div>
       </div>
     </Wrapper>
