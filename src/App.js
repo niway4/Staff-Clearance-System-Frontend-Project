@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  
-  Routes,
-  Route,
-  useNavigate,
-  useParams
-} from "react-router-dom";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import ClearanceRequestersList from "./pages/SuperAdmin/ClearanceRequestersList";
+import ClearanceForm from "./Component/ClearanceForm";
+import ViceDashBoard from "./pages/Vice/ViceDashBoard";
+import ProfileEditor from "./Comp/ProfileEditor";
 import AllEmployeesList from "./pages/SuperAdmin/AllEmployeesList";
 import SuperAdminDashboard from "./pages/SuperAdmin/SuperAdminDashboard";
 import DebtorsList from "./pages/SuperAdmin/DebtorsList";
@@ -18,8 +15,15 @@ import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import SideBarProvider from "./contexts/SideBarProvider";
 // import Wasman from "./wasman";
 
-import {user, stats, clearanceItems, clearanceRecords} from "./assets/data/AppData"
-import Dashboard from "./Component/DashbordPage";
+import {
+  user,
+  stats,
+  clearanceItems,
+  clearanceRecords,
+} from "./assets/data/AppData";
+import DepartmentDashboard from "./Component/DepartmentDashboard";
+import OfficePage from "./Component/OfficeDashboard";
+import Dashboards from "./Component/DashbordPage";
 import Progress from "./Component/ProgressPage";
 import Records from "./Component/RecordPage";
 import RecordDetail from "./Component/RecodreDetailPage";
@@ -30,6 +34,8 @@ import Login from "./Comp/Login";
 import LoginPage from "./Comp/LoginPage";
 import SupportPage from "./Comp/Supportpage";
 import EmployeeHomePage from "./Comp/EmployeeHomePage";
+import { Import } from "lucide-react";
+
 function RecordDetailWrapper({ records }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -44,74 +50,78 @@ function App() {
   return (
     <SideBarProvider>
       <Routes>
-      {/* Novel Route */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/loginpage" element={<LoginPage />} />
-      <Route path="/supportpage" element={<SupportPage />} />
-      <Route path="/employeehomepage" element={<EmployeeHomePage />} />
+        {/* Novel Route */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/loginpage" element={<LoginPage />} />
+        <Route path="/ProfileEditor" element={<ProfileEditor />} />
+        <Route path="/supportpage" element={<SupportPage />} />
+        <Route path="/employeehomepage" element={<EmployeeHomePage />} />
         {/* <Wasman /> */}
-       
-          <Route path="/home" element={<SuperAdminDashboard />} />
-          <Route path="/dashboard" element={<SuperAdminDashboard />} />
-          <Route path="/employees" element={<AllEmployeesList />} />
-          <Route path="/employees/:id" element={<EmplyeeDetail />} />
-          <Route path="/add-employee" element={<AddEmployeeForm />} />
-          <Route path="/edit-employee/:id" element={<EditEmployee />} />
-          <Route path="/debtors" element={<DebtorsList />} />
-          <Route path="/requesters" element={<ClearanceRequestersList />} />
-          <Route path="/debtorsprofile" element={<DebtorProfile />} />
-          <Route path="/approval" element={<Approval />} />
-          {/* { <Route path="*" element={<navigate to="/dashboard" replace />} /> } */}
-          {/* fsnfsonlf */}
-          <Route
-            path="/"
-            element={
-              <Dashboard
-                user={user}
-                stats={stats}
-                onNavigateToProgress={() => navigate("/progress")}
-              />
-            }
-          />
-          <Route
-            path="/progress"
-            element={
-              <Progress
-                items={clearanceItems}
-                stats={stats}
-                onBackClick={() => navigate("/")}
-              />
-            }
-          />
-          <Route
-            path="/records"
-            element={
-              <Records
-                records={clearanceRecords}
-                onBackClick={() => navigate("/")}
-                onViewRecord={(id) => navigate(`/records/${id}`)}
-              />
-            }
-          />
-          <Route
-            path="/records/:id"
-            element={<RecordDetailWrapper records={clearanceRecords} />}
-          />
-          <Route
-            path="/create"
-            element={
-              <CreateRecord
-                onBackClick={() => navigate("/records")}
-                onSubmit={(data) => {
-                  console.log("Form submitted:", data);
-                  navigate("/records");
-                }}
-              />
-            }
-          />
-        </Routes>
-      
+
+        <Route path="/home" element={<SuperAdminDashboard />} />
+        <Route path="/dashboard" element={<SuperAdminDashboard />} />
+        <Route path="/employees" element={<AllEmployeesList />} />
+        <Route path="/employees/:id" element={<EmplyeeDetail />} />
+        <Route path="/add-employee" element={<AddEmployeeForm />} />
+        <Route path="/edit-employee/:id" element={<EditEmployee />} />
+        <Route path="/debtors" element={<DebtorsList />} />
+        <Route path="/requesters" element={<ClearanceRequestersList />} />
+        <Route path="/debtorsprofile" element={<DebtorProfile />} />
+        <Route path="/approval" element={<Approval />} />
+        {/* { <Route path="*" element={<navigate to="/dashboard" replace />} /> } */}
+        {/* fsnfsonlf */}
+        <Route
+          path="/t"
+          element={
+            <Dashboards
+              user={user}
+              stats={stats}
+              onNavigateToProgress={() => navigate("/progress")}
+            />
+          }
+        />
+        <Route path="/form" element={<ClearanceForm />} />
+        <Route path="/vdb" element={<ViceDashBoard />} />
+        <Route
+          path="/progress"
+          element={
+            <Progress
+              items={clearanceItems}
+              stats={stats}
+              onBackClick={() => navigate("/")}
+            />
+          }
+        />
+        <Route path="/adminda" element={<DepartmentDashboard />} />
+        <Route
+          path="/records"
+          element={
+            <Records
+              records={clearanceRecords}
+              onBackClick={() => navigate("/")}
+              onViewRecord={(id) => navigate(`/records/${id}`)}
+            />
+          }
+        />
+        <Route path="/list" element={<OfficePage />} />
+        <Route
+          path="/records/:id"
+          element={<RecordDetailWrapper records={clearanceRecords} />}
+        />
+        <Route
+          path="/create"
+          element={
+            <CreateRecord
+              onBackClick={() => navigate("/records")}
+              onSubmit={(data) => {
+                console.log("Form submitted:", data);
+                navigate("/records");
+              }}
+            />
+          }
+        />
+      </Routes>
     </SideBarProvider>
   );
 }
