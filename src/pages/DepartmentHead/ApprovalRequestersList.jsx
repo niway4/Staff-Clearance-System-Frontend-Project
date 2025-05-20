@@ -6,6 +6,16 @@ import Wrapper from "./Wrapper";
 import useFetch from "../../api/useFetch.js";
 
 export default function ClearanceRequestersList() {
+
+
+  const { data: empdata, get: empget } = useFetch("/request/admin");
+
+  useEffect(() => {
+    empget("/department/get"); // Fetch data on component mount
+  }, []);
+
+  console.log(empdata);
+
   const header = [
     { label: "Id", key: "id" },
     { label: "Name", key: "username" },
@@ -62,7 +72,6 @@ export default function ClearanceRequestersList() {
           searchFunction={handleSearch}
           placeholder="Search for requests..."
         />
-
         <TableCard header={header} inputData={filteredData} />
       </div>
     </Wrapper>

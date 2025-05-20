@@ -8,7 +8,7 @@ import useFetch from "../../api/useFetch.js";
 import { useNavigate } from "react-router-dom";
 
 export default function ClearanceRequestersList() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   // login post API
   const {
     data: postData,
@@ -35,6 +35,7 @@ const navigate = useNavigate();
     { label: "E-mail", key: "email" },
     { label: "Status", key: "status" },
     { label: "Updated Date", key: "updated_at" },
+    { label: "Action", key: "action" },
   ];
   const header2 = [
     { label: "First Name", key: "staff_fname" },
@@ -48,7 +49,7 @@ const navigate = useNavigate();
   const [filteredData1, setFilteredData1] = React.useState([]);
   const [filteredData2, setFilteredData2] = React.useState([]);
 
-// --- START --- OFFICE APPROVING EMPLOYEES GET API
+  // --- START --- OFFICE APPROVING EMPLOYEES GET API
   const {
     data: data1,
     error: error1,
@@ -86,64 +87,76 @@ const navigate = useNavigate();
       setFilteredData2(data2);
     }
   }, [data2]);
+
   // --- END --- VICE AND HEAD APPROVING EMPLOYEES API
+  const renderAction = (row) => {
+    if (row.status?.toLowerCase() === "completed") {
+      return (
+        <button
+          className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering row click
+            // handle approval logic here
+            alert(`Approved ${row.fname} ${row.lname}`);
+          }}
+        >
+          Approve
+        </button>
+      );
+    }
+    return null;
+  };
 
-  // const handleSearch = (searchTerm, selectedFilter) => {
-  //   const filtered1 = originalData1.filter((data) => {
-  //     // const matchesName = data.username
-  //     //   .toLowerCase()
-  //     //   .startsWith(searchTerm.toLowerCase());
+  const {data:postdata, post: postApprove } = useFetch("/cleared");
 
-  //     // const matchesFilter =
-  //     //   selectedFilter === "All" || data.status === selectedFilter;
+  const handleApprove = async (row) => {
+    try {
+      await postApprove("/create", { staff_id: row.staff_id || row.id });
+      alert("Approved successfully!");
 
-  //     // return matchesName && matchesFilter;
-  //   });
+      // Refresh the data after approval
+      get1("/displayAll");
+    } catch (err) {
+      alert("Approval failed. Try again.");
+      console.error(err);
+    }
+  };
+console.log("postdata", postdata);
 
-  //   const filtered2 = originalData2.filter((data) => {
-  //     const matchesName = data.fname
-  //       .toLowerCase()
-  //       .startsWith(searchTerm.toLowerCase());
-
-  //     const matchesFilter =
-  //       selectedFilter === "All" || data.status === selectedFilter;
-
-  //     return matchesName && matchesFilter;
-  //   });
-
-  //   setFilteredData1(filtered1);
-  //   setFilteredData2(filtered2);
-  // };
   const handleSearch = (searchTerm, selectedFilter) => {
     const filtered1 = originalData1.filter((data) => {
-      const name = data.username || "";
-      const matchesName = name.toLowerCase().startsWith(searchTerm.toLowerCase());
-  
-      const matchesFilter =
-        selectedFilter === "All" || data.status === selectedFilter;
-  
-      return matchesName && matchesFilter;
-    });
-  
-    const filtered2 = originalData2.filter((data) => {
       const name = data.fname || "";
-      const matchesName = name.toLowerCase().startsWith(searchTerm.toLowerCase());
-  
+      const matchesName = name
+        .toLowerCase()
+        .startsWith(searchTerm.toLowerCase());
+
       const matchesFilter =
         selectedFilter === "All" || data.status === selectedFilter;
-  
+
       return matchesName && matchesFilter;
     });
-  
+
+    const filtered2 = originalData2.filter((data) => {
+      const name = data.staff_fname || "";
+      const matchesName = name
+        .toLowerCase()
+        .startsWith(searchTerm.toLowerCase());
+
+      const matchesFilter =
+        selectedFilter === "All" || data.status === selectedFilter;
+
+      return matchesName && matchesFilter;
+    });
+
     setFilteredData1(filtered1);
     setFilteredData2(filtered2);
   };
-  
-  const handleRowClick = (rowId) => {
-    // <Link to={`/employee/${id}`}></Link>
 
-    console.log("Row clicked with ID:", rowId);
-     navigate(`/employee/${rowId}`);
+  const handleRowClick = (rowId) => {
+    navigate(`/requester/${rowId}`);
+  };
+  const handleRowClick2 = (id) => {
+    navigate(`#`);
   };
 
   return (
@@ -168,33 +181,55 @@ const navigate = useNavigate();
           offices:
         </div>
         <br />
-        {/* <TableCard
-          header={header1}
-          inputData={filteredData1}
-          onRowClick={()=>{handleRowClick()}}
-        /> */}
-        <TableCard
-  header={header1}
-  inputData={Array.isArray(filteredData1) ? filteredData1 : []}
-  onRowClick={handleRowClick}
-/>
+        {loading1 && <p className="text-gray-600">Loading...</p>}
+        {error1 && (
+          <>
+            {console.log("Error occurred:", error)}
+            <p className="text-red-600">Can not load, check your connection.</p>
+          </>
+        )}
+        {!loading1 && filteredData1 && (
+          <TableCard
+            header={header1}
+            inputData={Array.isArray(filteredData1) ? filteredData1 : []}
+            onRowClick={handleRowClick}
+            renderAction={(row) =>
+              row.status === "completed" ? (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent row navigation
+                    handleApprove(row);
+                  }}
+                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  Approve
+                </button>
+              ) : (
+                <span className="text-gray-400">N/A</span>
+              )
+            }
+          />
+        )}
 
         <div className="mt-10 text-2xl font-bold">
           List of employees who are waiting for department head and Vice
           president approval:
         </div>
         <br />
-        {/* <TableCard
-          header={header2}
-          inputData={filteredData2}
-          onRowClick={handleRowClick}
-        /> */}
-        <TableCard
-  header={header2}
-  inputData={Array.isArray(filteredData2) ? filteredData2 : []}
-  onRowClick={handleRowClick}
-/>
-
+        {loading2 && <p className="text-gray-600">Loading...</p>}
+        {error2 && (
+          <>
+            {console.log("Error occurred:", error)}
+            <p className="text-red-600">Can not load, check your connection.</p>
+          </>
+        )}
+        {!loading2 && filteredData2 && (
+          <TableCard
+            header={header2}
+            inputData={Array.isArray(filteredData2) ? filteredData2 : []}
+            onRowClick={handleRowClick2}
+          />
+        )}
       </div>
     </Wrapper>
   );

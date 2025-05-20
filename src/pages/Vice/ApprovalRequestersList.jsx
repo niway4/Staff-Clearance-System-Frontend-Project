@@ -6,6 +6,18 @@ import Wrapper from "./Wrapper";
 import useFetch from "../../api/useFetch.js";
 
 export default function ClearanceRequestersList() {
+
+
+
+ const { data:reqdata, get:reqget } = useFetch('/request/admin');
+
+    useEffect(() => {
+        reqget('/department/get'); 
+    }, []);
+console.log(reqdata);
+
+
+
   const header = [
     { label: "Id", key: "id" },
     { label: "Name", key: "username" },

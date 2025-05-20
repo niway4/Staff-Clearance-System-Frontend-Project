@@ -12,8 +12,8 @@ function Wrapper({ children }) {
   const navItems = [
     { to: "/dashboard", label: "Dashboard", icon: dashboard },
     { to: "/employees", label: "Manage Employees", icon: employees },
-    // { to: "/Debtors", label: "Creditees List", icon: debtors },
     { to: "/requesters", label: "Clearance Requesters List", icon: requesters },
+    { to: "/clearedstaff", label: "Cleared Staff", icon: debtors },
   ];
 
   const AdminData = {

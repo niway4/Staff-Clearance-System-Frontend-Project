@@ -9,28 +9,35 @@ import useFetch from "../../api/useFetch.js";
 import { useEmployeeContext } from "../../contexts/EmployeeContext.js";
 
 function AllEmployeesList() {
+  const { data: empdata, get: empget } = useFetch("/admin");
+
+  useEffect(() => {
+    empget("/allstaffs"); // Fetch data on component mount
+  }, []);
+
+  console.log(empdata);
+
   const { employees, setEmployees } = useEmployeeContext();
   const header = [
-    { label: "Id", key: "id" },
-    { label: "Name", key: "username" },
-    { label: "E-mail", key: "email" },
+    { label: "First Name", key: "fname" },
+    { label: "Middle Name", key: "sname" },
+    { label: "Last Name", key: "lname" },
     { label: "Phone", key: "phone" },
     {
-      label: "Address",
-      key: "address",
-      render: (address) => `${address.street}, ${address.city}`,
+      label: "E-mail",
+      key: "email",
     },
-    { label: "website", key: "website" },
+    { label: "Staff ID", key: "id" },
   ];
 
   const [filteredData, setFilteredData] = useState([]);
-  const { data, error, loading, get } = useFetch("https://jsonplaceholder.typicode.com");
+  const { data, error, loading, get } = useFetch("/admin");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!employees) {
-      get("/users");
+      get("/allstaffs");
     } else {
       setFilteredData(employees);
     }
@@ -44,7 +51,8 @@ function AllEmployeesList() {
   }, [data, employees, setEmployees]);
 
   const handleRowClick = (id) => {
-    navigate(`/employees/${id}`);
+    console.log("Row clicked with ID:", id);
+    navigate(`/employee/${id}`);
   };
 
   const handleSearch = (searchTerm, selectedFilter) => {

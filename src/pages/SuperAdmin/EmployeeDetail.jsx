@@ -1,113 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import {employeeData} from "../../assets/data/AllEmployees"; 
+// import React, { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
+// import useFetch from "../../api/useFetch";
 
-function EmployeeDetail() {
+// const EmployeeDetail = () => {
+//   const { id } = useParams();
+//   const { data, error, loading, get } = useFetch("/admin");
+//   const [originalData, setOriginalData] = useState({});
 
-  const { id } = useParams(); // Extract id from route parameters
-  const [employee, setEmployee] = useState(null);
-  const navigate = useNavigate();
+//   useEffect(() => {
+//     get("/allstaffs/" + id);
+//   }, []);
 
-  useEffect(() => {
-    const fetchEmployeeData = () => {
-      const foundEmployee = employeeData.find(
-        (emp) => emp.id === parseInt(id, 10)
-      );
-      if (foundEmployee) {
-        setEmployee(foundEmployee);
-      } else {
-        console.error("Employee not found");
-      }
-    };
+//   useEffect(() => {
+//     if (data?.data) {
+//       setOriginalData(data.data);
+//     }
+//   }, [data]);
 
-    fetchEmployeeData();
-  }, [id]);
+//   console.log("Employee Detail Data", data);
 
-  if (!employee) {
-    return <div className="text-center">Employee not found</div>;
-  }
+//   return (
+//     // <div className="min-h-screen bg-gray-100 p-6">
+//     //   <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
+//     //     <div>
+//     //       <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
+//     //         Employee Profile
+//     //       </h1>
+//     //     </div>
 
-  const handleClearance = (status) => {
-    const message = status === "approve" ? "Clearance Approved" : "Clearance Rejected";
-    if (window.confirm(`Are you sure you want to ${message.toLowerCase()}?`)) {
-      alert(message);
-    }
-  };
+//     //     {loading && <p className="text-gray-600">Loading...</p>}
+//     //     {error && <p className="text-red-600">Error: {error.message}</p>}
 
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this employee?")) {
-      // Logic to delete the employee
-      // In a real application, you would also update the state and possibly make an API call
-      console.log(`Employee ${employee.employeename} deleted.`);
-      navigate("/employees");
-    }
-  };
+//     //     {!loading && Object.keys(originalData).length > 0 && (
+//     //       <div className="mb-8">
+//     //         <p className="text-lg font-semibold text-gray-700">
+//     //           <span className="mr-2 text-gray-500">First Name:</span>
+//     //           {data.fname}
+//     //         </p>
+//     //         {/* Uncomment and adjust as needed */}
+//     //         {/* <p className="text-lg font-semibold text-gray-700">
+//     //           <span className="mr-2 text-gray-500">Middle Name:</span>
+//     //           {originalData.sname}
+//     //         </p>
+//     //         <p className="text-lg font-semibold text-gray-700">
+//     //           <span className="mr-2 text-gray-500">Last Name:</span>
+//     //           {originalData.lname}
+//     //         </p> */}
+//     //         {/* Add more fields as needed */}
+//     //       </div>
+//     //     )}
+//     //   </div>
+//     // </div>
+//     <div>hello</div>
+//   );
+// };
 
-  return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4">Employee Details</h1>
-      <div className="mb-4">
-        <p>
-          <strong>Name:</strong> {employee.employeename}
-        </p>
-        <p>
-          <strong>ID:</strong> {employee.id}
-        </p>
-        <p>
-          <strong>Department:</strong> {employee.department}
-        </p>
-        <p>
-          <strong>Role:</strong> {employee.role}
-        </p>
-        <p>
-          <strong>Status:</strong> {employee.status}
-        </p>
-        <p>
-          <strong>Contact:</strong> {employee.contact || "N/A"}
-        </p>
-      </div>
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold">Clearance Status</h2>
-        <div className={`p-4 text-white rounded ${employee.clearanceStatus === 'Approved' ? 'bg-green-500' : 'bg-red-500'}`}>
-          {employee.clearanceStatus || "Pending"}
-        </div>
-      </div>
-      <div className="flex space-x-4">
-        <button
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          onClick={() => handleClearance("approve")}
-        >
-          Approve Clearance
-        </button>
-        <button
-          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-          onClick={() => handleClearance("reject")}
-        >
-          Reject Clearance
-        </button>
-      </div>
-      <div className="flex space-x-4 mt-4">
-        <button
-          className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
-          onClick={() => navigate(`/edit-employee/${id}`)} // Navigate to edit page
-        >
-          Edit Employee
-        </button>
-        <button
-          className="bg-red-700 text-white py-2 px-4 rounded hover:bg-red-800"
-          onClick={handleDelete}
-        >
-          Delete Employee
-        </button>
-      </div>
-      <button
-        className="mt-4 bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
-        onClick={() => navigate("/employees")}
-      >
-        Back to Employee List
-      </button>
-    </div>
-  );
-}
-
-export default EmployeeDetail;
+// export default EmployeeDetail;

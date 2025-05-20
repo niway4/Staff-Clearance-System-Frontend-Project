@@ -7,7 +7,7 @@ import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
-import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
+// import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -34,8 +34,15 @@ import Login from "./Comp/Login";
 import LoginPage from "./Comp/LoginPage";
 import SupportPage from "./Comp/Supportpage";
 import EmployeeHomePage from "./Comp/EmployeeHomePage";
+//vice
 import ViceDashBoard from "./pages/Vice/ViceDashBoard";
 import ApprovalRequestersList from "./pages/Vice/ApprovalRequestersList";
+//dep. head
+import HeadDashBoard from "./pages/DepartmentHead/HeadDashBoard";
+import HeadList from "./pages/DepartmentHead/ApprovalRequestersList";
+// cleared staff
+import ClearedStaff from "./pages/SuperAdmin/ClearedStaff";
+import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
 
 function RecordDetailWrapper({ records }) {
   const { id } = useParams();
@@ -56,14 +63,22 @@ function App() {
           <Route path="/clearance-progress/:employeeId" element={<Dashboard />} />
           <Route path="/experienceletter" element={<ExperienceLetter />} />
           <Route path="/leavingletter" element={<LeavingLetter />} />
+          <Route path="/employee/:id" element={<EditEmployee />} />
 
           {/* vice president routes */}
-          <Route path="/approvalreq" element={<ApprovalRequestersList />} />
-          <Route path="/vdb" element={<ViceDashBoard />} />
+          <Route path="/vicelist" element={<ApprovalRequestersList />} />
+          <Route path="/vicedb" element={<ViceDashBoard />} />
+
+          {/*dep.t head routes */}
+          <Route path="/headlist" element={<HeadList />} />
+          <Route path="/headdb" element={<HeadDashBoard />} />
 
           {/* HR route */}
           <Route path="/hrprofile" element={<HrProfile />} />
-          <Route path="/employee/:id" element={<RequesterProfile />} />
+          <Route path="/requester/:id" element={<RequesterProfile />} />
+          {/* cleared staff */}
+          <Route path="/clearedstaff" element={<ClearedStaff />} />
+          <Route path="/clearedstaff/:id" element={<ClearedStaffProfile />} />
 
           {/* Novel Route */}
           <Route path="/example" element={<ExampleComponent />} />
@@ -75,9 +90,9 @@ function App() {
           <Route path="/" element={<SuperAdminDashboard />} />
           <Route path="/dashboard" element={<SuperAdminDashboard />} />
           <Route path="/employees" element={<AllEmployeesList />} />
-          <Route path="/employees/:id" element={<EmplyeeDetail />} />
+          {/* <Route path="/employee/:id" element={<EmplyeeDetail />} /> */}
           <Route path="/add-employee" element={<AddEmployeeForm />} />
-          <Route path="/edit-employee/:id" element={<EditEmployee />} />
+          {/* <Route path="/edit-employee/:id" element={<EditEmployee />} /> */}
           <Route path="/debtors" element={<DebtorsList />} />
           <Route path="/requesters" element={<ClearanceRequestersList />} />
           <Route path="/debtorsprofile" element={<DebtorProfile />} />
