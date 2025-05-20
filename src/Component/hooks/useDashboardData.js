@@ -1,8 +1,20 @@
-
+// hooks/useDashboardData.js
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export function useDashboardData() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({
+    user: { name: "Student" },
+    stats: {
+      progressPercentage: 0, // Changed from 'percentage' to 'progressPercentage'
+      completedCount: 0,
+      totalCount: 0,
+      inProgressCount: 0,
+    },
+    recentUpdates: [],
+    requiredActions: [],
+  });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -10,78 +22,24 @@ export function useDashboardData() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock data that would come from an API
-        const mockData = {
-          user: {
-            id: "EMP001",
-            name: "Dr. Sarah Johnson",
-            department: "Computer Science",
-            position: "Associate Professor",
-            notifications: 3,
-          },
+        const response = await axios.get("/status/progress", {
+          withCredentials: true,
+        });
+        const { pendingCount, completedCount, percentage } = response.data;
+
+        const totalCount = pendingCount + completedCount;
+
+        setData({
+          user: { name: "Student" },
           stats: {
-            completedCount: 3,
-            inProgressCount: 2,
-            pendingCount: 0,
-            rejectedCount: 0,
-            totalCount: 5,
-            progressPercentage: 50,
+            progressPercentage: percentage, // Now matches the UI's expected property name
+            completedCount: completedCount,
+            totalCount: totalCount,
+            inProgressCount: pendingCount,
           },
-          recentUpdates: [
-            {
-              id: 1,
-              title: "Library Clearance Approved",
-              time: "2h ago",
-              approver: "Ms. Jennifer Adams",
-              comment: "All books returned, no outstanding fees.",
-              status: "completed",
-              
-            },
-            {
-              id: 2,
-              title: "IT Department Clearance Approved",
-              time: "1d ago",
-              approver: "Mr. Robert Chen",
-              comment: "All accounts deactivated, equipment returned.",
-              status: "completed",
-            },
-            {
-              id: 3,
-              title: "Finance Department Review",
-              time: "2d ago",
-              approver: "Your request is being processed",
-              comment: "Checking for outstanding payments and financial obligations.",
-              status: "in-progress",
-            },
-          ],
-          requiredActions: [
-            {
-              id: 1,
-              title: "Submit Lab Equipment Form",
-              description: "Required for Lab Equipment clearance",
-              buttonText: "Submit Form",
-              status: "pending",
-            },
-            {
-              id: 2,
-              title: "Schedule Exit Interview",
-              description: "Required for HR clearance",
-              buttonText: "Schedule Now",
-              status: "pending",
-            },
-            {
-              id: 3,
-              title: "Return Library Books",
-              description: "Completed on May 2, 2023",
-              status: "completed",
-            },
-          ],
-        };
-        
-        setData(mockData);
+          recentUpdates: [],
+          requiredActions: [],
+        });
         setError(null);
       } catch (err) {
         setError("Failed to fetch dashboard data. Please try again later.");
@@ -96,4 +54,3 @@ export function useDashboardData() {
 
   return { data, loading, error };
 }
-

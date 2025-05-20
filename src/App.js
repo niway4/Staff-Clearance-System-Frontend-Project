@@ -9,9 +9,13 @@ import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
 import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
+import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
+import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
 import SideBarProvider from "./contexts/SideBarProvider";
 import ExampleComponent from "./assets/data/emp";
 import { EmployeeProvider } from "./contexts/EmployeeContext";
+import HrProfile from "./pages/SuperAdmin/HrProfile";
+import RequesterProfile from "./pages/SuperAdmin/RequesterProfile";
 // import Wasman from "./wasman";
 import {
   user,
@@ -30,6 +34,8 @@ import Login from "./Comp/Login";
 import LoginPage from "./Comp/LoginPage";
 import SupportPage from "./Comp/Supportpage";
 import EmployeeHomePage from "./Comp/EmployeeHomePage";
+import ViceDashBoard from "./pages/Vice/ViceDashBoard";
+import ApprovalRequestersList from "./pages/Vice/ApprovalRequestersList";
 
 function RecordDetailWrapper({ records }) {
   const { id } = useParams();
@@ -46,6 +52,19 @@ function App() {
     <SideBarProvider>
       <EmployeeProvider>
         <Routes>
+          {/* id based */}
+          <Route path="/clearance-progress/:employeeId" element={<Dashboard />} />
+          <Route path="/experienceletter" element={<ExperienceLetter />} />
+          <Route path="/leavingletter" element={<LeavingLetter />} />
+
+          {/* vice president routes */}
+          <Route path="/approvalreq" element={<ApprovalRequestersList />} />
+          <Route path="/vdb" element={<ViceDashBoard />} />
+
+          {/* HR route */}
+          <Route path="/hrprofile" element={<HrProfile />} />
+          <Route path="/employee/:id" element={<RequesterProfile />} />
+
           {/* Novel Route */}
           <Route path="/example" element={<ExampleComponent />} />
           <Route path="/novel" element={<LandingPage />} />

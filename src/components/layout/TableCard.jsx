@@ -58,7 +58,7 @@ const TableCard = ({ header, inputData=[], onRowClick }) => {
             <tr
               key={inp.id}
               className="even:bg-evenTableRowColor hover:bg-titleBarColor cursor-pointer"
-              onClick={() => onRowClick(inp.id)}
+              onClick={() => onRowClick(inp.staff_id)}
             >
               {header.map((h, idx) => (
                 <td key={idx} className="py-1 px-2">

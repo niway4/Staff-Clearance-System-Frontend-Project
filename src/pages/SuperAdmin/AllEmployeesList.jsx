@@ -28,14 +28,6 @@ function AllEmployeesList() {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {get("/users");  }, []);
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setFilteredData(data);
-  //   }
-  // }, [data]);
-
   useEffect(() => {
     if (!employees) {
       get("/users");
@@ -49,7 +41,8 @@ function AllEmployeesList() {
       setEmployees(data);
       setFilteredData(data);
     }
-  }, [data]);
+  }, [data, employees, setEmployees]);
+
   const handleRowClick = (id) => {
     navigate(`/employees/${id}`);
   };

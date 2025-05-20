@@ -3,11 +3,11 @@ import TitleBar from "../../components/layout/TitleBar";
 import bkd from "../../assets/images/bkd.jpg";
 import Wrapper from "./Wrapper";
 
-function SuperAdminDashboard() {
+function ViceDashBoard() {
   return (
     <Wrapper>
       <div>
-        <TitleBar title="Human Resource Admin Dashboard" />
+        <TitleBar title="Vice President Dashboard" />
         <div
           style={{
             backgroundImage: `url(${bkd})`,
@@ -33,4 +33,4 @@ function SuperAdminDashboard() {
   );
 }
 
-export default SuperAdminDashboard;
+export default ViceDashBoard;

@@ -17,7 +17,6 @@ function Dashboard({ onNavigateToProgress, onNavigateToRecords }) {
     );
   }
 
-
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[400px] mx-4">
@@ -41,9 +40,7 @@ function Dashboard({ onNavigateToProgress, onNavigateToRecords }) {
 
   const { user, stats, recentUpdates, requiredActions } = data;
 
-  const handleActionClick = (actionId) => {
-    console.log(`Action clicked: ${actionId}`);
-  };
+  const handleActionClick = (actionId) => {};
 
   return (
     <div className="space-y-8">
@@ -118,7 +115,7 @@ function Dashboard({ onNavigateToProgress, onNavigateToRecords }) {
             <div className="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-700 mt-2">
               <div
                 className="h-full bg-blue-600 transition-all duration-300"
-                style={{ width: `${stats.progressPercentage}%` }}
+                style={{ width: `${stats.progressPercentage}% ` }}
               />
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-300 mt-3">
@@ -231,8 +228,7 @@ function Dashboard({ onNavigateToProgress, onNavigateToRecords }) {
                         ? "bg-green-100 dark:bg-green-900/30"
                         : "bg-amber-100 dark:bg-amber-900/30"
                     }`}
-                  > 
-
+                  >
                     {update.status === "completed" ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
