@@ -43,6 +43,8 @@ import HeadList from "./pages/DepartmentHead/ApprovalRequestersList";
 // cleared staff
 import ClearedStaff from "./pages/SuperAdmin/ClearedStaff";
 import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
+import ClearedStaffForm from "./pages/SuperAdmin/ClearedStaffForm";
+
 
 function RecordDetailWrapper({ records }) {
   const { id } = useParams();
@@ -79,6 +81,8 @@ function App() {
           {/* cleared staff */}
           <Route path="/clearedstaff" element={<ClearedStaff />} />
           <Route path="/clearedstaff/:id" element={<ClearedStaffProfile />} />
+          <Route path="/clearedstaffform" element={<ClearedStaffForm />} />
+          <Route path="/clearedstaffform/:id" element={<ClearedStaffForm />} />
 
           {/* Novel Route */}
           <Route path="/example" element={<ExampleComponent />} />

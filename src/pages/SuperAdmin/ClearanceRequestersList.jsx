@@ -109,18 +109,24 @@ export default function ClearanceRequestersList() {
 
   const {data:postdata, post: postApprove } = useFetch("/cleared");
 
-  const handleApprove = async (row) => {
-    try {
-      await postApprove("/create", { staff_id: row.staff_id || row.id });
-      alert("Approved successfully!");
+  // const handleApprove = async (row) => {
+  //   try {
+  //     await postApprove("/create", { staff_id: row.staff_id || row.id });
+  //     alert("Approved successfully!");
 
-      // Refresh the data after approval
-      get1("/displayAll");
-    } catch (err) {
-      alert("Approval failed. Try again.");
-      console.error(err);
-    }
-  };
+  //     // Refresh the data after approval
+  //     get1("/displayAll");
+  //   } catch (err) {
+  //     alert("Approval failed. Try again.");
+  //     console.error(err);
+  //   }
+  // };
+
+const handleApprove = (row)=>{
+  navigate(`/clearedstaffform/${row.staff_id}`);
+
+}
+
 console.log("postdata", postdata);
 
   const handleSearch = (searchTerm, selectedFilter) => {
