@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 export function useDashboardData() {
   const [data, setData] = useState({
     user: { name: "Student" },
@@ -18,7 +19,7 @@ export function useDashboardData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -32,7 +33,7 @@ export function useDashboardData() {
         setData({
           user: { name: "Student" },
           stats: {
-            progressPercentage: percentage, // Now matches the UI's expected property name
+            progressPercentage: percentage,
             completedCount: completedCount,
             totalCount: totalCount,
             inProgressCount: pendingCount,
@@ -47,7 +48,7 @@ export function useDashboardData() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchData();
   }, []);

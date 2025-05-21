@@ -26,7 +26,8 @@ export default function DepartmentDashboard() {
         }
 
         const data = await response.json()
-        setClearanceRequests(data)
+        // Ensure data is an array before setting it
+        setClearanceRequests(Array.isArray(data) ? data : data.data || [])
       } catch (err) {
         console.error("Failed to fetch clearance requests:", err)
         setError("Failed to load clearance requests. Please try again later.")
@@ -39,21 +40,23 @@ export default function DepartmentDashboard() {
   }, [])
 
   // Filter requests based on search term and status filter
-  const filteredRequests = clearanceRequests.filter((request) => {
-    const fullName = `${request.staff_fname} ${request.staff_sname} ${request.staff_lname}`.toLowerCase()
-    const matchesSearch =
-      fullName.includes(searchTerm.toLowerCase()) || request.staff_id.toString().includes(searchTerm)
+  const filteredRequests = Array.isArray(clearanceRequests)
+    ? clearanceRequests.filter((request) => {
+        const fullName = `${request.staff_fname} ${request.staff_sname} ${request.staff_lname}`.toLowerCase()
+        const matchesSearch =
+          fullName.includes(searchTerm.toLowerCase()) || request.staff_id.toString().includes(searchTerm)
 
-    const matchesStatus = statusFilter === "all" || request.status === statusFilter
+        const matchesStatus = statusFilter === "all" || request.status === statusFilter
 
-    return matchesSearch && matchesStatus
-  })
+        return matchesSearch && matchesStatus
+      })
+    : []
 
   const handleApprove = async (staff_id) => {
     setIsSubmitting(true)
     try {
       const response = await fetch("/request/admin/update", {
-        method: "",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -143,7 +146,7 @@ export default function DepartmentDashboard() {
   return (
     <div className="min-h-screen bg-backgroundColor">
       {/* Header remains the same */}
-      <header className="bg-sideBarColor text-white shadow-md">{/* ... keep existing header structure ... */}</header>
+      <header className="bg-sideBarColor text-white shadow-md"></header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter controls remain the same */}
@@ -201,15 +204,39 @@ export default function DepartmentDashboard() {
                           {new Date(request.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                          <button
-                            className="text-editButtonColor hover:text-sideBarColor font-medium"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              setSelectedRequest(request)
-                            }}
-                          >
-                            View Details
-                          </button>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              className="text-editButtonColor hover:text-sideBarColor font-medium"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setSelectedRequest(request)
+                              }}
+                            >
+                              View Details
+                            </button>
+                            <button
+                              className="px-2 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 flex items-center text-xs font-medium"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleApprove(request.staff_id)
+                              }}
+                              disabled={isSubmitting}
+                            >
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                              Approve
+                            </button>
+                            <button
+                              className="px-2 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 flex items-center text-xs font-medium"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleReject(request.staff_id)
+                              }}
+                              disabled={isSubmitting}
+                            >
+                              <XCircle className="h-3 w-3 mr-1" />
+                              Reject
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))

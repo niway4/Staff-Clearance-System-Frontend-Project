@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Wrapper from "./Wrapper.jsx";
 import TitleBar from "../../components/layout/TitleBar.jsx";
 import TableCard from "../../components/layout/TableCard.jsx";
 import debtors from "../../assets/data/DebtorList.js";
 import SearchBar from "../../components/layout/SearchBar.jsx";
+import useFetch from "../../api/useFetch.js";
+
 function DebtorsList() {
+  const { data, error, loading, get } = useFetch();
+  const {
+    data: postData,
+    error: postError,
+    loading: postLoading,
+    post,
+  } = useFetch("/admin");
+
+  useEffect(() => {
+    get("/");
+  }, []);
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const newData = { username: "bina", password: "123456" };
+    await post("/login", newData);
+  };
+
   const handleSerch = (searchTerm) => {
     const filteredData = debtors.filter(
       (data) =>
@@ -15,23 +35,37 @@ function DebtorsList() {
         data.duedate.includes(searchTerm)
     );
     return filteredData;
-  }
+  };
+
   return (
     <Wrapper>
-      <div >
-        <TitleBar title="Debtors List" />
-        <SearchBar filterParams={[ ]} searchFunction={handleSerch} placeholder="Search for Debtors..." />
+      <div>
+        <TitleBar title="Creditees List" />
+        <SearchBar
+          filterParams={[]}
+          searchFunction={handleSerch}
+          placeholder="Search for Debtors..."
+        />
+        <button onClick={handleSignIn}>login</button>
         <TableCard
           header={[
-            "Name",
-            "Email",
-            "Contact Number",
-            "Amount Owed",
-            "Due Date",
-       
+            { label: "Name", key: "name" },
+            { label: "Email", key: "email" },
+            { label: "Contact Number", key: "contactnumber" },
+            { label: "Amount Owed", key: "amountowed" },
+            { label: "Due Date", key: "duedate" },
+            { label: "Status", key: "status" },
           ]}
           inputData={debtors}
         />
+        <div>
+          {loading && <p>get Loading...</p>}
+          {error && <p>Error: {error.message}</p>}
+          {data && `got ${console.log(data)}`}
+          {postLoading && <p>post Loading...</p>}
+          {postError && <p>post Error: {postError.message}</p>}
+          {postData && ` posted ${console.log(postData)}`}
+        </div>
       </div>
     </Wrapper>
   );

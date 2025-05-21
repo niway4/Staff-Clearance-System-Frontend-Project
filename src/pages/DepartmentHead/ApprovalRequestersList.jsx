@@ -8,15 +8,13 @@ import useFetch from "../../api/useFetch.js";
 export default function ClearanceRequestersList() {
 
 
+  const { data: empdata, get: empget } = useFetch("/request/admin");
 
- const { data:reqdata, get:reqget } = useFetch('/request/admin');
+  useEffect(() => {
+    empget("/department/get"); // Fetch data on component mount
+  }, []);
 
-    useEffect(() => {
-        reqget('/department/get'); 
-    }, []);
-console.log(reqdata);
-
-
+  console.log(empdata);
 
   const header = [
     { label: "Id", key: "id" },
@@ -74,7 +72,6 @@ console.log(reqdata);
           searchFunction={handleSearch}
           placeholder="Search for requests..."
         />
-
         <TableCard header={header} inputData={filteredData} />
       </div>
     </Wrapper>

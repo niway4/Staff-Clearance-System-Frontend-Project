@@ -61,9 +61,7 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
 
   const { user, stats, recentUpdates, requiredActions } = data;
 
-  const handleActionClick = (actionId) => {
-    console.log(`Action clicked: ${actionId}`);
-  };
+  const handleActionClick = (actionId) => {};
 
   return (
     <div className="space-y-8 pb-12">
@@ -247,6 +245,7 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
                         : "bg-amber-100"
                     }`}
                   >
+                  
                     {update.status === "completed" ? (
                       <CheckCircle className="h-6 w-6 text-green-600" />
                     ) : (

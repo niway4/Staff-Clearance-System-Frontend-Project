@@ -5,16 +5,13 @@ export function useProgressData() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-
         // Fetch stats from the backend
         const response = await axios.get("/status/progress");
         const { pendingCount, completedCount, percentage } = response.data;
-
         // Mock data with stats updated from the backend
         const mockData = {
           clearanceItems: [
@@ -30,6 +27,7 @@ export function useProgressData() {
                 comments: "All books returned, no outstanding fees.",
               },
             },
+
             {
               id: 2,
               department: "IT Department",

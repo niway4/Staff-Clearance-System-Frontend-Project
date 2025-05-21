@@ -2,13 +2,11 @@
 import React from "react";
 import NavLinkItem from "../ui/NavLinkItem";
 import aastuLogo from "../../assets/images/aastuLogo.png";
+import { nav } from "framer-motion/client";
+import { NavLink } from 'react-router-dom';
 const Sidebar = ({ AdminData, navItems }) => {
-
   return (
-  
     <div className=" w-56 bg-sideBarColor text-white flex flex-col p-2">
-
-   
       <div className="flex mb-6 items-center">
         <img
           className="rounded-full w -14 h-14 mr-4"
@@ -24,10 +22,12 @@ const Sidebar = ({ AdminData, navItems }) => {
           src={AdminData.img}
           alt="Admin-Image"
         />
-        <div>
-          <p className="font-semibold">{AdminData.name}</p>
-          <p className="text-sm">{AdminData.role}</p>
-        </div>
+        <NavLink to={"/HrProfile"}>
+          <div>
+            <p className="font-semibold">{AdminData.name}</p>
+            <p className="text-sm">{AdminData.role}</p>
+          </div>
+        </NavLink>
       </div>
       <hr className="border-gray-300 w-full mt-4 mb-6" />
       <nav className="flex flex-col gap-6">

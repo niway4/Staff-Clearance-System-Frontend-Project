@@ -24,3 +24,4 @@ yarn-error.log*
 
 # my ignored files
 /src/components/layout/Pagination.jsx
+/src/codeWarehouse
