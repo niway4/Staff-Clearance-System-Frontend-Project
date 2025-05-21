@@ -116,7 +116,7 @@ const LoginPage = () => {
           <span className="text-white font-bold text-xl hidden md:block">ClearanceSystem</span>
         </div>
 
-        <Link to="/EmployeeHomePage">
+        <Link to="/">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

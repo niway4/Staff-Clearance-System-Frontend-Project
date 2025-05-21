@@ -1,21 +1,32 @@
-"use client"
+"use client";
 
-import { useDashboardData } from "./hooks/useDashboardData"
-import { motion } from "framer-motion"
-import { Clock, CheckCircle, AlertCircle, Shield, Clock3, ChevronRight, BarChart3, FileText } from "lucide-react"
+import { useDashboardData } from "./hooks/useDashboardData";
+import { motion } from "framer-motion";
+import {
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  Shield,
+  Clock3,
+  ChevronRight,
+  BarChart3,
+  FileText,
+} from "lucide-react";
 
 function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
-  const { data, loading, error } = useDashboardData()
+  const { data, loading, error } = useDashboardData();
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px] mx-4">
         <div className="flex flex-col items-center">
           <div className="w-16 h-16 border-4 border-sideBarColor border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-6 text-gray-600 font-medium">Loading dashboard data...</p>
+          <p className="mt-6 text-gray-600 font-medium">
+            Loading dashboard data...
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -29,7 +40,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           <div className="flex items-start">
             <AlertCircle className="text-red-500 h-6 w-6 mt-0.5 flex-shrink-0" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-red-800 mb-2">Error Loading Dashboard</h3>
+              <h3 className="text-lg font-semibold text-red-800 mb-2">
+                Error Loading Dashboard
+              </h3>
               <p className="text-red-700 mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
@@ -41,25 +54,33 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           </div>
         </motion.div>
       </div>
-    )
+    );
   }
 
-  if (!data) return null
+  if (!data) return null;
 
-  const { user, stats, recentUpdates, requiredActions } = data
+  const { user, stats, recentUpdates, requiredActions } = data;
 
   const handleActionClick = (actionId) => {
-    console.log(`Action clicked: ${actionId}`)
-  }
+    console.log(`Action clicked: ${actionId}`);
+  };
 
   return (
     <div className="space-y-8 pb-12">
       {/* Enhanced Header Section with Gradient Background */}
       <div className="bg-gradient-to-r from-sideBarColor to-blue-800 text-white p-6 rounded-xl shadow-lg mb-8">
         <div className="flex flex-col md:flex-row justify-between gap-6 md:items-center">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Welcome back, {user.name.split(" ")[0]}</h1>
-            <p className="text-blue-200 mt-2">Track and manage your clearance process with ease</p>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              Welcome back, {user.name.split(" ")[0]}
+            </h1>
+            <p className="text-blue-200 mt-2">
+              Track and manage your clearance process with ease
+            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -95,10 +116,14 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           className="rounded-xl overflow-hidden border border-gray-200 shadow-md bg-white hover:shadow-lg transition-all duration-300"
         >
           <div className="p-6 border-b border-gray-100">
-            <h3 className="text-sm font-medium text-gray-600">Clearance Progress</h3>
+            <h3 className="text-sm font-medium text-gray-600">
+              Clearance Progress
+            </h3>
           </div>
           <div className="px-6 py-6">
-            <div className="text-3xl font-bold text-sideBarColor">{stats.progressPercentage}%</div>
+            <div className="text-3xl font-bold text-sideBarColor">
+              {stats.progressPercentage}%
+            </div>
             <div className="h-3 w-full rounded-full bg-gray-100 mt-3">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-sideBarColor to-blue-500 transition-all duration-500"
@@ -124,7 +149,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           </div>
           <div className="px-6 py-6">
             <div className="flex items-center gap-3">
-              <div className="text-3xl font-bold text-green-600">{stats.completedCount}</div>
+              <div className="text-3xl font-bold text-green-600">
+                {stats.completedCount}
+              </div>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <CheckCircle className="h-6 w-6 text-green-600" />
               </div>
@@ -148,7 +175,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           </div>
           <div className="px-6 py-6">
             <div className="flex items-center gap-3">
-              <div className="text-3xl font-bold text-gold">{stats.inProgressCount}</div>
+              <div className="text-3xl font-bold text-gold">
+                {stats.inProgressCount}
+              </div>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
                 <Clock3 className="h-6 w-6 text-gold" />
               </div>
@@ -168,7 +197,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
           className="rounded-xl overflow-hidden border border-gray-200 shadow-md bg-white hover:shadow-lg transition-all duration-300"
         >
           <div className="p-6 border-b border-gray-100">
-            <h3 className="text-sm font-medium text-gray-600">Estimated Completion</h3>
+            <h3 className="text-sm font-medium text-gray-600">
+              Estimated Completion
+            </h3>
           </div>
           <div className="px-6 py-6">
             <div className="text-3xl font-bold text-sideBarColor">May 15</div>
@@ -190,8 +221,12 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
         >
           <div className="p-6 border-b border-gray-100 flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold text-sideBarColor">Recent Updates</h3>
-              <p className="text-sm text-gray-500">Latest activity on your clearance requests</p>
+              <h3 className="text-lg font-semibold text-sideBarColor">
+                Recent Updates
+              </h3>
+              <p className="text-sm text-gray-500">
+                Latest activity on your clearance requests
+              </p>
             </div>
             <BarChart3 className="h-5 w-5 text-gray-400" />
           </div>
@@ -207,7 +242,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
                 >
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-full ${
-                      update.status === "completed" ? "bg-green-100" : "bg-amber-100"
+                      update.status === "completed"
+                        ? "bg-green-100"
+                        : "bg-amber-100"
                     }`}
                   >
                     {update.status === "completed" ? (
@@ -218,15 +255,20 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
                   </div>
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
-                      <p className="text-base font-medium text-sideBarColor">{update.title}</p>
+                      <p className="text-base font-medium text-sideBarColor">
+                        {update.title}
+                      </p>
                       <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-700">
                         {update.time}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600">
-                      <span className="font-medium">Approved by:</span> {update.approver}
+                      <span className="font-medium">Approved by:</span>{" "}
+                      {update.approver}
                     </p>
-                    <p className="text-sm text-gray-600 italic">&ldquo;{update.comment}&rdquo;</p>
+                    <p className="text-sm text-gray-600 italic">
+                      &ldquo;{update.comment}&rdquo;
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -265,13 +307,17 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.1 * index + 0.6 }}
                   className={`rounded-lg border p-4 transition-all duration-200 hover:shadow-md ${
-                    action.status === "completed" ? "bg-green-50 border-green-200" : "bg-amber-50 border-amber-200"
+                    action.status === "completed"
+                      ? "bg-green-50 border-green-200"
+                      : "bg-amber-50 border-amber-200"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                        action.status === "completed" ? "bg-green-100" : "bg-amber-100"
+                        action.status === "completed"
+                          ? "bg-green-100"
+                          : "bg-amber-100"
                       }`}
                     >
                       {action.status === "completed" ? (
@@ -281,8 +327,12 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
                       )}
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-gray-800">{action.title}</h3>
-                      <p className="text-xs text-gray-600 mt-1">{action.description}</p>
+                      <h3 className="text-sm font-medium text-gray-800">
+                        {action.title}
+                      </h3>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {action.description}
+                      </p>
                     </div>
                   </div>
                   {action.buttonText && action.status !== "completed" && (
@@ -309,7 +359,9 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
         transition={{ duration: 0.5, delay: 0.6 }}
         className="rounded-xl overflow-hidden border border-gray-200 shadow-md bg-white p-6"
       >
-        <h3 className="text-lg font-semibold text-sideBarColor mb-4">Quick Links</h3>
+        <h3 className="text-lg font-semibold text-sideBarColor mb-4">
+          Quick Links
+        </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {[
             { title: "My Profile", icon: "👤" },
@@ -323,13 +375,15 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
               className="flex flex-col items-center justify-center p-4 rounded-lg border border-gray-200 cursor-pointer transition-colors"
             >
               <div className="text-2xl mb-2">{link.icon}</div>
-              <span className="text-sm font-medium text-gray-700">{link.title}</span>
+              <span className="text-sm font-medium text-gray-700">
+                {link.title}
+              </span>
             </motion.div>
           ))}
         </div>
       </motion.div>
     </div>
-  )
+  );
 }
 
-export default Dashboards
+export default Dashboards;

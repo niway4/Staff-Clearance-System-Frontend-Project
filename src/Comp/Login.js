@@ -51,7 +51,7 @@ const Login = () => {
         // Email-based login logic
         const { logged } = responseData
         if (logged) {
-          navigate("/t") // Redirect to a default dashboard page
+          navigate("/EmployeeHomePage") // Redirect to a default dashboard page
         } else {
           navigate("/LoginPage")
         }
@@ -67,7 +67,7 @@ const Login = () => {
             navigate("/vdb")
             break
           case "dept":
-            navigate("/DPage")
+            navigate("/adminda")
             break
           case "office":
             navigate("/create")

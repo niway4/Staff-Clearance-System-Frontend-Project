@@ -151,11 +151,7 @@ export default function LoginPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <img
-                src="/placeholder.svg?height=400&width=500"
-                alt="Clearance System Dashboard"
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
+              
             </motion.div>
           </div>
 
