@@ -73,58 +73,71 @@
 
 // export default EditEmployee;
 
+
+
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../api/useFetch";
+import Wrapper from "./Wrapper";
 
 const EditEmployee = () => {
-  const { id } = useParams();
+  const navigate = useNavigate();
+  const { id } = useParams(); // this is a string
+  const staffId = parseInt(id); // convert it to number
   const { data, error, loading, get } = useFetch("/admin");
-  const [originalData, setOriginalData] = useState({});
+  const [staffDetail, setStaffDetail] = useState(null);
 
   useEffect(() => {
-    get("/allstaffs/" + id);
+    get("/allstaffs");
   }, []);
 
   useEffect(() => {
-    if (data?.data) {
-      setOriginalData(data.data);
+    if (data && Array.isArray(data)) {
+      const found = data.find((staff) => staff.id === staffId);
+      setStaffDetail(found || null);
     }
-  }, [data]);
-
-  console.log("Employee Detail Data", data);
+  }, [data, staffId]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
-        <div>
+    <Wrapper>
+      <div className="min-h-screen bg-gray-100 p-6">
+        <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
           <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
-            Employee Profile
+            Cleared Staff Profile
+            <div className="space-x-2">
+              <button
+                onClick={() => navigate(`/leavingletter/${id}`)}
+                className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"
+              >
+                Print Leaving Letter
+              </button>
+              <button
+                onClick={() => navigate("/experienceletter")}
+                className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-700"
+              >
+                Print Experience Letter
+              </button>
+            </div>
           </h1>
+          {loading && <p className="text-gray-600">Loading...</p>}
+          {error && <p className="text-red-600">Error: {error.message}</p>}
+          {!loading && staffDetail ? (
+            <div className="mb-8 space-y-2 text-lg text-gray-700">
+              <p><strong>First Name:</strong> {staffDetail.fname}</p>
+              <p><strong>Middle Name:</strong> {staffDetail.sname}</p>
+              <p><strong>Last Name:</strong> {staffDetail.lname}</p>
+              <p><strong>Position:</strong> {staffDetail.position}</p>
+              <p><strong>Birthdate:</strong> {new Date(staffDetail.birthdate).toLocaleDateString()}</p>
+              <p><strong>Salary:</strong> {staffDetail.salary}</p>
+              <p><strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}</p>
+              {/* Add more fields as needed */}
+            </div>
+          ) : (
+            !loading && <p className="text-gray-500">No staff found with ID: {id}</p>
+          )}
         </div>
-
-        {loading && <p className="text-gray-600">Loading...</p>}
-        {error && <p className="text-red-600">Error: {error.message}</p>}
-
-        {!loading && Object.keys(originalData).length > 0 && (
-          <div className="mb-8">
-            <p className="text-lg font-semibold text-gray-700">
-              <span className="mr-2 text-gray-500">First Name:</span>
-              {originalData.fname}
-            </p>
-            {/* Uncomment and adjust as needed */}
-            {/* <p className="text-lg font-semibold text-gray-700">
-              <span className="mr-2 text-gray-500">Middle Name:</span>
-              {originalData.sname}
-            </p>
-            <p className="text-lg font-semibold text-gray-700">
-              <span className="mr-2 text-gray-500">Last Name:</span>
-              {originalData.lname}
-            </p> */}
-          </div>
-        )}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

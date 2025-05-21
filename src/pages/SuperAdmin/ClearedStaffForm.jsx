@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import useFetch from "../../api/useFetch";
 import { useParams } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const ClearedStaffForm = () => {
+  const navigate = useNavigate();
   const { staffId } = useParams();
   const { post, loading, error } = useFetch("/cleared");
 
@@ -40,6 +42,7 @@ const ClearedStaffForm = () => {
     try {
       await post("/create", formData);
       alert("Cleared staff data submitted successfully.");
+      navigate("/");
     } catch (err) {
       alert("Failed to submit. Try again.");
     }

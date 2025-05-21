@@ -65,6 +65,8 @@ function App() {
           <Route path="/clearance-progress/:employeeId" element={<Dashboard />} />
           <Route path="/experienceletter" element={<ExperienceLetter />} />
           <Route path="/leavingletter" element={<LeavingLetter />} />
+          <Route path="/leavingletter/:id" element={<LeavingLetter />} />
+
           <Route path="/employee/:id" element={<EditEmployee />} />
 
           {/* vice president routes */}

@@ -107,7 +107,7 @@ export default function ClearanceRequestersList() {
     return null;
   };
 
-  const {data:postdata, post: postApprove } = useFetch("/cleared");
+  const { data: postdata, post: postApprove } = useFetch("/cleared");
 
   // const handleApprove = async (row) => {
   //   try {
@@ -122,12 +122,11 @@ export default function ClearanceRequestersList() {
   //   }
   // };
 
-const handleApprove = (row)=>{
-  navigate(`/clearedstaffform/${row.staff_id}`);
+  const handleApprove = (row) => {
+    navigate(`/clearedstaffform/${row.staff_id}`);
+  };
 
-}
-
-console.log("postdata", postdata);
+  console.log("postdata", postdata);
 
   const handleSearch = (searchTerm, selectedFilter) => {
     const filtered1 = originalData1.filter((data) => {
