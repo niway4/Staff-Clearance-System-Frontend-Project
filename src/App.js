@@ -11,7 +11,7 @@ import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
-// import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
+ import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -29,8 +29,8 @@ import {
 } from "./assets/data/AppData";
 import Dashboard from "./Component/DashbordPage";
 import Progress from "./Component/ProgressPage";
-import Records from "./Component/RecordPage";
-import RecordDetail from "./Component/RecodreDetailPage";
+
+
 import CreateRecord from "./Component/CreatRecordePage";
 // Novel
 import LandingPage from "./Comp/LandingPage";
@@ -49,15 +49,7 @@ import ClearedStaff from "./pages/SuperAdmin/ClearedStaff";
 import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
 import ClearedStaffForm from "./pages/SuperAdmin/ClearedStaffForm";
 
-function RecordDetailWrapper({ records }) {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const record = records.find((r) => r.id === id);
 
-  return (
-    <RecordDetail record={record} onBackClick={() => navigate("/records")} />
-  );
-}
 function App() {
   const navigate = useNavigate();
   return (
@@ -65,10 +57,7 @@ function App() {
       <EmployeeProvider>
         <Routes>
           {/* id based */}
-          <Route
-            path="/clearance-progress/:employeeId"
-            element={<Dashboard />}
-          />
+         
           <Route path="/experienceletter" element={<ExperienceLetter />} />
           <Route path="/leavingletter" element={<LeavingLetter />} />
           <Route path="/leavingletter/:id" element={<LeavingLetter />} />
@@ -120,6 +109,9 @@ function App() {
                 user={user}
                 stats={stats}
                 onNavigateToProgress={() => navigate("/progress")}
+                 onNavigateToForm={() => navigate("/form")}
+
+
               />
             }
           />
@@ -137,28 +129,18 @@ function App() {
             }
           />
 
-          <Route
-            path="/records"
-            element={
-              <Records
-                records={clearanceRecords}
-                onBackClick={() => navigate("/")}
-                onViewRecord={(id) => navigate(`/records/${id}`)}
-              />
-            }
-          />
-          <Route
-            path="/records/:id"
-            element={<RecordDetailWrapper records={clearanceRecords} />}
-          />
+         
+            
+          
+        
           <Route
             path="/create"
             element={
               <CreateRecord
-                onBackClick={() => navigate("/records")}
+                onBackClick={() => navigate("/office")}
                 onSubmit={(data) => {
                   console.log("Form submitted:", data);
-                  navigate("/records");
+                  navigate("/office");
                 }}
               />
             }

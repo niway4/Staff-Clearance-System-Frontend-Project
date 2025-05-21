@@ -13,7 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 
-function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
+function Dashboards({ onNavigateToProgress, onNavigateToForm }) {
   const { data, loading, error } = useDashboardData();
 
   if (loading) {
@@ -74,7 +74,7 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Welcome back, {user.name.split(" ")[0]}
+              Welcome back
             </h1>
             <p className="text-blue-200 mt-2">
               Track and manage your clearance process with ease
@@ -94,7 +94,7 @@ function Dashboards({ onNavigateToProgress, onNavigateToRecords }) {
               Request Status
             </button>
             <button
-              onClick={onNavigateToRecords}
+              onClick={onNavigateToForm}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 bg-gold hover:bg-lightGold text-white shadow-md h-11 px-5 py-2 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-1 focus:ring-offset-blue-600"
             >
               <Shield className="mr-2 h-5 w-5" />

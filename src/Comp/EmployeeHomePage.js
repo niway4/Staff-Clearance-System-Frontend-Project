@@ -186,7 +186,7 @@ function EmployeeDashboard() {
                 <ClipboardList className="h-5 w-5 mr-3" /> Your Records
               </button>
               <Link
-                to="/Progress"
+                to="/form"
                 className="w-full flex items-center px-4 py-3 text-gray-300 hover:bg-white/10 rounded-lg transition"
               >
                 <FileCheck className="h-5 w-5 mr-3" /> Request Clearance

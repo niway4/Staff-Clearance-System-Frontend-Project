@@ -70,7 +70,7 @@ const Login = () => {
             navigate("/adminda")
             break
           case "office":
-            navigate("/create")
+            navigate("/office")
             break
           default:
             setError("Unknown role or invalid credentials.")

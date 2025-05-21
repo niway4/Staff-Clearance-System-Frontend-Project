@@ -103,7 +103,7 @@ function useClearanceForm() {
       const data = await response.json();
 
       if (response.status === 200 && data.message) {
-        navigate("/progress"); // Navigate to the "/t" route after successful submission
+        navigate("/staffDashboard"); // Navigate to the "/t" route after successful submission
       }
 
       setSubmitSuccess(true);

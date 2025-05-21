@@ -42,7 +42,7 @@ function CreateRecord() {
       if (response.status === 200) {
         setSuccessMessage("Record created successfully!")
         setTimeout(() => {
-          navigate("/list")
+          navigate("/office")
         }, 1500)
       } else {
         throw new Error("Failed to create the record")
@@ -59,7 +59,7 @@ function CreateRecord() {
       {/* Header Section */}
       <div className="max-w-2xl mx-auto mb-8">
         <button
-          onClick={() => navigate("/list")}
+          onClick={() => navigate("/office")}
           className="flex items-center text-sideBarColor hover:text-gold transition-colors mb-6 font-medium"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -226,7 +226,7 @@ function CreateRecord() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="button"
-                onClick={() => navigate("/list")}
+                onClick={() => navigate("/office")}
                 className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
                 disabled={loading}
               >
