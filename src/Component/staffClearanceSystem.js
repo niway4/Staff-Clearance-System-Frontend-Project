@@ -1,105 +1,100 @@
-import { useEffect, useState } from "react";
-import { User, Search } from "lucide-react";
-import Wrapper from "../pages/Vice/Wrapper";
-import axios from "axios";
+"use client"
+
+import { useEffect, useState } from "react"
+import { User, Search } from "lucide-react"
+import Wrapper from "../pages/Vice/Wrapper"
+import axios from "axios"
 
 export default function ApprovalRequestList() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [processingId, setProcessingId] = useState(null);
-  const [requests, setRequests] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [processingId, setProcessingId] = useState(null)
+  const [requests, setRequests] = useState([])
 
   useEffect(() => {
     const fetchClearanceRequests = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
-        const response = await axios.get("/request/admin/get");
-        // Ensure we're getting an array from the API
-        const data = Array.isArray(response.data) ? response.data : [];
-        setRequests(data);
+        const response = await axios.get("/request/admin/vice/get")
+        setRequests(response.data.request || [])
       } catch (err) {
-        console.error("Failed to fetch clearance requests:", err);
-        setRequests([]); // Reset to empty array on error
+        console.error("Failed to fetch clearance requests:", err)
+        setRequests([])
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    fetchClearanceRequests();
-  }, []);
-
-  // Safe filtering with array check
-  const filteredRequests = Array.isArray(requests) 
-    ? requests.filter(request => {
-        const search = searchTerm.toLowerCase();
-        return (
-          request.employeeName?.toLowerCase().includes(search) ||
-          request.department?.toLowerCase().includes(search)
-        );
-      })
-    : [];
+    }
+    fetchClearanceRequests()
+  }, [])
 
   const formatDate = (dateString) => {
     try {
-      const date = new Date(dateString);
+      const date = new Date(dateString)
       return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
-      });
-    } catch {
-      return "Invalid date";
+      })
+    } catch (error) {
+      console.error("Invalid date format:", dateString)
+      return "Invalid date"
     }
-  };
+  }
+  const handleAction = async (staff_id, action) => {
+    const confirmation = window.confirm(`Are you sure you want to ${action} this request?`)
+    if (!confirmation) return
 
-  const handleApprove = async (staff_id) => {
     try {
-      setProcessingId(staff_id);
-      await axios.put("/request/admin/approve", { staff_id });
-      
-      setRequests(prev => {
-        if (!Array.isArray(prev)) return prev;
-        return prev.map(request => 
-          request.staff_id === staff_id 
-            ? { ...request, status: "Approved" } 
-            : request
-        );
-      });
+      setProcessingId(staff_id)
+      // Updated URL to request/admin/vice/update
+      await axios.put("/request/admin/vice/update", { staff_id, action })
+
+      setRequests((prev) =>
+        prev.map((request) =>
+          request.staff_id === staff_id
+            ? { ...request, status_vice: action === "approve" ? "Approved" : "Rejected" }
+            : request,
+        ),
+      )
     } catch (err) {
-      console.error("Failed to approve request:", err);
+      console.error(`Failed to ${action} request:`, err)
+      alert(`Failed to ${action} request. Please try again.`)
     } finally {
-      setProcessingId(null);
+      setProcessingId(null)
     }
-  };
+  }
+
+  const filteredRequests = requests.filter((request) => {
+    const fullName =
+      `${request.staff_fname || ""} ${request.staff_sname || ""} ${request.staff_lname || ""}`.toLowerCase()
+    const department = request.dept_name?.toLowerCase() || ""
+    const search = searchTerm.toLowerCase()
+
+    return fullName.includes(search) || department.includes(search)
+  })
 
   const refreshData = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const response = await axios.get("/request/admin/get");
-      const data = Array.isArray(response.data) ? response.data : [];
-      setRequests(data);
+      const response = await axios.get("/request/admin/vice/get")
+      setRequests(response.data.request || [])
     } catch (err) {
-      console.error("Failed to refresh data:", err);
-      setRequests([]);
+      console.error("Failed to refresh data:", err)
+      setRequests([])
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <Wrapper>
       <div className="p-8 bg-backgroundColor">
         <div className="max-w-7xl mx-auto">
-          {/* Header section */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-sideBarColor">
-              Approval Request List
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Review and approve pending requests
-            </p>
+            <h1 className="text-3xl font-bold text-sideBarColor">Approval Request List</h1>
+            <p className="text-gray-600 mt-2">Review and approve pending requests</p>
           </div>
 
-          {/* Search and refresh section */}
           <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="relative w-full sm:w-64">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -136,7 +131,6 @@ export default function ApprovalRequestList() {
             </button>
           </div>
 
-          {/* Table section */}
           <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -158,7 +152,7 @@ export default function ApprovalRequestList() {
                       Status
                     </th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-sideBarColor uppercase tracking-wider">
-                      Action
+                      Actions
                     </th>
                   </tr>
                 </thead>
@@ -177,12 +171,107 @@ export default function ApprovalRequestList() {
                     </tr>
                   ) : (
                     filteredRequests.map((request) => (
-                      <tr 
-                        key={request.staff_id} 
+                      <tr
+                        key={request.staff_id}
                         className="hover:bg-gray-50 transition-colors duration-150 ease-in-out"
                       >
-                        {/* Table cells remain the same as previous version */}
-                        {/* ... (keep the same table cell structure) */}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-sideBarColor/10 flex items-center justify-center text-sideBarColor font-semibold">
+                              {`${request.staff_fname?.[0]}${request.staff_sname?.[0]}`}
+                            </div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                {`${request.staff_fname} ${request.staff_sname} ${request.staff_lname}`}
+                              </div>
+                              <div className="text-xs text-gray-500">ID: {request.staff_id}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{request.dept_name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {formatDate(request.created_at)}
+                          <div className="text-xs text-gray-500">
+                            {new Date(request.created_at).toLocaleTimeString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              request.status_vice === "Approved"
+                                ? "bg-green-100 text-green-800"
+                                : request.status_vice === "Rejected"
+                                  ? "bg-red-100 text-red-800"
+                                  : "bg-yellow-100 text-yellow-800"
+                            }`}
+                          >
+                            {request.status_vice}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          {request.status_vice === "Pending" && (
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => handleAction(request.staff_id, "approve")}
+                                disabled={processingId === request.staff_id}
+                                className="px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 text-sm flex items-center"
+                              >
+                                {processingId === request.staff_id && (
+                                  <svg
+                                    className="animate-spin mr-2 h-4 w-4 text-white"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <circle
+                                      className="opacity-25"
+                                      cx="12"
+                                      cy="12"
+                                      r="10"
+                                      stroke="currentColor"
+                                      strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                      className="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    ></path>
+                                  </svg>
+                                )}
+                                {processingId === request.staff_id ? "Processing..." : "Approve"}
+                              </button>
+                              <button
+                                onClick={() => handleAction(request.staff_id, "reject")}
+                                disabled={processingId === request.staff_id}
+                                className="px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50 transition-colors duration-200 text-sm flex items-center"
+                              >
+                                {processingId === request.staff_id && (
+                                  <svg
+                                    className="animate-spin mr-2 h-4 w-4 text-white"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <circle
+                                      className="opacity-25"
+                                      cx="12"
+                                      cy="12"
+                                      r="10"
+                                      stroke="currentColor"
+                                      strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                      className="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    ></path>
+                                  </svg>
+                                )}
+                                {processingId === request.staff_id ? "Processing..." : "Reject"}
+                              </button>
+                            </div>
+                          )}
+                        </td>
                       </tr>
                     ))
                   )}
@@ -190,10 +279,8 @@ export default function ApprovalRequestList() {
               </table>
             </div>
           </div>
-
-          {/* Pagination section remains the same */}
         </div>
       </div>
     </Wrapper>
-  );
+  )
 }
