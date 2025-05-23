@@ -74,9 +74,10 @@ const Login = () => {
             break
           default:
             setError("Unknown role or invalid credentials.")
-            navigate("/Login") // Redirect back to login page for unknown roles
+            navigate("/employee") // Redirect back to login page for unknown roles
         }
       }
+      
     } catch (error) {
       console.error("Login failed:", error?.response?.data || error.message)
       setError("An error occurred during login. Please try again.")

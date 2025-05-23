@@ -29,7 +29,7 @@ import {
 } from "./assets/data/AppData";
 import Dashboard from "./Component/DashbordPage";
 import Progress from "./Component/ProgressPage";
-
+import StaffClearanceSystem  from "./Component/staffClearanceSystem";
 
 import CreateRecord from "./Component/CreatRecordePage";
 // Novel
@@ -66,7 +66,7 @@ function App() {
 
           {/* vice president routes */}
           <Route path="/vicelist" element={<ApprovalRequestersList />} />
-          <Route path="/vicedb" element={<ViceDashBoard />} />
+          <Route path="/vdb" element={<ViceDashBoard />} />
 
           {/*dep.t head routes */}
           <Route path="/headlist" element={<HeadList />} />
@@ -114,7 +114,11 @@ function App() {
 
               />
             }
+
+            
           />
+
+          <Route  path="/test" element={< StaffClearanceSystem/>}/>
           <Route path="/employee" element={<DepartmentDashboard />} />
           <Route path="/office" element={<OfficePage />} />
           <Route path="/form" element={<ClearanceForm />} />

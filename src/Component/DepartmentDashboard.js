@@ -32,14 +32,36 @@ export default function DepartmentDashboard() {
       setError(null);
 
       try {
-        const response = await fetch("/api/wasman/melkamu");
+        const response = await fetch("/request/admin/department/get");
 
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
-        setClearanceRequests(data);
+        // Map the backend response to the expected format
+        const mappedData = data.map((item) => ({
+          id: item.staff_id,
+          employeeName: `${item.staff_fname} ${item.staff_lname} ${
+            item.staff_sname || ""
+          }`.trim(),
+          position: item.current_position,
+          department: item.dept_name,
+          submissionDate: item.created_at,
+          status: item.status.toLowerCase(),
+          reason: item.reason,
+          unfinishedWork: item.unfinished_projects
+            ? [
+                {
+                  id: 1,
+                  task: item.unfinished_projects,
+                  priority: "medium",
+                  deadline: new Date().toISOString(),
+                },
+              ]
+            : [],
+        }));
+        setClearanceRequests(mappedData);
       } catch (err) {
         console.error("Failed to fetch clearance requests:", err);
         setError("Failed to load clearance requests. Please try again later.");
@@ -55,10 +77,11 @@ export default function DepartmentDashboard() {
   const filteredRequests = clearanceRequests.filter((request) => {
     const matchesSearch =
       request.employeeName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      request.id?.toLowerCase().includes(searchTerm.toLowerCase());
+      String(request.id)?.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus =
-      statusFilter === "all" || request.status === statusFilter;
+      statusFilter === "all" ||
+      request.status?.toLowerCase() === statusFilter.toLowerCase();
 
     return matchesSearch && matchesStatus;
   });
@@ -67,14 +90,13 @@ export default function DepartmentDashboard() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`/api/wasman/melkamu/${id}/approve`, {
+      const response = await fetch(`/request/admin/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "approved" }),
+        body: JSON.stringify({ id, status: "approved", staff_id: id }),
       });
-
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
@@ -106,12 +128,12 @@ export default function DepartmentDashboard() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`/api/wasman/melkamu/${id}/reject`, {
+      const response = await fetch(`/request/admin/reject/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "rejected" }),
+        body: JSON.stringify({ status: "rejected", staff_id: id }),
       });
 
       if (!response.ok) {
@@ -140,7 +162,9 @@ export default function DepartmentDashboard() {
   };
 
   const getStatusBadge = (status) => {
-    switch (status) {
+    const statusLower = status?.toLowerCase();
+
+    switch (statusLower) {
       case "pending":
         return (
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -162,7 +186,11 @@ export default function DepartmentDashboard() {
           </span>
         );
       default:
-        return null;
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            {status || "Unknown"}
+          </span>
+        );
     }
   };
 
