@@ -1,98 +1,104 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { User, Search } from "lucide-react"
-import Wrapper from "../pages/Vice/Wrapper"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import { User, Search } from "lucide-react";
+import Wrapper from "../pages/Vice/Wrapper";
+import axios from "axios";
 
 export default function ApprovalRequestList() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [processingId, setProcessingId] = useState(null)
-  const [requests, setRequests] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [processingId, setProcessingId] = useState(null);
+  const [requests, setRequests] = useState([]);
 
   useEffect(() => {
     const fetchClearanceRequests = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        const response = await axios.get("/request/admin/vice/get")
-        setRequests(response.data.request || [])
+        const response = await axios.get("/request/admin/vice/get");
+        setRequests(response.data.request || []);
       } catch (err) {
-        console.error("Failed to fetch clearance requests:", err)
-        setRequests([])
+        console.error("Failed to fetch clearance requests:", err);
+        setRequests([]);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchClearanceRequests()
-  }, [])
+    };
+    fetchClearanceRequests();
+  }, []);
 
   const formatDate = (dateString) => {
     try {
-      const date = new Date(dateString)
+      const date = new Date(dateString);
       return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
-      })
+      });
     } catch (error) {
-      console.error("Invalid date format:", dateString)
-      return "Invalid date"
+      console.error("Invalid date format:", dateString);
+      return "Invalid date";
     }
-  }
+  };
   const handleAction = async (staff_id, action) => {
-    const confirmation = window.confirm(`Are you sure you want to ${action} this request?`)
-    if (!confirmation) return
+   
 
     try {
-      setProcessingId(staff_id)
+      setProcessingId(staff_id);
       // Updated URL to request/admin/vice/update
-      await axios.put("/request/admin/vice/update", { staff_id, action })
+      await axios.put("/request/admin/vice/update", { staff_id, action });
 
       setRequests((prev) =>
         prev.map((request) =>
           request.staff_id === staff_id
-            ? { ...request, status_vice: action === "approve" ? "Approved" : "Rejected" }
-            : request,
-        ),
-      )
+            ? {
+                ...request,
+                status_vice: action === "approve" ? "Approved" : "Rejected",
+              }
+            : request
+        )
+      );
     } catch (err) {
-      console.error(`Failed to ${action} request:`, err)
-      alert(`Failed to ${action} request. Please try again.`)
+      console.error(`Failed to ${action} request:`, err);
     } finally {
-      setProcessingId(null)
+      setProcessingId(null);
     }
-  }
+  };
 
   const filteredRequests = requests.filter((request) => {
-    const fullName =
-      `${request.staff_fname || ""} ${request.staff_sname || ""} ${request.staff_lname || ""}`.toLowerCase()
-    const department = request.dept_name?.toLowerCase() || ""
-    const search = searchTerm.toLowerCase()
+    const fullName = `${request.staff_fname || ""} ${
+      request.staff_sname || ""
+    } ${request.staff_lname || ""}`.toLowerCase();
+    const department = request.dept_name?.toLowerCase() || "";
+    const search = searchTerm.toLowerCase();
 
-    return fullName.includes(search) || department.includes(search)
-  })
+    return fullName.includes(search) || department.includes(search);
+  });
 
   const refreshData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await axios.get("/request/admin/vice/get")
-      setRequests(response.data.request || [])
+      const response = await axios.get("/request/admin/vice/get");
+      setRequests(response.data.request || []);
     } catch (err) {
-      console.error("Failed to refresh data:", err)
-      setRequests([])
+      console.error("Failed to refresh data:", err);
+      setRequests([]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Wrapper>
       <div className="p-8 bg-backgroundColor">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-sideBarColor">Approval Request List</h1>
-            <p className="text-gray-600 mt-2">Review and approve pending requests</p>
+            <h1 className="text-3xl font-bold text-sideBarColor">
+              Approval Request List
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Review and approve pending requests
+            </p>
           </div>
 
           <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -159,13 +165,19 @@ export default function ApprovalRequestList() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {loading ? (
                     <tr>
-                      <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
+                      <td
+                        colSpan={5}
+                        className="px-6 py-10 text-center text-gray-500"
+                      >
                         Loading requests...
                       </td>
                     </tr>
                   ) : filteredRequests.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-6 py-10 text-center text-gray-500">
+                      <td
+                        colSpan={5}
+                        className="px-6 py-10 text-center text-gray-500"
+                      >
                         No approval requests found
                       </td>
                     </tr>
@@ -184,11 +196,15 @@ export default function ApprovalRequestList() {
                               <div className="text-sm font-medium text-gray-900">
                                 {`${request.staff_fname} ${request.staff_sname} ${request.staff_lname}`}
                               </div>
-                              <div className="text-xs text-gray-500">ID: {request.staff_id}</div>
+                              <div className="text-xs text-gray-500">
+                                ID: {request.staff_id}
+                              </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{request.dept_name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {request.dept_name}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(request.created_at)}
                           <div className="text-xs text-gray-500">
@@ -201,8 +217,8 @@ export default function ApprovalRequestList() {
                               request.status_vice === "Approved"
                                 ? "bg-green-100 text-green-800"
                                 : request.status_vice === "Rejected"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-yellow-100 text-yellow-800"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-yellow-100 text-yellow-800"
                             }`}
                           >
                             {request.status_vice}
@@ -212,7 +228,9 @@ export default function ApprovalRequestList() {
                           {request.status_vice === "Pending" && (
                             <div className="flex space-x-2">
                               <button
-                                onClick={() => handleAction(request.staff_id, "approve")}
+                                onClick={() =>
+                                  handleAction(request.staff_id, "approve")
+                                }
                                 disabled={processingId === request.staff_id}
                                 className="px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 text-sm flex items-center"
                               >
@@ -238,10 +256,14 @@ export default function ApprovalRequestList() {
                                     ></path>
                                   </svg>
                                 )}
-                                {processingId === request.staff_id ? "Processing..." : "Approve"}
+                                {processingId === request.staff_id
+                                  ? "Processing..."
+                                  : "Approve"}
                               </button>
                               <button
-                                onClick={() => handleAction(request.staff_id, "reject")}
+                                onClick={() =>
+                                  handleAction(request.staff_id, "reject")
+                                }
                                 disabled={processingId === request.staff_id}
                                 className="px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50 transition-colors duration-200 text-sm flex items-center"
                               >
@@ -267,7 +289,9 @@ export default function ApprovalRequestList() {
                                     ></path>
                                   </svg>
                                 )}
-                                {processingId === request.staff_id ? "Processing..." : "Reject"}
+                                {processingId === request.staff_id
+                                  ? "Processing..."
+                                  : "Reject"}
                               </button>
                             </div>
                           )}
@@ -282,5 +306,5 @@ export default function ApprovalRequestList() {
         </div>
       </div>
     </Wrapper>
-  )
+  );
 }
