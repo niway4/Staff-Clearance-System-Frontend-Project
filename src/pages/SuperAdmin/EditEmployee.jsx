@@ -103,19 +103,19 @@ const EditEmployee = () => {
       <div className="min-h-screen bg-gray-100 p-6">
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
           <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
-            Cleared Staff Profile
+             Employee Profile
             <div className="space-x-2">
               <button
-                onClick={() => navigate(`/leavingletter/${id}`)}
-                className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"
+                onClick={() => navigate(`#`)}
+                className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-800"
               >
-                Print Leaving Letter
+                Edit Employee 
               </button>
               <button
-                onClick={() => navigate("/experienceletter")}
-                className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-700"
+                onClick={() => navigate("#")}
+                className="bg-red-600 text-white text-sm px-3 py-1 rounded hover:bg-red-800"
               >
-                Print Experience Letter
+                Delete Employee
               </button>
             </div>
           </h1>

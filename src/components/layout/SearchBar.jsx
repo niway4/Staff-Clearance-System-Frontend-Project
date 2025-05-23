@@ -34,12 +34,12 @@ const SearchBar = ({
   };
 
   return (
-    <div className="flex items-center space-x-4   mb-4">
+    <div className="flex justify-center  items-center space-x-4   mb-4">
       <div className="flex items-center space-x-2 relative">
-        <span className="text-lg font-bold text-gray-700">Filter:</span>
-        <Button variant="outline" onClick={toggleDropdown}>
+        {/* <span className="text-lg font-bold text-gray-700">Filter:</span> */}
+        {/* <Button variant="outline" onClick={toggleDropdown}>
           {selectedFilter}
-        </Button>
+        </Button> */}
         {isDropdownOpen && (
           <div className="absolute top-full mt-1 w-40 bg-white border border-gold rounded shadow-lg z-10">
             {filterParams.map((filter) => (
