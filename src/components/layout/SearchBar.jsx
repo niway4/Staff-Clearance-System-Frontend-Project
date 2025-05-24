@@ -40,7 +40,7 @@ const SearchBar = ({
         {/* <Button variant="outline" onClick={toggleDropdown}>
           {selectedFilter}
         </Button> */}
-        {isDropdownOpen && (
+        {/* {isDropdownOpen && (
           <div className="absolute top-full mt-1 w-40 bg-white border border-gold rounded shadow-lg z-10">
             {filterParams.map((filter) => (
               <button
@@ -52,7 +52,7 @@ const SearchBar = ({
               </button>
             ))}
           </div>
-        )}
+        )} */}
       </div>
       <div className="relative w-full max-w-sm">
         <input

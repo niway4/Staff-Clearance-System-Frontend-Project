@@ -499,6 +499,8 @@ export default function ClearanceRequestersList() {
   console.log("postdata", postdata);
 
   const handleSearch = (searchTerm, selectedFilter) => {
+    if (!HR && !head) return;
+
     const filtered1 = HR.filter((data) => {
       const name = data.fname || "";
       const matchesName = name

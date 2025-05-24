@@ -58,7 +58,7 @@ function SuperAdminDashboard() {
         >
           <div className="flex flex-col items-center justify-center h-screen bg-black bg-opacity-50 p-6">
             <h1 className="text-5xl font-bold text-white mb-5">
-              Welcome to the Super Admin Dashboard
+              Welcome to HR Dashboard
             </h1>
             <h2 className="text-center mt-4 text-gray-200 text-2xl">
               Manage your application effectively! A centralized platform for all your needs to manage <br />

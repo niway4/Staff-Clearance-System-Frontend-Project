@@ -1,142 +1,645 @@
 // import React, { useEffect, useState } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
-// import useEmplyeeData from "../../assets/data/useEmployeeData"; // Import the custom hook to fetch employee data
+// import useFetch from "../../api/useFetch";
+// import Wrapper from "./Wrapper";
+// import Spinner from "../../components/ui/Spinner";
 
-// function EditEmployee() {
-// const {employeeData, fetcheError, fetchLoading} = useEmplyeeData();
-
-//   const { id } = useParams();
-//   const [employee, setEmployee] = useState(null);
+// const EditEmployee = () => {
 //   const navigate = useNavigate();
+//   const { id } = useParams();
+//   const staffId = parseInt(id);
+
+//   const { data, error, loading, get } = useFetch("/admin");
+//   const { putdata, puterror, putloading, put } = useFetch("/staff");
+//   const { deletedata, deleteerror, deleteloading, del } = useFetch("/staff");
+
+//   const [staffDetail, setStaffDetail] = useState(null);
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [editableStaffDetail, setEditableStaffDetail] = useState(null);
+
+//   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+//   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+//   const [successMessage, setSuccessMessage] = useState("");
 
 //   useEffect(() => {
-//     const foundEmployee = employeeData.find(emp => emp.id === parseInt(id, 10));
-//     if (foundEmployee) {
-//       setEmployee(foundEmployee);
+//     get("/allstaffs");
+//   }, []);
+
+//   useEffect(() => {
+//     if (data && Array.isArray(data)) {
+//       const found = data.find((staff) => staff.id === staffId);
+//       setStaffDetail(found || null);
+//       setEditableStaffDetail(found ? { ...found } : null);
 //     }
-//   }, [id]);
+//   }, [data, staffId]);
+
+//   const handleEditClick = () => {
+//     setIsEditing(true);
+//   };
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
-//     setEmployee(prev => ({ ...prev, [name]: value }));
+//     setEditableStaffDetail((prev) => ({ ...prev, [name]: value }));
 //   };
 
-//   const handleSubmit = (e) => {
+//   const handleSubmit = async (e) => {
 //     e.preventDefault();
-//     // Logic to save changes, e.g., API call to update the employee
-//     console.log("Employee updated:", employee);
-//     navigate(`/employee/${id}`); // Redirect back to the employee detail page
+//     if (!editableStaffDetail) return;
+
+//     try {
+//       const response = await put(`/update/${staffId}`, editableStaffDetail);
+//       if (response.success) {
+//         setStaffDetail(editableStaffDetail);
+//         setIsEditing(false);
+//         setSuccessMessage("Employee updated successfully!");
+//         setShowSuccessPopup(true);
+//         get("/allstaffs");
+//       } else {
+//         alert("Failed to update: " + (response.message || "Unknown error"));
+//       }
+//     } catch (err) {
+//       console.error("Update error:", err);
+//       alert("Update error: " + err.message);
+//     }
 //   };
 
-//   if (!employee) {
-//     return <div>Employee not found</div>;
-//   }
+//   const handleDelete = () => {
+//     setShowConfirmDelete(true);
+//   };
+
+//   const handleDeleteConfirmed = async () => {
+//     try {
+//       const response = await del(`/delete/${staffId}`);
+//       if (response.success) {
+//         // setShowConfirmDelete(false);
+//         setSuccessMessage("Employee deleted successfully!");
+//         setShowSuccessPopup(true);
+//         // 👇 Redirect will happen after user closes the popup
+//         navigate("/employees");
+//       } else {
+//         alert("Failed to delete: " + (response.message || "Unknown error"));
+//         // setShowConfirmDelete(false);
+//       }
+//     } catch (err) {
+//       console.error("Delete error:", err);
+//       alert("Delete error: " + err.message);
+//       // setShowConfirmDelete(false);
+//     }
+//     setShowConfirmDelete(false);
+//     navigate("/employees");
+//   };
 
 //   return (
-//     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-//       <h1 className="text-2xl font-bold mb-4">Edit Employee</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <label className="block mb-1" htmlFor="employeename">Employee Name</label>
-//           <input
-//             type="text"
-//             id="employeename"
-//             name="employeename"
-//             value={employee.employeename}
-//             onChange={handleChange}
-//             required
-//             className="border rounded p-2 w-full"
-//           />
+//     <Wrapper>
+//       <div className="min-h-screen bg-gray-100 p-6">
+//         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
+//           <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
+//             Employee Profile
+//             <div className="space-x-2">
+//               {!isEditing && (
+//                 <button
+//                   onClick={handleEditClick}
+//                   className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-800"
+//                 >
+//                   Edit Employee
+//                 </button>
+//               )}
+//               {isEditing && (
+//                 <button
+//                   onClick={handleSubmit}
+//                   className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-800"
+//                 >
+//                   Save Changes
+//                 </button>
+//               )}
+//               <button
+//                 onClick={handleDelete}
+//                 className="bg-red-600 text-white text-sm px-3 py-1 rounded hover:bg-red-800"
+//               >
+//                 Delete Employee
+//               </button>
+//             </div>
+//           </h1>
+
+//           {loading && <Spinner />}
+//           {error && <p className="text-red-600">Error: {error.message}</p>}
+
+//           {!loading && staffDetail ? (
+//             <form onSubmit={handleSubmit} className="space-y-2 text-lg">
+//               {["fname", "sname", "lname", "email", "phone", "address"].map(
+//                 (field) => (
+//                   <p key={field}>
+//                     <strong className="capitalize">{field}:</strong>{" "}
+//                     {isEditing ? (
+//                       <input
+//                         type={field === "email" ? "email" : "text"}
+//                         name={field}
+//                         value={editableStaffDetail?.[field] || ""}
+//                         onChange={handleChange}
+//                         className="border rounded px-2 py-1 w-full"
+//                       />
+//                     ) : (
+//                       staffDetail?.[field] || "-"
+//                     )}
+//                   </p>
+//                 )
+//               )}
+//               <p>
+//                 <strong>ID:</strong> {staffDetail.id}
+//               </p>
+//               {isEditing && (
+//                 <div className="flex justify-end space-x-2 mt-4">
+//                   <button
+//                     type="button"
+//                     onClick={() => {
+//                       setIsEditing(false);
+//                       setEditableStaffDetail({ ...staffDetail });
+//                     }}
+//                     className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-700"
+//                   >
+//                     Cancel
+//                   </button>
+//                   <button
+//                     type="submit"
+//                     className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-800"
+//                   >
+//                     Save Changes
+//                   </button>
+//                 </div>
+//               )}
+//             </form>
+//           ) : (
+//             !loading && (
+//               <p className="text-gray-500">No staff found with ID: {id}</p>
+//             )
+//           )}
 //         </div>
-//         <div className="mb-4">
-//           <label className="block mb-1" htmlFor="department">Department</label>
-//           <input
-//             type="text"
-//             id="department"
-//             name="department"
-//             value={employee.department}
-//             onChange={handleChange}
-//             required
-//             className="border rounded p-2 w-full"
-//           />
+//       </div>
+
+//       {/* 🔴 Centered Delete Confirmation Popup */}
+//       {showConfirmDelete && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+//           <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+//             <h2 className="text-xl font-bold mb-4">
+//               Are you sure you want to delete this employee?
+//             </h2>
+//             <div className="space-x-4">
+//               <button
+//                 onClick={handleDeleteConfirmed}
+//                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-800"
+//               >
+//                 Yes, Delete
+//               </button>
+//               <button
+//                 onClick={() => setShowConfirmDelete(false)}
+//                 className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           </div>
 //         </div>
-//         <button
-//           type="submit"
-//           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-//         >
-//           Save Changes
-//         </button>
-//       </form>
-//     </div>
+//       )}
+
+//       {/* ✅ Full-page Success Popup */}
+//       {showSuccessPopup && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+//           <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full">
+//             <h2 className="text-2xl font-bold text-green-700 mb-4">
+//               {successMessage}
+//             </h2>
+//             <button
+//               onClick={() => {
+//                 setShowSuccessPopup(false);
+//                 // ✅ Redirect to /allstaffs if the employee was deleted
+//                 if (successMessage.includes("deleted")) {
+//                   navigate("/allstaffs");
+//                 }
+//               }}
+//               className="mt-4 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-800"
+//             >
+//               OK
+//             </button>
+//           </div>
+//         </div>
+//       )}
+//     </Wrapper>
 //   );
-// }
+// };
 
 // export default EditEmployee;
 
-
+//=======================================  new code =====================================================//
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useFetch from "../../api/useFetch";
-import Wrapper from "./Wrapper";
+import useFetch from "../../api/useFetch"; // Ensure this path is correct
+import Wrapper from "./Wrapper"; // Ensure this path is correct
+import Spinner from "../../components/ui/Spinner"; // Ensure this path is correct
+
+// Define the mapping for display names outside the component
+// to avoid re-creation on every render.
+const fieldDisplayNames = {
+  fname: "First Name",
+  sname: "Surname",
+  lname: "Last Name",
+  email: "Email",
+  phone: "Phone Number",
+  address: "Address",
+  // Add any other fields you want to display differently
+};
 
 const EditEmployee = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // this is a string
-  const staffId = parseInt(id); // convert it to number
-  const { data, error, loading, get } = useFetch("/admin");
-  const [staffDetail, setStaffDetail] = useState(null);
+  const { id } = useParams();
+  const staffId = parseInt(id);
 
+  // useFetch for initial GET request to fetch all staffs
+  // The 'data' state here will hold the result of '/admin/allstaffs'
+  const { data, error, loading, get } = useFetch("/admin");
+
+  // useFetch for PUT request to update staff
+  // 'putdata', 'puterror', 'putloading' relate to the PUT operation's state
+  const {
+    data: putdata, // Renamed to avoid confusion with the main 'data'
+    error: puterror,
+    loading: putloading,
+    put,
+  } = useFetch("/staff");
+
+  // useFetch for DELETE request to delete staff
+  // 'deletedata', 'deleteerror', 'deleteloading' relate to the DELETE operation's state
+  const {
+    data: deletedata, // Renamed
+    error: deleteerror,
+    loading: deleteloading,
+    del,
+  } = useFetch("/staff");
+
+  const [staffDetail, setStaffDetail] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editableStaffDetail, setEditableStaffDetail] = useState(null);
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Effect to fetch all staffs on component mount
   useEffect(() => {
     get("/allstaffs");
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
 
+  // Effect to find the specific staff detail when 'data' (all staffs) or 'staffId' changes
   useEffect(() => {
     if (data && Array.isArray(data)) {
       const found = data.find((staff) => staff.id === staffId);
       setStaffDetail(found || null);
+      // Initialize editableStaffDetail with a copy of found staff, and set photo to null
+      // This prepares the form for edits without carrying over the photo_url
+      setEditableStaffDetail(found ? { ...found, photo: null } : null);
     }
-  }, [data, staffId]);
+  }, [data, staffId]); // Re-run if data or staffId changes
+
+  // Handler for clicking the "Edit Employee" button
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  // Handler for input field changes (text, email, etc.)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditableStaffDetail((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handler for file input change (profile photo)
+  const handleFileChange = (e) => {
+    setEditableStaffDetail((prev) => ({
+      ...prev,
+      photo: e.target.files[0], // Store the File object
+    }));
+  };
+
+  // Handler for submitting the edit form
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior (page reload)
+    if (!editableStaffDetail) return; // Should not happen if staffDetail is loaded
+
+    try {
+      const formData = new FormData();
+      // Loop through editableStaffDetail to append data to FormData
+      for (const key in editableStaffDetail) {
+        if (key === "photo" && editableStaffDetail.photo) {
+          // If a new photo file is selected, append it
+          formData.append("photo", editableStaffDetail.photo);
+        } else if (key !== "id" && editableStaffDetail[key] !== null) {
+          // Append other fields, excluding 'id' (as it's in the URL) and null values
+          formData.append(key, editableStaffDetail[key]);
+        }
+      }
+
+      // Perform the PUT request using the useFetch hook
+      const response = await put(`/update/${staffId}`, formData, true); // `true` indicates FormData
+
+      // Check the 'success' flag from the standardized useFetch response
+      if (response.success) {
+        // Update local staffDetail with the new data from editableStaffDetail
+        // and the potentially updated photo_url from the backend response.
+        setStaffDetail({
+          ...editableStaffDetail,
+          photo_url: response.data.photo_url || staffDetail.photo_url,
+          photo: null, // Clear the photo from editableStaffDetail
+        });
+        setIsEditing(false); // Exit editing mode
+        setSuccessMessage(response.message || "Employee updated successfully!"); // Use message from hook
+        setShowSuccessPopup(true); // Show success popup
+        get("/allstaffs"); // Re-fetch all staffs to ensure data consistency across the app
+      } else {
+        // If operation was not successful based on the 'success' flag
+        setErrorMessage(response.message || "Failed to update employee."); // Use message from hook
+        setShowErrorPopup(true); // Show error popup
+      }
+    } catch (err) {
+      // Catch any unexpected client-side errors (e.g., network issues before fetch)
+      console.error("Update error (client-side catch):", err);
+      setErrorMessage(
+        "An unexpected client-side error occurred during update: " + err.message
+      );
+      setShowErrorPopup(true);
+    }
+  };
+
+  // Handler for clicking the "Delete Employee" button (shows confirmation)
+  const handleDelete = () => {
+    setShowConfirmDelete(true);
+  };
+
+  // Handler for confirming the deletion
+  const handleDeleteConfirmed = async () => {
+    setShowConfirmDelete(false); // Close confirmation popup immediately
+
+    try {
+      // Perform the DELETE request using the useFetch hook
+      const response = await del(`/delete/${staffId}`);
+
+      // Check the 'success' flag from the standardized useFetch response
+      if (response.success) {
+        setSuccessMessage(response.message || "Employee deleted successfully!"); // Use message from hook
+        setShowSuccessPopup(true); // Show success popup
+        // Navigation to /employees will happen when the user clicks 'OK' on the success popup
+      } else {
+        // If operation was not successful based on the 'success' flag
+        setErrorMessage(response.message || "Failed to delete employee."); // Use message from hook
+        setShowErrorPopup(true); // Show error popup
+      }
+    } catch (err) {
+      // Catch any unexpected client-side errors
+      console.error("Delete error (client-side catch):", err);
+      setErrorMessage(
+        "An unexpected client-side error occurred during deletion: " +
+          err.message
+      );
+      setShowErrorPopup(true);
+    }
+  };
+
+  // Handler for canceling the edit operation
+  const handleCancelEdit = () => {
+    setIsEditing(false); // Exit editing mode
+    // Reset editableStaffDetail to the original staffDetail, clearing any selected photo
+    setEditableStaffDetail(
+      staffDetail ? { ...staffDetail, photo: null } : null
+    );
+  };
 
   return (
     <Wrapper>
       <div className="min-h-screen bg-gray-100 p-6">
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
           <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
-             Employee Profile
+            Employee Profile
             <div className="space-x-2">
+              {/* Edit Employee Button - visible when not editing */}
+              {!isEditing && (
+                <button
+                  onClick={handleEditClick}
+                  className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-800"
+                >
+                  Edit Employee
+                </button>
+              )}
+              {/* Save Changes Button - visible when editing */}
+              {isEditing && (
+                <button
+                  onClick={handleSubmit}
+                  disabled={putloading} // Disable during PUT operation
+                  className={`text-white text-sm px-3 py-1 rounded ${
+                    putloading
+                      ? "bg-green-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-800"
+                  }`}
+                >
+                  {putloading ? "Saving..." : "Save Changes"}
+                </button>
+              )}
+              {/* Delete Employee Button */}
               <button
-                onClick={() => navigate(`#`)}
-                className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-800"
+                onClick={handleDelete}
+                disabled={deleteloading} // Disable during DELETE operation
+                className={`text-white text-sm px-3 py-1 rounded ${
+                  deleteloading
+                    ? "bg-red-400 cursor-not-allowed"
+                    : "bg-red-600 hover:bg-red-800"
+                }`}
               >
-                Edit Employee 
-              </button>
-              <button
-                onClick={() => navigate("#")}
-                className="bg-red-600 text-white text-sm px-3 py-1 rounded hover:bg-red-800"
-              >
-                Delete Employee
+                {deleteloading ? "Deleting..." : "Delete Employee"}
               </button>
             </div>
           </h1>
-          {loading && <p className="text-gray-600">Loading...</p>}
-          {error && <p className="text-red-600">Error: {error.message}</p>}
+
+          {/* Initial Data Loading and Error Display */}
+          {loading && <Spinner />}
+          {error && (
+            <p className="text-red-600">Error loading data: {error.message}</p>
+          )}
+
+          {/* Employee Profile Display/Edit Form */}
           {!loading && staffDetail ? (
-            <div className="mb-8 space-y-2 text-lg text-gray-700">
-              <p><strong>First Name:</strong> {staffDetail.fname}</p>
-              <p><strong>Middle Name:</strong> {staffDetail.sname}</p>
-              <p><strong>Last Name:</strong> {staffDetail.lname}</p>
-              <p><strong>Position:</strong> {staffDetail.position}</p>
-              <p><strong>Birthdate:</strong> {new Date(staffDetail.birthdate).toLocaleDateString()}</p>
-              <p><strong>Salary:</strong> {staffDetail.salary}</p>
-              <p><strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}</p>
-              {/* Add more fields as needed */}
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-2 text-lg">
+              {/* Current Image preview (if exists and no new photo selected) */}
+              {staffDetail?.photo_url && !editableStaffDetail?.photo && (
+                <div className="mb-4">
+                  <p className="font-semibold">Current Profile Image:</p>
+                  <img
+                    src={staffDetail.photo_url}
+                    alt="Profile"
+                    className="w-32 h-32 rounded object-cover"
+                  />
+                </div>
+              )}
+
+              {/* New Image preview (if a new photo is selected for upload) */}
+              {editableStaffDetail?.photo && (
+                <div className="mb-4">
+                  <p className="font-semibold">Selected Image Preview:</p>
+                  <img
+                    src={URL.createObjectURL(editableStaffDetail.photo)}
+                    alt="Preview"
+                    className="w-32 h-32 rounded object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Basic fields (First Name, Surname, Last Name, Email, Phone, Address) */}
+              {["fname", "sname", "lname", "email", "phone", "address"].map(
+                (field) => (
+                  <p key={field}>
+                    {/* Use the mapping object for display name, fallback to capitalized field if not found */}
+                    <strong>
+                      {fieldDisplayNames[field] ||
+                        field.charAt(0).toUpperCase() + field.slice(1)}
+                      :
+                    </strong>{" "}
+                    {isEditing ? (
+                      <input
+                        type={field === "email" ? "email" : "text"}
+                        name={field}
+                        value={editableStaffDetail?.[field] || ""}
+                        onChange={handleChange}
+                        className="border rounded px-2 py-1 w-full"
+                      />
+                    ) : (
+                      staffDetail?.[field] || "-"
+                    )}
+                  </p>
+                )
+              )}
+
+              {/* Image input field - visible only when editing */}
+              {isEditing && (
+                <div className="mb-4">
+                  <label className="block font-semibold mb-1" htmlFor="photo">
+                    Update Profile Image:
+                  </label>
+                  <input
+                    type="file"
+                    name="photo"
+                    id="photo"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="block w-full border rounded px-2 py-1"
+                  />
+                </div>
+              )}
+
+              {/* Employee ID (always displayed, not editable) */}
+              <p>
+                <strong>ID:</strong> {staffDetail.id}
+              </p>
+
+              {/* Edit/Cancel Buttons - visible only when editing */}
+              {isEditing && (
+                <div className="flex justify-end space-x-2 mt-4">
+                  <button
+                    type="button"
+                    onClick={handleCancelEdit}
+                    className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={putloading} // Disable during PUT operation
+                    className={`text-white px-3 py-1 rounded ${
+                      putloading
+                        ? "bg-green-400 cursor-not-allowed"
+                        : "bg-green-600 hover:bg-green-800"
+                    }`}
+                  >
+                    {putloading ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              )}
+            </form>
           ) : (
-            !loading && <p className="text-gray-500">No staff found with ID: {id}</p>
+            // Message if no staff found or still loading
+            !loading && (
+              <p className="text-gray-500">No staff found with ID: {id}</p>
+            )
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Popup */}
+      {showConfirmDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+            <h2 className="text-xl font-bold mb-4">
+              Are you sure you want to delete this employee?
+            </h2>
+            <div className="space-x-4">
+              <button
+                onClick={handleDeleteConfirmed}
+                disabled={deleteloading}
+                className={`text-white px-4 py-2 rounded ${
+                  deleteloading
+                    ? "bg-red-400 cursor-not-allowed"
+                    : "bg-red-600 hover:bg-red-800"
+                }`}
+              >
+                {deleteloading ? "Deleting..." : "Yes, Delete"}
+              </button>
+              <button
+                onClick={() => setShowConfirmDelete(false)}
+                disabled={deleteloading}
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full">
+            <h2 className="text-2xl font-bold text-green-700 mb-4">
+              {successMessage}
+            </h2>
+            <button
+              onClick={() => {
+                setShowSuccessPopup(false);
+                // Navigate to employees list only after a deletion
+                if (successMessage.includes("deleted")) {
+                  navigate("/employees"); // Navigate to the employees list page
+                }
+              }}
+              className="mt-4 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-800"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error Popup */}
+      {showErrorPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full">
+            <h2 className="text-2xl font-bold text-red-700 mb-4">Error!</h2>
+            <p className="text-red-600 mb-6">{errorMessage}</p>
+            <button
+              onClick={() => setShowErrorPopup(false)}
+              className="mt-4 px-6 py-2 bg-red-600 text-white rounded hover:bg-red-800"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </Wrapper>
   );
 };
