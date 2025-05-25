@@ -231,6 +231,7 @@
 
 //=======================================  new code =====================================================//
 
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../api/useFetch"; // Ensure this path is correct
@@ -246,6 +247,7 @@ const fieldDisplayNames = {
   email: "Email",
   phone: "Phone Number",
   address: "Address",
+  
   // Add any other fields you want to display differently
 };
 

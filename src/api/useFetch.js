@@ -45,7 +45,7 @@
 //       headers: isFormData ? undefined : { "Content-Type": "application/json" },
 //       body: isFormData ? body : JSON.stringify(body),
 //     });
-  
+
 //   //======================================= new post method end =====================================================//
 
 // //   const put = (url, body) =>
@@ -64,25 +64,20 @@
 //       headers: isFormData ? undefined : { "Content-Type": "application/json" },
 //       body: isFormData ? body : JSON.stringify(body),
 //     });
-  
+
 //   //======================================= new post method end =====================================================//
 //   const del = (url) =>
 //     fetchData(url, {
 //       method: "DELETE",
 //       credentials: "include",
 //     });
-    
+
 //   return { data, error, loading, get, post, put, del };
 // };
 
 // export default useFetch;
 
-
-
-
-
 //==========================
-
 
 import { useState } from "react";
 
@@ -114,16 +109,24 @@ const useFetch = (baseURL) => {
       } catch (jsonError) {
         // If JSON parsing fails (e.g., empty response, plain text error),
         // treat result as null or a simple message.
-        result = { message: response.statusText || `HTTP status ${response.status}` };
+        result = {
+          message: response.statusText || `HTTP status ${response.status}`,
+        };
       }
 
       if (!response.ok) {
         // If the HTTP status is not in the 200-299 range, it's an error.
-        const errorMessage = result.message || `HTTP error! Status: ${response.status}`;
+        const errorMessage =
+          result.message || `HTTP error! Status: ${response.status}`;
         const err = new Error(errorMessage);
         setError(err); // Set the error state for the hook
         // Return a standardized error object for the caller
-        return { success: false, message: errorMessage, data: result, error: err };
+        return {
+          success: false,
+          message: errorMessage,
+          data: result,
+          error: err,
+        };
       }
 
       // If the HTTP status is OK (200-299)
@@ -137,7 +140,8 @@ const useFetch = (baseURL) => {
       };
     } catch (err) {
       // This catches network errors (e.g., no internet, CORS issues)
-      const errorMessage = err.message || "An unexpected network error occurred.";
+      const errorMessage =
+        err.message || "An unexpected network error occurred.";
       setError(err); // Set the error state for the hook
       // Return a standardized error object for the caller
       return { success: false, message: errorMessage, data: null, error: err };
@@ -156,7 +160,10 @@ const useFetch = (baseURL) => {
     fetchData(url, {
       method: "POST",
       credentials: "include",
-      headers: isFormData ? undefined : { "Content-Type": "application/json" },
+      headers: isFormData
+        ? undefined
+        //  { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
       body: isFormData ? body : JSON.stringify(body),
     });
 
@@ -164,7 +171,10 @@ const useFetch = (baseURL) => {
     fetchData(url, {
       method: "PUT",
       credentials: "include",
-      headers: isFormData ? undefined : { "Content-Type": "application/json" },
+      headers: isFormData
+        ? undefined 
+        // { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
       body: isFormData ? body : JSON.stringify(body),
     });
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Sidebar from "../../components/layout/SideBar";
-import personAvatar from "../../assets/images/personAvatar.jpg";
+import personAvatar2 from "../../assets/images/personAvatar2.jpg";
 import dashboard from "../../assets/icons/dashboard.svg";
 import employees from "../../assets/icons/employees.svg";
 import debtors from "../../assets/icons/debtors.svg";
@@ -13,18 +13,24 @@ function Wrapper({ children }) {
     { to: "/dashboard", label: "Dashboard", icon: dashboard },
     { to: "/employees", label: "Manage Employees", icon: employees },
     { to: "/requesters", label: "Clearance Requesters List", icon: requesters },
+    // { to: "/req4hr", label: "Requests for HR", icon: requesters },
+    { to: "/req4head", label: "Requests for Department Head", icon: requesters },
+    { to: "/req4vice", label: "Requests for Vice President", icon: requesters },
+
     { to: "/clearedstaff", label: "Cleared Staff", icon: debtors },
   ];
 
   const AdminData = {
-    name: "FName LName",
-    role: "Admin",
-    img: personAvatar,
+    name: "Abebe Tesfaye",
+    role: "HR Admin",
+    img: personAvatar2,
   };
 
   return (
     <div className="flex h-screen ">
-      {SideBarCtx.isSidebarOpen && <Sidebar AdminData={AdminData} navItems={navItems} />}
+      {SideBarCtx.isSidebarOpen && (
+        <Sidebar AdminData={AdminData} navItems={navItems} />
+      )}
       <div className="flex-1 bg-backgroundColor p-6 overflow-auto">
         {children}
       </div>

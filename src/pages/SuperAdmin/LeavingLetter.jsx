@@ -587,6 +587,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../api/useFetch";
 import html2pdf from "html2pdf.js"; // Import html2pdf.js
 import { div } from "framer-motion/client";
+import Button from "../../components/ui/Button";
 
 const ComponentToPrint = React.forwardRef((props, ref) => {
   const { id } = useParams();
@@ -778,12 +779,19 @@ const LeavingLetter = () => {
         >
           🖨️ Print Form
         </button> */}{" "}
-        <button
+        <Button
+                className="py-2 text-center hover:text-white ml-9"
+                variant="outline"
+                onClick={handleDownload}
+                >
+          Download the Letter
+          </Button>
+        {/* <button
           className="bg-blue-500 text-white font-bold text-2xl m-6"
           onClick={handleDownload}
         >
-          ⬇️ Download Page
-        </button>{" "}
+          Download the Letter
+        </button>{" "} */}
       </div>{" "}
     </Wrapper>
   );

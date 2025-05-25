@@ -46,7 +46,9 @@ import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
 import ClearedStaffForm from "./pages/SuperAdmin/ClearedStaffForm";
 // new
 import CombinedProvider from "./contexts/CombinedProvider";
-
+import RequestForHR from "./pages/SuperAdmin/RequestForHR";
+import RequestForHead from "./pages/SuperAdmin/RequestForHead";
+import RequestForVice from "./pages/SuperAdmin/RequestForVice";
 
 function RecordDetailWrapper({ records }) {
   const { id } = useParams();
@@ -64,10 +66,22 @@ function App() {
       <CombinedProvider>
         <EmployeeProvider>
           <Routes>
+            {/* new routs */}
+            <Route path="/req4hr" element={<RequestForHR />} />
+            <Route path="/req4head" element={<RequestForHead />} />
+            <Route path="/req4vice" element={<RequestForVice />} />
+
+
             {/* id based */}
-            <Route path="/clearance-progress/:employeeId" element={<Dashboard />} />
+            <Route
+              path="/clearance-progress/:employeeId"
+              element={<Dashboard />}
+            />
             <Route path="/experienceletter" element={<ExperienceLetter />} />
-            <Route path="/experienceletter/:id" element={<ExperienceLetter />} />
+            <Route
+              path="/experienceletter/:id"
+              element={<ExperienceLetter />}
+            />
             <Route path="/leavingletter" element={<LeavingLetter />} />
             <Route path="/leavingletter/:id" element={<LeavingLetter />} />
             <Route path="/employee/:id" element={<EditEmployee />} />
@@ -84,7 +98,10 @@ function App() {
             <Route path="/clearedstaff" element={<ClearedStaff />} />
             <Route path="/clearedstaff/:id" element={<ClearedStaffProfile />} />
             <Route path="/clearedstaffform" element={<ClearedStaffForm />} />
-            <Route path="/clearedstaffform/:id" element={<ClearedStaffForm />} />
+            <Route
+              path="/clearedstaffform/:id"
+              element={<ClearedStaffForm />}
+            />
             {/* Novel Route */}
             <Route path="/example" element={<ExampleComponent />} />
             <Route path="/novel" element={<LandingPage />} />

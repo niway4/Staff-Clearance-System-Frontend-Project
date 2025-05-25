@@ -20,8 +20,6 @@
 //     }
 //   }, [data]);
 
-  
-
 //   const firstRecord = originalData[0];
 
 //   return (
@@ -115,8 +113,6 @@
 
 // export default ClearedStaffProfile;
 
-
-
 // import React, { useEffect, useState } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
 // import useFetch from "../../api/useFetch";
@@ -185,8 +181,6 @@
 
 // export default ClearedStaffProfile;
 
-
-
 // /
 // /
 // /
@@ -203,13 +197,13 @@
 // /
 // /
 
-
-
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../api/useFetch";
 import Wrapper from "./Wrapper";
+import Button from "../../components/ui/Button.jsx";
+import TitleBar from "../../components/layout/TitleBar.jsx";
+import Spinner from "../../components/ui/Spinner.jsx";
 
 const ClearedStaffProfile = () => {
   const navigate = useNavigate();
@@ -231,48 +225,104 @@ const ClearedStaffProfile = () => {
 
   return (
     <Wrapper>
+      <TitleBar title="Cleared Staff Profile" />
       <div className="min-h-screen bg-gray-100 p-6">
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
-          <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
-            Cleared Staff Profile
+          <h1 className="text-3xl font-bold mb-6 text-black border-b pb-2 flex justify-between items-center">
+           Personal Information
             <div className="space-x-2">
-              <button
+              <Button
+                className="py-2 hover:text-white ml-9"
+                variant="outline"
+                onClick={() => navigate(`/leavingletter/${id}`)}
+              >
+                Print Leaving Letter
+              </Button>
+              {/* <button
                 onClick={() => navigate(`/leavingletter/${id}`)}
                 className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"
               >
                 Print Leaving Letter
-              </button>
-              <button
+              </button> */}
+              <Button
+                className="py-2 hover:text-white ml-9"
+                variant="outline"
+                onClick={() => navigate(`/experienceletter/${id}`)}
+              >
+                Print Experience Letter
+              </Button>
+              {/* <button
                 onClick={() => navigate(`/experienceletter/${id}`)}
                 className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-700"
               >
                 Print Experience Letter
-              </button>
+              </button> */}
             </div>
           </h1>
-          {loading && <p className="text-gray-600">Loading...</p>}
+          {loading && <p className="text-gray-600"><Spinner/></p>}
           {error && <p className="text-red-600">Error: {error.message}</p>}
           {!loading && staffDetail ? (
             <div className="mb-8 space-y-2 text-lg text-gray-700">
-              <p><strong>First Name:</strong> {staffDetail.fname}</p>
-              <p><strong>Middle Name:</strong> {staffDetail.sname}</p>
-              <p><strong>Last Name:</strong> {staffDetail.lname}</p>
-              <p><strong>Position:</strong> {staffDetail.position}</p>
-              <p><strong>Birth Date:</strong> {new Date(staffDetail.birth_date).toLocaleDateString()}</p>
-              <p><strong>Employment Date:</strong> {new Date(staffDetail.employment_date).toLocaleDateString()}</p>
-              <p><strong>Salary:</strong> {staffDetail.salary}</p>
-              <p><strong>Last Time Salary:</strong> {new Date(staffDetail.last_time_salary).toLocaleDateString()}</p>
-              <p><strong>Public Transport:</strong> {staffDetail.public_transport ? "Yes" : "No"}</p>
-              <p><strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}</p>
-              <p><strong>Cleared Date:</strong> {staffDetail.cleared_date ? new Date(staffDetail.cleared_date).toLocaleDateString() : "N/A"}</p>
-              <p><strong>Nonused Breaks:</strong> {staffDetail.nonused_breaks}</p>
-              <p><strong>Education Field:</strong> {staffDetail.education_field}</p>
-              <p><strong>Educational Level:</strong> {staffDetail.educational_level}</p>
-              <p><strong>Discipline:</strong> {staffDetail.descipline ? "Yes" : "No"}</p>
+              <p>
+                <strong>First Name:</strong> {staffDetail.fname}
+              </p>
+              <p>
+                <strong>Middle Name:</strong> {staffDetail.sname}
+              </p>
+              <p>
+                <strong>Last Name:</strong> {staffDetail.lname}
+              </p>
+              <p>
+                <strong>Position:</strong> {staffDetail.position}
+              </p>
+              <p>
+                <strong>Birth Date:</strong>{" "}
+                {new Date(staffDetail.birth_date).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Employment Date:</strong>{" "}
+                {new Date(staffDetail.employment_date).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Salary:</strong> {staffDetail.salary}
+              </p>
+              <p>
+                <strong>Last Time Salary:</strong>{" "}
+                {new Date(staffDetail.last_time_salary).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Public Transport:</strong>{" "}
+                {staffDetail.public_transport ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Cleared Date:</strong>{" "}
+                {staffDetail.cleared_date
+                  ? new Date(staffDetail.cleared_date).toLocaleDateString()
+                  : "N/A"}
+              </p>
+              <p>
+                <strong>Nonused Breaks:</strong> {staffDetail.nonused_breaks}
+              </p>
+              <p>
+                <strong>Education Field:</strong> {staffDetail.education_field}
+              </p>
+              <p>
+                <strong>Educational Level:</strong>{" "}
+                {staffDetail.educational_level}
+              </p>
+              <p>
+                <strong>Discipline:</strong>{" "}
+                {staffDetail.descipline ? "Yes" : "No"}
+              </p>
               {/* Add more fields as needed */}
             </div>
           ) : (
-            !loading && <p className="text-gray-500">No staff found with ID: {id}</p>
+            !loading && (
+              <p className="text-gray-500">No staff found with ID: {id}</p>
+            )
           )}
         </div>
       </div>
