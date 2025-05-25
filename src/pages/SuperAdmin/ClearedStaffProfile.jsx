@@ -229,7 +229,7 @@ const ClearedStaffProfile = () => {
       <div className="min-h-screen bg-gray-100 p-6">
         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
           <h1 className="text-3xl font-bold mb-6 text-black border-b pb-2 flex justify-between items-center">
-           Personal Information
+          Employee Details
             <div className="space-x-2">
               <Button
                 className="py-2 hover:text-white ml-9"
@@ -259,65 +259,141 @@ const ClearedStaffProfile = () => {
               </button> */}
             </div>
           </h1>
-          {loading && <p className="text-gray-600"><Spinner/></p>}
+          {loading && (
+            <p className="text-gray-600">
+              <Spinner />
+            </p>
+          )}
           {error && <p className="text-red-600">Error: {error.message}</p>}
           {!loading && staffDetail ? (
-            <div className="mb-8 space-y-2 text-lg text-gray-700">
-              <p>
-                <strong>First Name:</strong> {staffDetail.fname}
-              </p>
-              <p>
-                <strong>Middle Name:</strong> {staffDetail.sname}
-              </p>
-              <p>
-                <strong>Last Name:</strong> {staffDetail.lname}
-              </p>
-              <p>
-                <strong>Position:</strong> {staffDetail.position}
-              </p>
-              <p>
-                <strong>Birth Date:</strong>{" "}
-                {new Date(staffDetail.birth_date).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Employment Date:</strong>{" "}
-                {new Date(staffDetail.employment_date).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Salary:</strong> {staffDetail.salary}
-              </p>
-              <p>
-                <strong>Last Time Salary:</strong>{" "}
-                {new Date(staffDetail.last_time_salary).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Public Transport:</strong>{" "}
-                {staffDetail.public_transport ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Cleared Date:</strong>{" "}
-                {staffDetail.cleared_date
-                  ? new Date(staffDetail.cleared_date).toLocaleDateString()
-                  : "N/A"}
-              </p>
-              <p>
-                <strong>Nonused Breaks:</strong> {staffDetail.nonused_breaks}
-              </p>
-              <p>
-                <strong>Education Field:</strong> {staffDetail.education_field}
-              </p>
-              <p>
-                <strong>Educational Level:</strong>{" "}
-                {staffDetail.educational_level}
-              </p>
-              <p>
-                <strong>Discipline:</strong>{" "}
-                {staffDetail.descipline ? "Yes" : "No"}
-              </p>
-              {/* Add more fields as needed */}
+            // <div className="mb-8 space-y-2 text-lg text-gray-700">
+            //   <p>
+            //     <strong>First Name:</strong> {staffDetail.fname}
+            //   </p>
+            //   <p>
+            //     <strong>Middle Name:</strong> {staffDetail.sname}
+            //   </p>
+            //   <p>
+            //     <strong>Last Name:</strong> {staffDetail.lname}
+            //   </p>
+            //   <p>
+            //     <strong>Position:</strong> {staffDetail.position}
+            //   </p>
+            //   <p>
+            //     <strong>Birth Date:</strong>{" "}
+            //     {new Date(staffDetail.birth_date).toLocaleDateString()}
+            //   </p>
+            //   <p>
+            //     <strong>Employment Date:</strong>{" "}
+            //     {new Date(staffDetail.employment_date).toLocaleDateString()}
+            //   </p>
+            //   <p>
+            //     <strong>Salary:</strong> {staffDetail.salary}
+            //   </p>
+            //   <p>
+            //     <strong>Last Time Salary:</strong>{" "}
+            //     {new Date(staffDetail.last_time_salary).toLocaleDateString()}
+            //   </p>
+            //   <p>
+            //     <strong>Public Transport:</strong>{" "}
+            //     {staffDetail.public_transport ? "Yes" : "No"}
+            //   </p>
+            //   <p>
+            //     <strong>Cleared:</strong> {staffDetail.cleared ? "Yes" : "No"}
+            //   </p>
+            //   <p>
+            //     <strong>Cleared Date:</strong>{" "}
+            //     {staffDetail.cleared_date
+            //       ? new Date(staffDetail.cleared_date).toLocaleDateString()
+            //       : "N/A"}
+            //   </p>
+            //   <p>
+            //     <strong>Nonused Breaks:</strong> {staffDetail.nonused_breaks}
+            //   </p>
+            //   <p>
+            //     <strong>Education Field:</strong> {staffDetail.education_field}
+            //   </p>
+            //   <p>
+            //     <strong>Educational Level:</strong>{" "}
+            //     {staffDetail.educational_level}
+            //   </p>
+            //   <p>
+            //     <strong>Discipline:</strong>{" "}
+            //     {staffDetail.descipline ? "Yes" : "No"}
+            //   </p>
+            //   {/* Add more fields as needed */}
+            // </div>
+            <div className="mb-8 text-black">
+             
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
+                <div>
+                  <strong>First Name:</strong> <span>{staffDetail.fname}</span>
+                </div>
+                <div>
+                  <strong>Middle Name:</strong> <span>{staffDetail.sname}</span>
+                </div>
+                <div>
+                  <strong>Last Name:</strong> <span>{staffDetail.lname}</span>
+                </div>
+                <div>
+                  <strong>Position:</strong> <span>{staffDetail.position}</span>
+                </div>
+                <div>
+                  <strong>Birth Date:</strong>{" "}
+                  <span>
+                    {new Date(staffDetail.birth_date).toLocaleDateString()}
+                  </span>
+                </div>
+                <div>
+                  <strong>Employment Date:</strong>{" "}
+                  <span>
+                    {new Date(staffDetail.employment_date).toLocaleDateString()}
+                  </span>
+                </div>
+                <div>
+                  <strong>Salary:</strong> <span>{staffDetail.salary}</span>
+                </div>
+                <div>
+                  <strong>Last Salary Date:</strong>{" "}
+                  <span>
+                    {new Date(
+                      staffDetail.last_time_salary
+                    ).toLocaleDateString()}
+                  </span>
+                </div>
+                <div>
+                  <strong>Public Transport:</strong>{" "}
+                  <span>{staffDetail.public_transport ? "Yes" : "No"}</span>
+                </div>
+                <div>
+                  <strong>Cleared:</strong>{" "}
+                  <span>{staffDetail.cleared ? "Yes" : "No"}</span>
+                </div>
+                <div>
+                  <strong>Cleared Date:</strong>{" "}
+                  <span>
+                    {staffDetail.cleared_date
+                      ? new Date(staffDetail.cleared_date).toLocaleDateString()
+                      : "N/A"}
+                  </span>
+                </div>
+                <div>
+                  <strong>Unused Breaks:</strong>{" "}
+                  <span>{staffDetail.nonused_breaks}</span>
+                </div>
+                <div>
+                  <strong>Education Field:</strong>{" "}
+                  <span>{staffDetail.education_field}</span>
+                </div>
+                <div>
+                  <strong>Educational Level:</strong>{" "}
+                  <span>{staffDetail.educational_level}</span>
+                </div>
+                <div>
+                  <strong>Discipline:</strong>{" "}
+                  <span>{staffDetail.descipline ? "Yes" : "No"}</span>
+                </div>
+              </div>
             </div>
           ) : (
             !loading && (

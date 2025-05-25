@@ -588,6 +588,7 @@ import useFetch from "../../api/useFetch";
 import html2pdf from "html2pdf.js"; // Import html2pdf.js
 import { div } from "framer-motion/client";
 import Button from "../../components/ui/Button";
+import TitleBar from "../../components/layout/TitleBar";
 
 const ComponentToPrint = React.forwardRef((props, ref) => {
   const { id } = useParams();
@@ -770,7 +771,7 @@ const LeavingLetter = () => {
 
   return (
     <Wrapper>
-      {" "}
+   <TitleBar title="Leaving Letter" />
       <div>
         <ComponentToPrint ref={componentRef} />{" "}
         {/* <button

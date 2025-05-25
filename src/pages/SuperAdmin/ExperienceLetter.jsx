@@ -126,6 +126,8 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../api/useFetch";
 import html2pdf from "html2pdf.js"; // Import html2pdf.js
 import Spinner from "../../components/ui/Spinner";
+import Button from "../../components/ui/Button";
+import TitleBar from "../../components/layout/TitleBar";
 
 const ComponentToPrint = React.forwardRef((props, ref) => {
   const { id } = useParams();
@@ -180,7 +182,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
         </h2>{" "}
         <p className="text-center font-semibold">
           <br /> <strong>የስራ ልምድ ደብዳቤ</strong>{" "}
-        </p><br />{" "}
+        </p>
+        <br />{" "}
         <p className="text-center font-semibold">
           {" "}
           <strong>TO WHOM IT MAY CONCERN</strong>{" "}
@@ -292,18 +295,13 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           //       {" "}
           // </ol>
           <div className="text-xl text-justify ">
-            <div className="text-right font-bold mr-12">
-            Ref. No:                   {" "}
-            </div>
-            <div className="text-right font-bold mr-12">
-            Date: {" "}
-            </div>
-              Our Academic staff member
-            Mrs/Ms. {staffDetail.fname} {staffDetail.sname} {staffDetail.lname}{" "}
-            requested our office to write a letter about his/her work experience
-            through an application dated on{" "}
-            {staffDetail.cleared_date.split("T")[0]}. Accordingly, we certify
-            that she has been working in our University in{" "}
+            <div className="text-right font-bold mr-12">Ref. No: </div>
+            <div className="text-right font-bold mr-12">Date: </div>
+            Our Academic staff member Mrs/Ms. {staffDetail.fname}{" "}
+            {staffDetail.sname} {staffDetail.lname} requested our office to
+            write a letter about his/her work experience through an application
+            dated on {staffDetail.cleared_date.split("T")[0]}. Accordingly, we
+            certify that she has been working in our University in{" "}
             {staffDetail.education_field}. From Oct 09, 2014 G.C up to October
             18, 2018 G.C on the position of Lecturer. From October 19, 2018 G.C
             up to October 17, 2022 G.C on Study leave for (PhD) program. From
@@ -312,13 +310,11 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             of birr {staffDetail.salary} only. In addition to her academic
             responsibility, she served as University-Industry Linkage
             Coordinator from December 21, 2015 G.C till February 21, 2018 G.C.
-            
           </div>
         ) : (
-          <Spinner/>
+          <Spinner />
         )}
-        <div className="text-right ">Sincerely</div>{" "}
-        <p className="right"></p>{" "}
+        <div className="text-right ">Sincerely</div> <p className="right"></p>{" "}
       </div>{" "}
     </div>
   );
@@ -340,15 +336,22 @@ const ExperienceLetter = () => {
 
   return (
     <Wrapper>
-      {" "}
+      <TitleBar title="Experience Letter" />{" "}
       <div>
         <ComponentToPrint ref={componentRef} />{" "}
-        <button
+        <Button
+          className="py-2 text-center hover:text-white ml-9"
+          variant="outline"
+          onClick={handleDownload}
+        >
+          Download the Letter
+        </Button>
+        {/* <button
           className="bg-sideBarColor text-white font-bold text-2xl m-6"
           onClick={handleDownload}
         >
-          ⬇️ Download the Letter
-        </button>{" "}
+          Download the Letter
+        </button>{" "} */}
       </div>{" "}
     </Wrapper>
   );
