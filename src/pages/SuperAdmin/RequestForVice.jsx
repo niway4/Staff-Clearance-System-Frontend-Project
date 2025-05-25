@@ -163,7 +163,7 @@ export default function ClearanceRequestersList() {
       // Ensure vice is treated as the full object, and filter its 'request' array
       setViceFilteredData(vice);
     }
-  }, [vice, getVice]);
+  }, []);
 
   // Update vice context and filtered data when viceData changes from fetch
   useEffect(() => {

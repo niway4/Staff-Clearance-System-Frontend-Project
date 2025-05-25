@@ -5,6 +5,7 @@ import { HeadProvider } from "./AllDataContext";
 import { ViceProvider } from "./AllDataContext";
 import { HRProvider } from "./AllDataContext";
 import { ThemeProvider } from "./AllDataContext";
+// import { HrinfoProvider } from "./AllDataContext";
 
 const CombinedProvider = ({ children }) => {
   return (

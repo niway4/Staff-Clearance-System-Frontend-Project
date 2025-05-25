@@ -257,7 +257,7 @@ export default function ClearanceRequestersList() {
     get("/get"); // Fetch data on component mount
   }, []);
 
-  //     console.log(data);
+      console.log(data);
 
   const navigate = useNavigate();
 
@@ -274,6 +274,8 @@ export default function ClearanceRequestersList() {
     get: getHR,
   } = useFetch("/status/admin");
 
+
+  
   useEffect(() => {
     if (!HR) {
       getHR("/displayAll");
