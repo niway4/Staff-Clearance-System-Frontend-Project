@@ -67,7 +67,7 @@ const Login = () => {
             navigate("/vdb")
             break
           case "dept":
-            navigate("/adminda")
+            navigate("/employee")
             break
           case "office":
             navigate("/office")
@@ -80,7 +80,7 @@ const Login = () => {
       
     } catch (error) {
       console.error("Login failed:", error?.response?.data || error.message)
-      setError("An error occurred during login. Please try again.")
+      
     } finally {
       setLoading(false)
     }
@@ -222,7 +222,7 @@ const Login = () => {
                   </label>
                 </div>
                 <Link
-                  to="/Supportpage"
+                  to="/forgotPassword"
                   className="text-sm font-medium text-sideBarColor hover:text-blue-800 transition-colors"
                 >
                   Forgot password?

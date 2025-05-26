@@ -11,7 +11,7 @@ import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
- import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
+import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -29,7 +29,7 @@ import {
 } from "./assets/data/AppData";
 import Dashboard from "./Component/DashbordPage";
 import Progress from "./Component/ProgressPage";
-import StaffClearanceSystem  from "./Component/staffClearanceSystem";
+import StaffClearanceSystem from "./Component/staffClearanceSystem";
 
 import CreateRecord from "./Component/CreatRecordePage";
 // Novel
@@ -42,14 +42,16 @@ import EmployeeHomePage from "./Comp/EmployeeHomePage";
 import ViceDashBoard from "./pages/Vice/ViceDashBoard";
 import ApprovalRequestersList from "./pages/Vice/ApprovalRequestersList";
 //dep. head
+
+import ContactPage from "./Comp/Contact";
 import HeadDashBoard from "./pages/DepartmentHead/HeadDashBoard";
 import HeadList from "./pages/DepartmentHead/ApprovalRequestersList";
 // cleared staff
 import ClearedStaff from "./pages/SuperAdmin/ClearedStaff";
 import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
 import ClearedStaffForm from "./pages/SuperAdmin/ClearedStaffForm";
-
-
+import ForgotPassword from "./Comp/ForgotPassword";
+import About from "./Comp/About";
 function App() {
   const navigate = useNavigate();
   return (
@@ -57,7 +59,7 @@ function App() {
       <EmployeeProvider>
         <Routes>
           {/* id based */}
-         
+
           <Route path="/experienceletter" element={<ExperienceLetter />} />
           <Route path="/leavingletter" element={<LeavingLetter />} />
           <Route path="/leavingletter/:id" element={<LeavingLetter />} />
@@ -71,7 +73,7 @@ function App() {
           {/*dep.t head routes */}
           <Route path="/headlist" element={<HeadList />} />
           <Route path="/headdb" element={<HeadDashBoard />} />
-
+          <Route path="/contact" element={<ContactPage />} />
           {/* HR route */}
           <Route path="/hrprofile" element={<HrProfile />} />
           <Route path="/requester/:id" element={<RequesterProfile />} />
@@ -80,7 +82,7 @@ function App() {
           <Route path="/clearedstaff/:id" element={<ClearedStaffProfile />} />
           <Route path="/clearedstaffform" element={<ClearedStaffForm />} />
           <Route path="/clearedstaffform/:id" element={<ClearedStaffForm />} />
-
+          <Route path="/about" element={<About />} />
           {/* Novel Route */}
           <Route path="/example" element={<ExampleComponent />} />
           <Route path="/" element={<LandingPage />} />
@@ -109,16 +111,13 @@ function App() {
                 user={user}
                 stats={stats}
                 onNavigateToProgress={() => navigate("/progress")}
-                 onNavigateToForm={() => navigate("/form")}
-
-
+                onNavigateToForm={() => navigate("/form")}
               />
             }
-
-            
           />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
 
-          <Route  path="/test" element={< StaffClearanceSystem/>}/>
+          <Route path="/test" element={<StaffClearanceSystem />} />
           <Route path="/employee" element={<DepartmentDashboard />} />
           <Route path="/office" element={<OfficePage />} />
           <Route path="/form" element={<ClearanceForm />} />
@@ -133,10 +132,6 @@ function App() {
             }
           />
 
-         
-            
-          
-        
           <Route
             path="/create"
             element={

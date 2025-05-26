@@ -78,7 +78,7 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.message) {
         setSuccess("Password changed successfully.")
         setTimeout(() => {
-          navigate("/Dashboard")
+          navigate("/employeehomepage")
         }, 2000)
       } else {
         setError(response.data.message || "Failed to change password.")

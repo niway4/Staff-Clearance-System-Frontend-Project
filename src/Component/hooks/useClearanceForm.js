@@ -1,7 +1,9 @@
 "use client";
 
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 function useClearanceForm() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -90,6 +92,8 @@ function useClearanceForm() {
         headers: {
           "Content-Type": "application/json",
         },
+
+      
         credentials: "include",
         body: JSON.stringify(formData),
       });
@@ -99,6 +103,11 @@ function useClearanceForm() {
           `Server responded with ${response.status}: ${response.statusText}`
         );
       }
+
+
+
+
+
 
       const data = await response.json();
 
@@ -117,6 +126,8 @@ function useClearanceForm() {
     } finally {
       setIsSubmitting(false);
     }
+
+  
   };
 
   return {
