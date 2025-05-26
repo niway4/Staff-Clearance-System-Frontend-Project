@@ -1,130 +1,8 @@
-// import React, { useRef, useState } from "react";
-// import { useReactToPrint } from "react-to-print";
-
-// const ComponentToPrint = React.forwardRef((props, ref) => {
-//   const { text } = props;
-//   const [formData, setFormData] = useState({
-//     fullName: "",
-//     dob: "",
-//     hireDate: "",
-//     level: "",
-//     salary: "",
-//     dept: "",
-//     program: "",
-//     field: "",
-//     empId: "",
-//     serviceYears: "",
-//     leaveStart: "",
-//     leaveEnd: "",
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   return (
-//     <div className="print-container m-16" ref={ref}>
-//       <style type="text/css" media="print">
-//         {"@page { size: portrait; }"}
-//       </style>
-//       <div className="memo-paper">
-//         <h2 className="text-center font-bold text-2xl">
-//           አዲስ አበባ ሳይንስ እና ቴክኖሎጂ ዩኒቨርሲቲ
-//           <br />
-//           ADDIS ABABA SCIENCE & TECHNOLOGY UNIVERSITY
-//         </h2>
-//         <p className="text-center font-semibold">
-
-//           <br />
-//           የስራ ልምድ ደብዳቤ
-//         </p>
-
-//         <div className="info-section">
-//           <p>ቁጥር፡ _______________________</p>
-//           <p>ቀን፡ _____________________</p>
-
-//           <p className="font-bold">
-//             ለሚመከተው ሁሉ
-//           </p>
-
-//           <p>
-//            የዩኒቨርሲቲያችን ሰራተኝ የነበሩት የስራ ልምድ ማስረጃ እንዲጻፍላቸው ማመልከቻ ጠይቀዋል። በዚሁ መሰረት
-//            ከዩኒቨርሲቲያችን የስራ ልምድ ደብዳቤ ይገኛል፡፡
-
-//           </p>
-
-//           <ol className="form-list">
-//             {Object.keys(formData).map((key) => (
-//               <li key={key}>
-//                 <label>
-//                   {key
-//                     .replace(/([A-Z])/g, " $1")
-//                     .replace(/^./, (str) => str.toUpperCase())}
-//                   :
-//                   <input
-//                     name={key}
-//                     value={formData[key]}
-//                     onChange={handleChange}
-//                     className="input-field"
-//                   />
-//                 </label>
-//               </li>
-//             ))}
-//           </ol>
-//           <p>ይህ መረጃ ለወጪ ክፍያ ተዘጋጅቷል፡፡</p>
-//           <p className="right">እንቁጽ፡ ___________________</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// });
-
-// const LeavingLetter = () => {
-//   const componentRef = useRef(null);
-//   const reactToPrintContent = () => {
-//     return componentRef.current;
-//   };
-
-//   const handlePrint = useReactToPrint({
-//     documentTitle: "SuperFileName",
-//   });
-
-//   return (
-//     <div className="container">
-//       <button
-//         className="print-button"
-//         onClick={() => handlePrint(reactToPrintContent)}
-//       >
-//         🖨️ Print Form
-//       </button>
-//       <ComponentToPrint ref={componentRef} />
-//     </div>
-//   );
-// };
-
-// export default LeavingLetter;
-
-// /
-// /
-// /
-// /
-// /
-// /
-// /
-// /
-// //
-
-// //
-
-// /
-
 import React, { useRef, useEffect, useState } from "react";
-import { useReactToPrint } from "react-to-print";
 import Wrapper from "./Wrapper";
 import { useParams } from "react-router-dom";
 import useFetch from "../../api/useFetch";
-import html2pdf from "html2pdf.js"; // Import html2pdf.js
+import html2pdf from "html2pdf.js";
 import Spinner from "../../components/ui/Spinner";
 import Button from "../../components/ui/Button";
 import TitleBar from "../../components/layout/TitleBar";
@@ -177,8 +55,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
       <div ref={formRef} className="memo-paper">
         {" "}
         <h2 className="text-center font-bold text-2xl">
-          አዲስ አበባ ሳይንስ እና ቴክኖሎጂ ዩኒቨርሲቲ <br /> ADDIS ABABA SCIENCE & TECHNOLOGY
-          UNIVERSITY{" "}
+          አዲስ አበባ ሳይንስ እና ቴክኖሎጂ ዩኒቨርሲቲ <br />
+          ADDIS ABABA SCIENCE & TECHNOLOGY UNIVERSITY{" "}
         </h2>{" "}
         <p className="text-center font-semibold">
           <br /> <strong>የስራ ልምድ ደብዳቤ</strong>{" "}
@@ -189,114 +67,13 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <strong>TO WHOM IT MAY CONCERN</strong>{" "}
         </p>{" "}
         {staffDetail ? (
-          // <ol>
-          //        {" "}
-          //   <li>
-          //            ሙሉ ስም፡ {staffDetail.fname} {staffDetail.sname}{" "}
-          //     {staffDetail.lname}      {" "}
-          //     <input
-          //       name="fullName"
-          //       value={formData.fullName}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የትውልድ ቀን፡ {staffDetail.birthdate}      {" "}
-          //     <input
-          //       name="dob"
-          //       type="date"
-          //       value={formData.dob}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የተቀመጠበት ቀን፡ {staffDetail.employment_date}
-          //     {" "}
-          //     <input
-          //       name="hireDate"
-          //       type="date"
-          //       value={formData.hireDate}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የተቀመጠበት ደረጃ (Level)፡ {staffDetail.educational_level}
-          //           {" "}
-          //     <input
-          //       name="level"
-          //       value={formData.level}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የወርሃዊ ደመወዝ፡ {staffDetail.salary}      {" "}
-          //     <input
-          //       name="salary"
-          //       value={formData.salary}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የሚሰሩበት ክፍል (Department)፡{" "}
-          //     {staffDetail.education_field}      {" "}
-          //     <input
-          //       name="dept"
-          //       value={formData.dept}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            Program፡ {staffDetail.position}      {" "}
-          //     <input
-          //       name="program"
-          //       value={formData.program}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የሠራተኛ መለያ ቁጥር፡ {staffDetail.pension_number}
-          //      {" "}
-          //     <input
-          //       name="empId"
-          //       value={formData.empId}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            አገልግሎት ዘመን፡ {staffDetail.last_time_salary}
-          //      {" "}
-          //     <input
-          //       name="serviceYears"
-          //       value={formData.serviceYears}
-          //       onChange={handleChange}
-          //     />
-          //          {" "}
-          //   </li>
-          //        {" "}
-          //   <li>
-          //            የተረጋገ ቀን፡ {staffDetail.cleared_date}     {" "}
-          //   </li>
-          //       {" "}
-          // </ol>
           <div className="text-xl text-justify ">
-            <div className="text-right font-bold mr-12">Ref. No: </div>
-            <div className="text-right font-bold mr-12">Date: </div>
+            <li className="list-none text-right font-bold mr-18">
+              Ref. No: <input />{" "}
+            </li>{" "}
+            <li className="list-none text-right font-bold mr-18">
+              Date: <input />{" "}
+            </li>{" "}
             Our Academic staff member Mrs/Ms. {staffDetail.fname}{" "}
             {staffDetail.sname} {staffDetail.lname} requested our office to
             write a letter about his/her work experience through an application

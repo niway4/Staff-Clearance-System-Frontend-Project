@@ -11,7 +11,6 @@ import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
-//  import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -21,8 +20,6 @@ import { EmployeeProvider } from "./contexts/EmployeeContext";
 import HrProfile from "./pages/SuperAdmin/HrProfile";
 import RequesterProfile from "./pages/SuperAdmin/RequesterProfile";
 import Records from "./Component/RecordPage";
-// import Component
-// import Wasman from "./wasman";
 import {
   user,
   stats,
@@ -96,7 +93,6 @@ function App() {
             <Route path="/clearedstaffform" element={<ClearedStaffForm />} />
             <Route
               path="/clearedstaffform/:id"
-              
               element={<ClearedStaffForm />}
             />
             {/* Novel Route */}
@@ -119,16 +115,16 @@ function App() {
             {/* fsnfsonlf */}
             <Route path="/form" element={<ClearanceForm />} />
             <Route
-            path="/staffDashboard"
-            element={
-              <Dashboard
-                user={user}
-                stats={stats}
-                onNavigateToProgress={() => navigate("/progress")}
-                 onNavigateToForm={() => navigate("/form")}
-
-
-              />}/>
+              path="/staffDashboard"
+              element={
+                <Dashboard
+                  user={user}
+                  stats={stats}
+                  onNavigateToProgress={() => navigate("/progress")}
+                  onNavigateToForm={() => navigate("/form")}
+                />
+              }
+            />
             <Route
               path="/wasman"
               element={
