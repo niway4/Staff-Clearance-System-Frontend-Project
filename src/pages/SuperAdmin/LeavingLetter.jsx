@@ -646,8 +646,14 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <br /> <strong>የስራ መልቀቂያ ደብዳቤ</strong>{" "}
         </p>
         <br /> <p className="text-center font-semibold"> </p>{" "}
-        <div className="text-right font-bold mr-18">Ref. No: </div>
-        <div className="text-right font-bold mr-18">Date: </div>
+        <li className="list-none text-right font-bold mr-18">
+          Ref. No: <input />{" "}
+        </li>{" "}
+        <li className="list-none text-right font-bold mr-18">
+          Date: <input />{" "}
+        </li>{" "}
+        {/* <div className="text-right font-bold mr-18">Ref. No: </div> */}
+        {/* <div className="text-right font-bold mr-18">Date: </div> */}
         <div className="text-center font-bold">
           ጉዳዩ:- የስራ መልቀቂያ መስጠትን ይመከታል፤
         </div>{" "}
@@ -657,12 +663,12 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               ከላይ በእርሱ እንደተገለጸው በዩኒቨርሲቲያችን ውስጥ ከዚህ በታች በተገለጸው የግል ማህደር ውስጥ
               የተገለጹት የስራ መልቀቂያ እንዲስጥዎት በማመልከቻ ጠይቀዋል።
             </div>
-            <div className="text-left ">
-              በዚሁ መሰረት የሰራተኛውን/ዋን የግል ማህደር በማየት፤
-            </div><br />{" "}
+            <div className="text-left ">በዚሁ መሰረት የሰራተኛውን/ዋን የግል ማህደር በማየት፤</div>
+            <br />{" "}
             <div className="ml-24">
               <li>
-                1. ሙሉ ስም፡ {staffDetail.fname} {staffDetail.sname} {staffDetail.lname}{" "}
+                1. ሙሉ ስም፡ {staffDetail.fname} {staffDetail.sname}{" "}
+                {staffDetail.lname}{" "}
                 <input
                   name="fullName"
                   value={formData.fullName}
@@ -688,7 +694,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 />{" "} */}
               </li>{" "}
               <li>
-               4. የትምህርት ደረጃ (Level)፡ {staffDetail.educational_level}{" "}
+                4. የትምህርት ደረጃ (Level)፡ {staffDetail.educational_level}{" "}
                 {/* <input
                   name="level"
                   value={formData.level}
@@ -696,7 +702,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 />{" "} */}
               </li>{" "}
               <li>
-              5. የወርሃዊ ደመወዝ፡ {staffDetail.salary}{" "}
+                5. የወርሃዊ ደመወዝ፡ {staffDetail.salary}{" "}
                 {/* <input
                   name="salary"
                   value={formData.salary}
@@ -720,7 +726,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 />{" "} */}
               </li>{" "}
               <li>
-              8. የሠራተኛ መለያ ቁጥር፡ {staffDetail.pension_number}{" "}
+                8. የሠራተኛ መለያ ቁጥር፡ {staffDetail.pension_number}{" "}
                 {/* <input
                   name="empId"
                   value={formData.empId}
@@ -728,7 +734,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 />{" "} */}
               </li>{" "}
               <li>
-               9. አገልግሎት ዘመን፡ {staffDetail.last_time_salary.split("T")[0]}{" "}
+                9. አገልግሎት ዘመን፡ {staffDetail.last_time_salary.split("T")[0]}{" "}
                 <input
                   name="serviceYears"
                   value={formData.serviceYears}
@@ -736,15 +742,17 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 />{" "}
               </li>{" "}
               <li>10. የለቀቁበት ቀን፡ {staffDetail.cleared_date.split("T")[0]} </li>{" "}
-            </div><br />
-            <p>ከ {staffDetail.cleared_date.split("T")[0]} ጀምሮ ከዩኒቨርሲቲያችን ጋር የነበራቸው የስራ ውል የተቋረጠ መሆኑን እንገልጻለን።</p>{" "}
+            </div>
+            <br />
+            <p>
+              ከ {staffDetail.cleared_date.split("T")[0]} ጀምሮ ከዩኒቨርሲቲያችን ጋር
+              የነበራቸው የስራ ውል የተቋረጠ መሆኑን እንገልጻለን።
+            </p>{" "}
             <div className="text-right">ከሠላምታ ጋር</div>{" "}
           </ol>
-
         ) : (
           <p>Loading staff details...</p>
         )}
-       
       </div>{" "}
     </div>
   );
@@ -771,28 +779,16 @@ const LeavingLetter = () => {
 
   return (
     <Wrapper>
-   <TitleBar title="Leaving Letter" />
+      <TitleBar title="Leaving Letter" />
       <div>
         <ComponentToPrint ref={componentRef} />{" "}
-        {/* <button
-          className="bg-sideBarColor text-white font-bold text-2xl m-6"
-          onClick={handlePrint}
-        >
-          🖨️ Print Form
-        </button> */}{" "}
         <Button
-                className="py-2 text-center hover:text-white ml-9"
-                variant="outline"
-                onClick={handleDownload}
-                >
-          Download the Letter
-          </Button>
-        {/* <button
-          className="bg-blue-500 text-white font-bold text-2xl m-6"
+          className="py-2 text-center hover:text-white ml-9"
+          variant="outline"
           onClick={handleDownload}
         >
           Download the Letter
-        </button>{" "} */}
+        </Button>
       </div>{" "}
     </Wrapper>
   );

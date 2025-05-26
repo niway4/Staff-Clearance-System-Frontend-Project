@@ -1,19 +1,18 @@
-// src/hooks/useProgressData.js
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export function useProgressData() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock data that would come from an API
+        // Fetch stats from the backend
+        const response = await axios.get("/status/progress");
+        const { pendingCount, completedCount, percentage } = response.data;
+        // Mock data with stats updated from the backend
         const mockData = {
           clearanceItems: [
             {
@@ -28,6 +27,7 @@ export function useProgressData() {
                 comments: "All books returned, no outstanding fees.",
               },
             },
+
             {
               id: 2,
               department: "IT Department",
@@ -78,15 +78,12 @@ export function useProgressData() {
             },
           ],
           stats: {
-            completedCount: 3,
-            inProgressCount: 2,
-            pendingCount: 0,
-            rejectedCount: 0,
-            totalCount: 5,
-            progressPercentage: 60,
+            pendingCount,
+            completedCount,
+            progressPercentage: percentage, // Mapped to progressPercentage
           },
         };
-        
+
         setData(mockData);
         setError(null);
       } catch (err) {

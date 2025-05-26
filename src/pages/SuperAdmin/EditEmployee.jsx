@@ -1,245 +1,9 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import useFetch from "../../api/useFetch";
-// import Wrapper from "./Wrapper";
-// import Spinner from "../../components/ui/Spinner";
-
-// const EditEmployee = () => {
-//   const navigate = useNavigate();
-//   const { id } = useParams();
-//   const staffId = parseInt(id);
-
-//   const { data, error, loading, get } = useFetch("/admin");
-//   const { putdata, puterror, putloading, put } = useFetch("/staff");
-//   const { deletedata, deleteerror, deleteloading, del } = useFetch("/staff");
-
-//   const [staffDetail, setStaffDetail] = useState(null);
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [editableStaffDetail, setEditableStaffDetail] = useState(null);
-
-//   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-//   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-//   const [successMessage, setSuccessMessage] = useState("");
-
-//   useEffect(() => {
-//     get("/allstaffs");
-//   }, []);
-
-//   useEffect(() => {
-//     if (data && Array.isArray(data)) {
-//       const found = data.find((staff) => staff.id === staffId);
-//       setStaffDetail(found || null);
-//       setEditableStaffDetail(found ? { ...found } : null);
-//     }
-//   }, [data, staffId]);
-
-//   const handleEditClick = () => {
-//     setIsEditing(true);
-//   };
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setEditableStaffDetail((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!editableStaffDetail) return;
-
-//     try {
-//       const response = await put(`/update/${staffId}`, editableStaffDetail);
-//       if (response.success) {
-//         setStaffDetail(editableStaffDetail);
-//         setIsEditing(false);
-//         setSuccessMessage("Employee updated successfully!");
-//         setShowSuccessPopup(true);
-//         get("/allstaffs");
-//       } else {
-//         alert("Failed to update: " + (response.message || "Unknown error"));
-//       }
-//     } catch (err) {
-//       console.error("Update error:", err);
-//       alert("Update error: " + err.message);
-//     }
-//   };
-
-//   const handleDelete = () => {
-//     setShowConfirmDelete(true);
-//   };
-
-//   const handleDeleteConfirmed = async () => {
-//     try {
-//       const response = await del(`/delete/${staffId}`);
-//       if (response.success) {
-//         // setShowConfirmDelete(false);
-//         setSuccessMessage("Employee deleted successfully!");
-//         setShowSuccessPopup(true);
-//         // 👇 Redirect will happen after user closes the popup
-//         navigate("/employees");
-//       } else {
-//         alert("Failed to delete: " + (response.message || "Unknown error"));
-//         // setShowConfirmDelete(false);
-//       }
-//     } catch (err) {
-//       console.error("Delete error:", err);
-//       alert("Delete error: " + err.message);
-//       // setShowConfirmDelete(false);
-//     }
-//     setShowConfirmDelete(false);
-//     navigate("/employees");
-//   };
-
-//   return (
-//     <Wrapper>
-//       <div className="min-h-screen bg-gray-100 p-6">
-//         <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-6">
-//           <h1 className="text-3xl font-bold mb-6 text-blue-800 border-b pb-2 flex justify-between items-center">
-//             Employee Profile
-//             <div className="space-x-2">
-//               {!isEditing && (
-//                 <button
-//                   onClick={handleEditClick}
-//                   className="bg-blue-600 text-white text-sm px-3 py-1 rounded hover:bg-blue-800"
-//                 >
-//                   Edit Employee
-//                 </button>
-//               )}
-//               {isEditing && (
-//                 <button
-//                   onClick={handleSubmit}
-//                   className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-800"
-//                 >
-//                   Save Changes
-//                 </button>
-//               )}
-//               <button
-//                 onClick={handleDelete}
-//                 className="bg-red-600 text-white text-sm px-3 py-1 rounded hover:bg-red-800"
-//               >
-//                 Delete Employee
-//               </button>
-//             </div>
-//           </h1>
-
-//           {loading && <Spinner />}
-//           {error && <p className="text-red-600">Error: {error.message}</p>}
-
-//           {!loading && staffDetail ? (
-//             <form onSubmit={handleSubmit} className="space-y-2 text-lg">
-//               {["fname", "sname", "lname", "email", "phone", "address"].map(
-//                 (field) => (
-//                   <p key={field}>
-//                     <strong className="capitalize">{field}:</strong>{" "}
-//                     {isEditing ? (
-//                       <input
-//                         type={field === "email" ? "email" : "text"}
-//                         name={field}
-//                         value={editableStaffDetail?.[field] || ""}
-//                         onChange={handleChange}
-//                         className="border rounded px-2 py-1 w-full"
-//                       />
-//                     ) : (
-//                       staffDetail?.[field] || "-"
-//                     )}
-//                   </p>
-//                 )
-//               )}
-//               <p>
-//                 <strong>ID:</strong> {staffDetail.id}
-//               </p>
-//               {isEditing && (
-//                 <div className="flex justify-end space-x-2 mt-4">
-//                   <button
-//                     type="button"
-//                     onClick={() => {
-//                       setIsEditing(false);
-//                       setEditableStaffDetail({ ...staffDetail });
-//                     }}
-//                     className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-700"
-//                   >
-//                     Cancel
-//                   </button>
-//                   <button
-//                     type="submit"
-//                     className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-800"
-//                   >
-//                     Save Changes
-//                   </button>
-//                 </div>
-//               )}
-//             </form>
-//           ) : (
-//             !loading && (
-//               <p className="text-gray-500">No staff found with ID: {id}</p>
-//             )
-//           )}
-//         </div>
-//       </div>
-
-//       {/* 🔴 Centered Delete Confirmation Popup */}
-//       {showConfirmDelete && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-//           <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-//             <h2 className="text-xl font-bold mb-4">
-//               Are you sure you want to delete this employee?
-//             </h2>
-//             <div className="space-x-4">
-//               <button
-//                 onClick={handleDeleteConfirmed}
-//                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-800"
-//               >
-//                 Yes, Delete
-//               </button>
-//               <button
-//                 onClick={() => setShowConfirmDelete(false)}
-//                 className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600"
-//               >
-//                 Cancel
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-
-//       {/* ✅ Full-page Success Popup */}
-//       {showSuccessPopup && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-//           <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full">
-//             <h2 className="text-2xl font-bold text-green-700 mb-4">
-//               {successMessage}
-//             </h2>
-//             <button
-//               onClick={() => {
-//                 setShowSuccessPopup(false);
-//                 // ✅ Redirect to /allstaffs if the employee was deleted
-//                 if (successMessage.includes("deleted")) {
-//                   navigate("/allstaffs");
-//                 }
-//               }}
-//               className="mt-4 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-800"
-//             >
-//               OK
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </Wrapper>
-//   );
-// };
-
-// export default EditEmployee;
-
-//=======================================  new code =====================================================//
-
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../api/useFetch"; // Ensure this path is correct
 import Wrapper from "./Wrapper"; // Ensure this path is correct
 import Spinner from "../../components/ui/Spinner"; // Ensure this path is correct
 
-// Define the mapping for display names outside the component
-// to avoid re-creation on every render.
 const fieldDisplayNames = {
   fname: "First Name",
   sname: "Surname",
@@ -247,7 +11,8 @@ const fieldDisplayNames = {
   email: "Email",
   phone: "Phone Number",
   address: "Address",
-  
+  // id_number: "Staff ID"
+
   // Add any other fields you want to display differently
 };
 
@@ -256,27 +21,23 @@ const EditEmployee = () => {
   const { id } = useParams();
   const staffId = parseInt(id);
 
-  // useFetch for initial GET request to fetch all staffs
-  // The 'data' state here will hold the result of '/admin/allstaffs'
+
   const { data, error, loading, get } = useFetch("/admin");
 
-  // useFetch for PUT request to update staff
-  // 'putdata', 'puterror', 'putloading' relate to the PUT operation's state
+
   const {
     data: putdata, // Renamed to avoid confusion with the main 'data'
     error: puterror,
     loading: putloading,
     put,
-  } = useFetch("/staff");
+  } = useFetch("/admin");
 
-  // useFetch for DELETE request to delete staff
-  // 'deletedata', 'deleteerror', 'deleteloading' relate to the DELETE operation's state
   const {
     data: deletedata, // Renamed
     error: deleteerror,
     loading: deleteloading,
     del,
-  } = useFetch("/staff");
+  } = useFetch("/admin");
 
   const [staffDetail, setStaffDetail] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -342,7 +103,7 @@ const EditEmployee = () => {
       }
 
       // Perform the PUT request using the useFetch hook
-      const response = await put(`/update/${staffId}`, formData, true); // `true` indicates FormData
+      const response = await put(`/allstaffs/${staffId}`, formData, true); // `true` indicates FormData
 
       // Check the 'success' flag from the standardized useFetch response
       if (response.success) {
@@ -383,7 +144,7 @@ const EditEmployee = () => {
 
     try {
       // Perform the DELETE request using the useFetch hook
-      const response = await del(`/delete/${staffId}`);
+      const response = await del(`/allstaffs/${staffId}`);
 
       // Check the 'success' flag from the standardized useFetch response
       if (response.success) {
@@ -537,7 +298,7 @@ const EditEmployee = () => {
 
               {/* Employee ID (always displayed, not editable) */}
               <p>
-                <strong>ID:</strong> {staffDetail.id}
+                <strong>Staff ID:</strong> {staffDetail.id_number}
               </p>
 
               {/* Edit/Cancel Buttons - visible only when editing */}

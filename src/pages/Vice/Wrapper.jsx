@@ -10,7 +10,7 @@ function Wrapper({ children }) {
   const navItems = [
     { to: "/vdb", label: "Dashboard", icon: dashboard },
     {
-      to: "/approvalreq",
+      to: "/test",
       label: "Approval Requesters List",
       icon: requesters,
     },

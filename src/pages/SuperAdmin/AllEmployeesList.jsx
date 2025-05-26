@@ -164,7 +164,7 @@ function AllEmployeesList() {
       label: "E-mail",
       key: "email",
     },
-    { label: "Staff ID", key: "id" },
+    { label: "Staff ID", key: "id_number" },
     { label: "Address", key: "address" },
   ];
 

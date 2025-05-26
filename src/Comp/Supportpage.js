@@ -25,7 +25,7 @@ export default function SupportPage() {
         {faqs.map((faq, idx) => (
           <div
             key={idx}
-            className="border border-blue-200 rounded-lg p-4 cursor-pointer transition hover:bg-blue-50"
+            className="border border-blue-200 rounded-lg p-4 cursor-pointer transition hover:bg-blue-200"
             onClick={() => toggle(idx)}
           >
             <div className="flex justify-between items-center">
@@ -40,10 +40,10 @@ export default function SupportPage() {
       </div>
 
       {/* Contact Support */}
-      <p className="text-center font-semibold text-blue-700 mb-2">
+      <p className="text-center font-semibold text-gold-700 mb-2">
         For other specific questions
       </p>
-      <p className="text-center text-blue-800 font-medium mb-6">
+      <p className="text-center text-gold-800 font-medium mb-6">
         Contact support using the form
       </p>
 
@@ -55,7 +55,7 @@ export default function SupportPage() {
             id="email"
             type="email"
             placeholder="email@gmail.com"
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:ring-black-300"
           />
         </div>
         <div>
@@ -64,12 +64,12 @@ export default function SupportPage() {
             id="message"
             rows="4"
             placeholder="Your question..."
-            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:ring-black-300"
           ></textarea>
         </div>
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
+          className="bg-blue-600 hover:bg-gold text-white px-6 py-2 rounded-md"
         >
           Submit
         </button>

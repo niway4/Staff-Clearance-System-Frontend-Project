@@ -1,13 +1,17 @@
 import React from "react";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import ClearanceRequestersList from "./pages/SuperAdmin/ClearanceRequestersList";
+import OfficePage from "./Component/OfficeDashboard";
+import DepartmentDashboard from "./Component/DepartmentDashboard";
+import ClearanceForm from "./Component/ClearanceForm";
+import ProfileEditor from "./Comp/ProfileEditor";
 import AllEmployeesList from "./pages/SuperAdmin/AllEmployeesList";
 import SuperAdminDashboard from "./pages/SuperAdmin/SuperAdminDashboard";
 import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
-// import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
+//  import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -16,6 +20,8 @@ import ExampleComponent from "./assets/data/emp";
 import { EmployeeProvider } from "./contexts/EmployeeContext";
 import HrProfile from "./pages/SuperAdmin/HrProfile";
 import RequesterProfile from "./pages/SuperAdmin/RequesterProfile";
+import Records from "./Component/RecordPage";
+// import Component
 // import Wasman from "./wasman";
 import {
   user,
@@ -25,8 +31,8 @@ import {
 } from "./assets/data/AppData";
 import Dashboard from "./Component/DashbordPage";
 import Progress from "./Component/ProgressPage";
-import Records from "./Component/RecordPage";
-import RecordDetail from "./Component/RecodreDetailPage";
+import StaffClearanceSystem from "./Component/staffClearanceSystem";
+
 import CreateRecord from "./Component/CreatRecordePage";
 // Novel
 import LandingPage from "./Comp/LandingPage";
@@ -50,15 +56,6 @@ import RequestForHR from "./pages/SuperAdmin/RequestForHR";
 import RequestForHead from "./pages/SuperAdmin/RequestForHead";
 import RequestForVice from "./pages/SuperAdmin/RequestForVice";
 
-function RecordDetailWrapper({ records }) {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const record = records.find((r) => r.id === id);
-
-  return (
-    <RecordDetail record={record} onBackClick={() => navigate("/records")} />
-  );
-}
 function App() {
   const navigate = useNavigate();
   return (
@@ -70,7 +67,6 @@ function App() {
             <Route path="/req4hr" element={<RequestForHR />} />
             <Route path="/req4head" element={<RequestForHead />} />
             <Route path="/req4vice" element={<RequestForVice />} />
-
 
             {/* id based */}
             <Route
@@ -104,12 +100,12 @@ function App() {
             />
             {/* Novel Route */}
             <Route path="/example" element={<ExampleComponent />} />
-            <Route path="/novel" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/loginpage" element={<LoginPage />} />
             <Route path="/supportpage" element={<SupportPage />} />
             <Route path="/employeehomepage" element={<EmployeeHomePage />} />
-            <Route path="/" element={<SuperAdminDashboard />} />
+            {/* <Route path="/" element={<SuperAdminDashboard />} /> */}
             <Route path="/dashboard" element={<SuperAdminDashboard />} />
             <Route path="/employees" element={<AllEmployeesList />} />
             {/* <Route path="/employee/:id" element={<EmplyeeDetail />} /> */}
@@ -120,6 +116,18 @@ function App() {
             <Route path="/debtorsprofile" element={<DebtorProfile />} />
             <Route path="/approval" element={<Approval />} />
             {/* fsnfsonlf */}
+            <Route path="/form" element={<ClearanceForm />} />
+            <Route
+            path="/staffDashboard"
+            element={
+              <Dashboard
+                user={user}
+                stats={stats}
+                onNavigateToProgress={() => navigate("/progress")}
+                 onNavigateToForm={() => navigate("/form")}
+
+
+              />}/>
             <Route
               path="/wasman"
               element={
@@ -150,10 +158,7 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/records/:id"
-              element={<RecordDetailWrapper records={clearanceRecords} />}
-            />
+
             <Route
               path="/create"
               element={
