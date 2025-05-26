@@ -21,7 +21,7 @@ export function useProgressData() {
               status: "completed",
               date: "2023-04-15",
               approver: {
-                name: "Jennifer Adams",
+                name: "Wasihun",
                 position: "Head Librarian",
                 date: "2023-04-15",
                 comments: "All books returned, no outstanding fees.",
@@ -34,7 +34,7 @@ export function useProgressData() {
               status: "completed",
               date: "2023-04-12",
               approver: {
-                name: "Robert Chen",
+                name: "Niway",
                 position: "IT Manager",
                 date: "2023-04-12",
                 comments: "All accounts deactivated, equipment returned in good condition.",
@@ -46,7 +46,7 @@ export function useProgressData() {
               status: "in-progress",
               date: "2023-04-10",
               pendingWith: {
-                name: "Michael Thompson",
+                name: "Biniyam",
                 position: "Finance Director",
                 lastUpdated: "2023-04-10",
                 status: "Under review - checking for outstanding payments",
@@ -54,7 +54,7 @@ export function useProgressData() {
             },
             {
               id: 4,
-              department: "Lab Equipment",
+              department: "Novel",
               status: "in-progress",
               date: "2023-04-05",
               pendingWith: {
@@ -70,7 +70,7 @@ export function useProgressData() {
               status: "completed",
               date: "2023-04-03",
               approver: {
-                name: "Sarah Wilson",
+                name: "Sarah ",
                 position: "HR Manager",
                 date: "2023-04-03",
                 comments: "Exit interview completed, all documentation received.",

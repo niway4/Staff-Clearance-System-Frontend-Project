@@ -435,10 +435,10 @@ export default function LoginPage() {
               Contact Us
             </h3>
             <ul className="space-y-2">
-              <li className="text-blue-200">123 University Ave</li>
-              <li className="text-blue-200">Campus Building, Suite 200</li>
+              <li className="text-blue-200">Addis Ababa Science and Technology</li>
+              <li className="text-blue-200">Campus Building</li>
               <li className="text-blue-200">support@clearancesystem.com</li>
-              <li className="text-blue-200">+1 (555) 123-4567</li>
+              <li className="text-blue-200">+251970388311</li>
             </ul>
           </div>
         </div>
