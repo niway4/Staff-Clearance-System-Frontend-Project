@@ -96,6 +96,7 @@ function App() {
             <Route path="/clearedstaffform" element={<ClearedStaffForm />} />
             <Route
               path="/clearedstaffform/:id"
+              
               element={<ClearedStaffForm />}
             />
             {/* Novel Route */}

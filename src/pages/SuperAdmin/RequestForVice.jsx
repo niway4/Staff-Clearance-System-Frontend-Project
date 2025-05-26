@@ -9,7 +9,7 @@
 // import { ViceContext } from "../../contexts/AllDataContext.js";
 
 // export default function ClearanceRequestersList() {
-//   const navigate = useNavigate();
+//   const navigate = useNavigate(); 
 
 //   const { vice, setVice } = useContext(ViceContext);
 //   const [viceFilteredData, setViceFilteredData] = React.useState([]);
@@ -263,6 +263,10 @@
 //   );
 // }
 
+
+
+
+
 import React, { useEffect, useContext, useState } from "react";
 import TitleBar from "../../components/layout/TitleBar";
 import SearchBar from "../../components/layout/SearchBar";
@@ -440,6 +444,7 @@ export default function ClearanceRequestersList() {
               <br />
             </div>
           )}
+
       </div>
     </Wrapper>
   );

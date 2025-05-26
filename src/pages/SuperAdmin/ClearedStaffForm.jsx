@@ -238,11 +238,11 @@ import TitleBar from "../../components/layout/TitleBar";
 
 const ClearedStaffForm = () => {
   const navigate = useNavigate();
-  const { staffId } = useParams();
+  const { id } = useParams();
   const { post, loading, error } = useFetch("/cleared"); // Removed 'data' as it's not directly used for display here
 
   const [formData, setFormData] = useState({
-    id: staffId,
+    id: id,
     fname: "",
     sname: "",
     lname: "",
@@ -299,7 +299,7 @@ const ClearedStaffForm = () => {
 
   const handleSuccessPopupClose = () => {
     setShowSuccessPopup(false);
-    navigate("/"); // Navigate after the user closes the success popup
+    navigate("/dashboard"); // Navigate after the user closes the success popup
   };
 
   const handleErrorPopupClose = () => {
@@ -308,6 +308,8 @@ const ClearedStaffForm = () => {
 
   return (
     <Wrapper>
+      {console.log(id)}
+      
       <TitleBar title="Cleared Staff Form" />
       <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
         <div className="bg-white rounded-xl shadow-2xl p-6 sm:p-8 lg:p-10 max-w-4xl w-full">
