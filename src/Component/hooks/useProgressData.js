@@ -14,7 +14,7 @@ export function useProgressData() {
         const { pendingCount, completedCount, percentage } = response.data;
         // Mock data with stats updated from the backend
         const mockData = {
-          clearanceItems: [
+          clearanceItems: [ 
             {
               id: 1,
               department: "Library",
@@ -37,7 +37,8 @@ export function useProgressData() {
                 name: "Niway",
                 position: "IT Manager",
                 date: "2023-04-12",
-                comments: "All accounts deactivated, equipment returned in good condition.",
+                comments:
+                  "All accounts deactivated, equipment returned in good condition.",
               },
             },
             {
@@ -73,7 +74,8 @@ export function useProgressData() {
                 name: "Sarah ",
                 position: "HR Manager",
                 date: "2023-04-03",
-                comments: "Exit interview completed, all documentation received.",
+                comments:
+                  "Exit interview completed, all documentation received.",
               },
             },
           ],
