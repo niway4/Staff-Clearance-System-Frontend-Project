@@ -3,17 +3,13 @@ import Button from "../ui/Button";
 import { LogOut } from "lucide-react";
 import { Menu, X } from "lucide-react";
 import { SideBarContext } from "../../contexts/SideBarProvider";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+import { useNavigate } from "react-router-dom";
 
 const TitleBar = ({ title }) => {
   const SideBarCtx = useContext(SideBarContext);
-  const navigate = useNavigate(); // Initialize useNavigate hook
-
-  const hadleLogOut = () => {
-    // Perform any logout logic here (e.g., clearing tokens, session)
-    // Then navigate to the home page
-    navigate("/");
-  };
+  const navigate = useNavigate();
+  const handleNavigate = () => {navigate("/")};
 
   return (
     <div className="flex bg-titleBarColor py-2 px-6 rounded-lg justify-between items-center mb-4">
@@ -29,7 +25,12 @@ const TitleBar = ({ title }) => {
       </button>
 
       <h3 className="font-serif text-3xl font-bold">{title}</h3>
-      <Button variant="ghost" className="flex items-center gap-1 " onClick={hadleLogOut}>
+
+
+      <Button variant="ghost" className="flex items-center gap-1 " onClick={handleNavigate}>
+      
+        
+
         <LogOut size={25} /> Log Out
       </Button>
     </div>

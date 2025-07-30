@@ -61,7 +61,7 @@ const Login = () => {
 
         switch (role) {
           case "HR":
-            navigate("/Dashboard")
+            navigate("/dashboard")
             break
           case "Vice president":
             navigate("/vdb")
