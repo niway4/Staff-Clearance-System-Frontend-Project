@@ -1,7 +1,6 @@
 {
   "name": "Front-Team",
   "version": "0.1.0",
-  "proxy": "https://aastu-clearance.onrender.com",
   "private": true,
   "dependencies": {
     "@fireworks-js/react": "^2.10.8",
@@ -16,6 +15,7 @@
     "framer-motion": "^12.9.2",
     "html2pdf.js": "^0.10.3",
     "jspdf": "^3.0.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.487.0",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",

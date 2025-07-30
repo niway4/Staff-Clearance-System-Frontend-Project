@@ -11,6 +11,9 @@ import DebtorsList from "./pages/SuperAdmin/DebtorsList";
 import DebtorProfile from "./pages/SuperAdmin/DebtorProfile";
 import Approval from "./pages/SuperAdmin/Approval";
 import AddEmployeeForm from "./components/forms/AddEmployeeForm";
+
+import EmplyeeDetail from "./pages/SuperAdmin/EmployeeDetail";
+
 import EditEmployee from "./pages/SuperAdmin/EditEmployee";
 import LeavingLetter from "./pages/SuperAdmin/LeavingLetter";
 import ExperienceLetter from "./pages/SuperAdmin/ExperienceLetter";
@@ -41,22 +44,30 @@ import EmployeeHomePage from "./Comp/EmployeeHomePage";
 import ViceDashBoard from "./pages/Vice/ViceDashBoard";
 import ApprovalRequestersList from "./pages/Vice/ApprovalRequestersList";
 //dep. head
+
+import ContactPage from "./Comp/Contact";
 import HeadDashBoard from "./pages/DepartmentHead/HeadDashBoard";
 import HeadList from "./pages/DepartmentHead/ApprovalRequestersList";
 // cleared staff
 import ClearedStaff from "./pages/SuperAdmin/ClearedStaff";
 import ClearedStaffProfile from "./pages/SuperAdmin/ClearedStaffProfile";
 import ClearedStaffForm from "./pages/SuperAdmin/ClearedStaffForm";
+
+import ForgotPassword from "./Comp/ForgotPassword";
+import About from "./Comp/About";
+
 // new
 import CombinedProvider from "./contexts/CombinedProvider";
 import RequestForHR from "./pages/SuperAdmin/RequestForHR";
 import RequestForHead from "./pages/SuperAdmin/RequestForHead";
 import RequestForVice from "./pages/SuperAdmin/RequestForVice";
 
+
 function App() {
   const navigate = useNavigate();
   return (
     <SideBarProvider>
+
       <CombinedProvider>
         <EmployeeProvider>
           <Routes>
@@ -172,6 +183,7 @@ function App() {
           </Routes>
         </EmployeeProvider>
       </CombinedProvider>
+
     </SideBarProvider>
   );
 }

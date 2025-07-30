@@ -1,6 +1,15 @@
 "use client";
 
-import { BookOpen, Building, FileCheck, Users, Save, CheckCircle } from 'lucide-react';
+import {
+  BookOpen,
+  Building,
+  FileCheck,
+  Users,
+  Save,
+  CheckCircle,
+} from "lucide-react";
+
+import useDepartments from "./hooks/useDepartments";
 import useClearanceForm from "./hooks/useClearanceForm";
 import { useEffect, useState } from "react";
 
@@ -16,7 +25,7 @@ function ClearanceForm() {
     submitForm,
     saveDraft,
   } = useClearanceForm();
-
+  const { departments, loading, error } = useDepartments();
   const [showDraftMessage, setShowDraftMessage] = useState(false);
 
   useEffect(() => {
@@ -35,7 +44,7 @@ function ClearanceForm() {
   };
 
   const handleSaveDraft = async () => {
-   console.log('save it ');
+    console.log("save it ");
   };
 
   return (
@@ -44,15 +53,14 @@ function ClearanceForm() {
         {/* Header */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-4">
-            <div className="bg-sideBarColor p-4 rounded-full">
-              
-            </div>
+            <div className="bg-sideBarColor p-4 rounded-full"></div>
           </div>
           <h1 className="text-3xl font-bold text-sideBarColor">
             University Clearance Request Form
           </h1>
           <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-            Please complete all fields to process your clearance request. Fields marked with <span className="text-red-500">*</span> are required.
+            Please complete all fields to process your clearance request. Fields
+            marked with <span className="text-red-500">*</span> are required.
           </p>
         </div>
 
@@ -62,7 +70,9 @@ function ClearanceForm() {
             <div className="flex">
               <CheckCircle className="h-6 w-6 mr-3 text-green-500" />
               <div>
-                <p className="font-medium">Clearance request submitted successfully!</p>
+                <p className="font-medium">
+                  Clearance request submitted successfully!
+                </p>
                 <p className="text-sm mt-1">
                   Your request has been received and is being processed.
                 </p>
@@ -78,7 +88,9 @@ function ClearanceForm() {
               <CheckCircle className="h-6 w-6 mr-3 text-blue-500" />
               <div>
                 <p className="font-medium">Draft saved successfully!</p>
-                <p className="text-sm mt-1">You can continue editing this form later.</p>
+                <p className="text-sm mt-1">
+                  You can continue editing this form later.
+                </p>
               </div>
             </div>
           </div>
@@ -92,9 +104,10 @@ function ClearanceForm() {
               Staff Clearance Application
             </div>
             <div className="text-titleBarColor text-sm mt-1 flex items-center">
-              <span className="bg-white/20 px-2 py-0.5 rounded text-xs">Form ID: CLR-2025-04</span>
+              <span className="bg-white/20 px-2 py-0.5 rounded text-xs">
+                Form ID: CLR-2025-04
+              </span>
               <span className="mx-2">•</span>
-              
             </div>
           </div>
 
@@ -114,29 +127,24 @@ function ClearanceForm() {
                     >
                       Department <span className="text-red-500">*</span>
                     </label>
-                    <select
-                      id="department"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                      className={`w-full px-3 py-2 border ${
-                        submitError?.errors?.department
-                          ? "border-red-500"
-                          : "border-lightGray"
-                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-editButtonColor shadow-sm`}
-                    >
+                    <div> <select  class="w-full px-3 py-2 border border-lightGray rounded-lg focus:outline-none focus:ring-2 focus:ring-editButtonColor shadow-sm"  >
+                      {/* Static Options */}
                       <option value="" disabled>
                         Select department
                       </option>
                       <option value="computer-science">Computer Science</option>
-                      <option value="engineering">Engineering</option>
-                      <option value="business">Business Administration</option>
-                      <option value="humanities">Humanities</option>
-                      <option value="medicine">Medicine</option>
-                      <option value="law">Law</option>
-                      <option value="education">Education</option>
-                      <option value="science">Science</option>
-                    </select>
+
+                      {/* Dynamic Options */}
+                      {departments.map((department) => (
+                        <option
+                          key={department.dept_id}
+                          value={department.dept_id}
+                        >
+                          {department.name}
+                        </option>
+                      ))}
+                    </select></div>
+                   
                     {submitError?.errors?.department && (
                       <p className="text-sm text-red-500 mt-1">
                         {submitError.errors.department}
@@ -479,7 +487,8 @@ function ClearanceForm() {
             University Administration Department © {new Date().getFullYear()}
           </p>
           <p className="mt-1">
-            For assistance, please contact the HR department at hr@addisababascienceandtechnology.edu
+            For assistance, please contact the HR department at
+            hr@addisababascienceandtechnology.edu
           </p>
         </div>
       </div>

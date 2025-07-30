@@ -241,7 +241,9 @@ export default function LoginPage() {
             <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-2xl border-4 border-white/20">
               <iframe
                 className="w-full aspect-video"
+
                 src="https://www.youtube.com/embed/i5xMLoouD2w"
+
                 title="Clearance System Tutorial"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
@@ -419,12 +421,16 @@ export default function LoginPage() {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-blue-200 hover:text-white transition-colors duration-300"
-                >
-                  Contact
-                </a>
+
+                <Link to="/contact">
+                  <a
+                    href="#"
+                    className="text-blue-200 hover:text-white transition-colors duration-300"
+                  >
+                    Contact
+                  </a>
+                </Link>
+
               </li>
             </ul>
           </div>
@@ -434,10 +440,10 @@ export default function LoginPage() {
               Contact Us
             </h3>
             <ul className="space-y-2">
-              <li className="text-blue-200">123 University Ave</li>
-              <li className="text-blue-200">Campus Building, Suite 200</li>
+              <li className="text-blue-200">Addis Ababa Science and Technology</li>
+              <li className="text-blue-200">Campus Building</li>
               <li className="text-blue-200">support@clearancesystem.com</li>
-              <li className="text-blue-200">+1 (555) 123-4567</li>
+              <li className="text-blue-200">+251970388311</li>
             </ul>
           </div>
         </div>
