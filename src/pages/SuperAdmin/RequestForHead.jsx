@@ -247,9 +247,9 @@ const RequestForHead = () => {
 
   return (
     <Wrapper>
-      {console.log(headData)}
 
-      <div>
+          <div className="min-w-[600px] overflow-auto">
+
         <TitleBar title="Requests for Department Head Approval" />
         <SearchBar
           filterParams={["All"]} // Adjust filter params if your head data has a status field

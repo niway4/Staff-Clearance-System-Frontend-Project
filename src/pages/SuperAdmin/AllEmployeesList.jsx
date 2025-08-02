@@ -25,7 +25,9 @@ function AllEmployeesList() {
   ];
 
   const [filteredData, setFilteredData] = useState([]);
-  const { data, error, loading, get } = useFetch(`${process.env.REACT_APP_DEPLOYMENT_LINK}/admin`); // Assuming this is your base URL for employee data
+  const { data, error, loading, get } = useFetch(
+    `${process.env.REACT_APP_DEPLOYMENT_LINK}/admin`
+  ); // Assuming this is your base URL for employee data
 
   const navigate = useNavigate();
 
@@ -88,36 +90,40 @@ function AllEmployeesList() {
   if (loading)
     return (
       <Wrapper>
-        <TitleBar title="All Employees List" />
-        <div className="items-center flex justify-between">
-          <SearchBar
-            filterParams={["All", "Active", "Pending"]}
-            searchFunction={handleSearch}
-            placeholder="Search for employees..."
-          />
+        <div className="min-w-[600px] overflow-auto">
+          <TitleBar title="All Employees List" />
+          <div className="items-center flex justify-between">
+            <SearchBar
+              filterParams={["All", "Active", "Pending"]}
+              searchFunction={handleSearch}
+              placeholder="Search for employees..."
+            />
+          </div>
+          <Spinner />
         </div>
-        <Spinner />
       </Wrapper>
     );
   if (error)
     return (
       <Wrapper>
-        <TitleBar title="All Employees List" />
-        <div className="items-center flex justify-between">
-          <SearchBar
-            filterParams={["All", "Active", "Pending"]}
-            searchFunction={handleSearch}
-            placeholder="Search for employees..."
-          />
+        <div className="min-w-[600px] overflow-auto">
+          <TitleBar title="All Employees List" />
+          <div className="items-center flex justify-between">
+            <SearchBar
+              filterParams={["All", "Active", "Pending"]}
+              searchFunction={handleSearch}
+              placeholder="Search for employees..."
+            />
+          </div>
+          {/* Display the error message from useFetch */}
+          <p className="text-red-600">Error: {error.message}</p>
         </div>
-        {/* Display the error message from useFetch */}
-        <p className="text-red-600">Error: {error.message}</p>
       </Wrapper>
     );
 
   return (
     <Wrapper>
-      <div>
+      <div className="min-w-[600px] overflow-auto">
         <TitleBar title="All Employees List" />
         <div className="items-center flex justify-between">
           <SearchBar
