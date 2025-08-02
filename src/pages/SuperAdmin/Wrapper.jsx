@@ -27,7 +27,7 @@ function Wrapper({ children }) {
   };
 
   return (
-    <div className="flex h-screen min-w-[600px] overflow-auto">
+    <div className="flex h-screen min-w-[1024px] overflow-auto">
       {SideBarCtx.isSidebarOpen && (
         <Sidebar AdminData={AdminData} navItems={navItems} />
       )}
