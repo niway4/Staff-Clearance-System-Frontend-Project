@@ -68,7 +68,7 @@ export default function ClearanceRequestersList() {
     { label: "Last Name", key: "lname" },
     { label: "E-mail", key: "email" },
     { label: "Status", key: "status" },
-    { label: "Updated Date", key: "updated_at" },
+    // { label: "Updated Date", key: "updated_at" },
     { label: "Action", key: "action" },
   ];
 
