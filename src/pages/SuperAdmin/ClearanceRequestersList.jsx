@@ -10,7 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { HRContext } from "../../contexts/AllDataContext.js";
 
 export default function ClearanceRequestersList() {
-  const { data, error, loading, get } = useFetch(`${process.env.REACT_APP_DEPLOYMENT_LINK}/request/admin`);
+  const { data, error, loading, get } = useFetch(
+    `${process.env.REACT_APP_DEPLOYMENT_LINK}/request/admin`
+  );
 
   useEffect(() => {
     get("/get"); // Fetch data on component mount
@@ -72,7 +74,9 @@ export default function ClearanceRequestersList() {
     { label: "Action", key: "action" },
   ];
 
-  const { data: postdata, post: postApprove } = useFetch(`${process.env.REACT_APP_DEPLOYMENT_LINK}/cleared`);
+  const { data: postdata, post: postApprove } = useFetch(
+    `${process.env.REACT_APP_DEPLOYMENT_LINK}/cleared`
+  );
 
   const handleApprove = (row) => {
     navigate(`/clearedstaffform/${row.staff_id}`);
@@ -104,7 +108,7 @@ export default function ClearanceRequestersList() {
 
   return (
     <Wrapper>
-      <div>
+      <div className="min-w-[600px] overflow-auto">
         <TitleBar title="Clearance Requesters List" />
         <SearchBar
           filterParams={["All", "Approved", "Pending", "Rejected"]}
@@ -313,7 +317,7 @@ export default function ClearanceRequestersList() {
 
 //   return (
 //     <Wrapper>
-//      { console.log(HRFilteredData)    }  
+//      { console.log(HRFilteredData)    }
 //       <div>
 //         <TitleBar title="Clearance Requesters List" />
 
@@ -331,7 +335,7 @@ export default function ClearanceRequestersList() {
 //         {!HRLoading && !HRError && (
 //           <>
 //             {HRFilteredData.length === 0 ? (
-            
+
 //               <div className="mt-10 text-2xl text-center font-bold">
 //                   {console.log(HRFilteredData)              }
 //                 No employees are currently requesting clearance approval.

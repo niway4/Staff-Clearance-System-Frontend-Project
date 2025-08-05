@@ -1,7 +1,3 @@
-
-
-
-
 // import React, { useContext } from "react";
 // import TitleBar from "../../components/layout/TitleBar";
 // import Wrapper from "./Wrapper";
@@ -77,7 +73,7 @@
 
 //       <div>
 //         <TitleBar title="Cleared Staff" />
-        
+
 //         {loading && <Spinner />}
 //         {error && <p className="text-red-600">Error: {error.message}</p>}
 
@@ -102,11 +98,6 @@
 
 // export default ClearedStaff;
 
-
-
-
-
-
 import React, { useContext, useEffect, useState, useCallback } from "react"; // Added useState and useCallback
 import TitleBar from "../../components/layout/TitleBar";
 import Wrapper from "./Wrapper";
@@ -124,7 +115,9 @@ function ClearedStaff() {
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [selectedFilter, setSelectedFilter] = useState("All"); // State for selected filter
 
-  const { data, error, loading, get } = useFetch(`${process.env.REACT_APP_DEPLOYMENT_LINK}/cleared`); // Assuming /cleared/get is the endpoint
+  const { data, error, loading, get } = useFetch(
+    `${process.env.REACT_APP_DEPLOYMENT_LINK}/cleared`
+  ); // Assuming /cleared/get is the endpoint
 
   const navigate = useNavigate();
 
@@ -201,7 +194,9 @@ function ClearedStaff() {
     }
 
     const filtered = staff.filter((item) => {
-      const name = `${item.fname || ""} ${item.sname || ""} ${item.lname || ""}`; // Include all name parts for broader search
+      const name = `${item.fname || ""} ${item.sname || ""} ${
+        item.lname || ""
+      }`; // Include all name parts for broader search
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
 
       const matchesName = name.toLowerCase().includes(lowerCaseSearchTerm);
@@ -232,7 +227,7 @@ function ClearedStaff() {
       {/* console.log(data) is useful for debugging but should be removed in production */}
       {/* {console.log(data)} */}
 
-      <div>
+      <div className="min-w-[600px] overflow-auto">
         <TitleBar title="Cleared Staff" />
 
         {loading && <Spinner />}
