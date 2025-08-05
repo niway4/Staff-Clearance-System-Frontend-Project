@@ -248,7 +248,7 @@ const RequestForHead = () => {
   return (
     <Wrapper>
 
-          <div className="min-w-[600px] overflow-auto">
+          <div >
 
         <TitleBar title="Requests for Department Head Approval" />
         <SearchBar

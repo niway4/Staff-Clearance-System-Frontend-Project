@@ -108,7 +108,7 @@ export default function ClearanceRequestersList() {
 
   return (
     <Wrapper>
-      <div className="min-w-[600px] overflow-auto">
+      <div >
         <TitleBar title="Clearance Requesters List" />
         <SearchBar
           filterParams={["All", "Approved", "Pending", "Rejected"]}

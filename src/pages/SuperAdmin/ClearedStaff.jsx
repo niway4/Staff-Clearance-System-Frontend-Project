@@ -227,7 +227,7 @@ function ClearedStaff() {
       {/* console.log(data) is useful for debugging but should be removed in production */}
       {/* {console.log(data)} */}
 
-      <div className="min-w-[600px] overflow-auto">
+      <div >
         <TitleBar title="Cleared Staff" />
 
         {loading && <Spinner />}

@@ -21,7 +21,7 @@ function Wrapper({ children }) {
     role: "Vice President",
     img: personAvatar,
   };
-
+  
   return (
     <div className="flex h-screen min-w-[1024px] overflow-auto">
       {SideBarCtx.isSidebarOpen && (

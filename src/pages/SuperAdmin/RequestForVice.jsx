@@ -389,7 +389,7 @@ export default function ClearanceRequestersList() {
       {/* {console.log("vice context:", viceData)} */}
       {/* {console.log("viceFilteredData:", viceFilteredData)} */}
 
-      <div className="min-w-[600px] overflow-auto">
+      <div >
         <TitleBar title="Requests for Vice President Approval" />
         <SearchBar
           filterParams={["All", "Approved", "Pending", "Rejected"]}

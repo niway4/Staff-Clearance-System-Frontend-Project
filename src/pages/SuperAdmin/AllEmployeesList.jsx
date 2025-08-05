@@ -90,7 +90,7 @@ function AllEmployeesList() {
   if (loading)
     return (
       <Wrapper>
-        <div className="min-w-[600px] overflow-auto">
+        <div>
           <TitleBar title="All Employees List" />
           <div className="items-center flex justify-between">
             <SearchBar
@@ -106,7 +106,7 @@ function AllEmployeesList() {
   if (error)
     return (
       <Wrapper>
-        <div className="min-w-[600px] overflow-auto">
+        <div>
           <TitleBar title="All Employees List" />
           <div className="items-center flex justify-between">
             <SearchBar
@@ -123,7 +123,7 @@ function AllEmployeesList() {
 
   return (
     <Wrapper>
-      <div className="min-w-[600px] overflow-auto">
+      <div>
         <TitleBar title="All Employees List" />
         <div className="items-center flex justify-between">
           <SearchBar

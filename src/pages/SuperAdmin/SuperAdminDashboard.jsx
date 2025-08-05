@@ -6,7 +6,7 @@ import Wrapper from "./Wrapper";
 function SuperAdminDashboard() {
   return (
     <Wrapper>
-      <div className="min-w-[600px] overflow-auto">
+      <div >
         <TitleBar title="Human Resource Admin Dashboard" />
         <div
           style={{
