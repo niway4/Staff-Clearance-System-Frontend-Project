@@ -34,7 +34,7 @@ const Sidebar = ({ AdminData, navItems }) => {
   }, [HRData]);
 
   return (
-    <div className="h-screen w-56 bg-sideBarColor text-white flex flex-col p-2">
+    <div className="h-screen overflow-auto w-56 bg-sideBarColor text-white flex flex-col p-2">
       <div className="flex mb-6 items-center">
         <img
           className="rounded-full w-14 h-14 mr-4"
